@@ -34,7 +34,11 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        canvas = document.getElementById('#main-canvas');
+        var context = canvas.getContext("2d");
+
     },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -44,6 +48,17 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+        // Hmmmmm
+        var canvas = parentElement.querySelector('#main-canvas');
+        var context = canvas.getContext("2d");
+
+        elemLeft = canvas.offsetLeft;
+        elemTop = canvas.offsetTop;
+        canvas.addEventListener('click', function(event) {              
+            context.fillRect(5, 5, 5, 5);
+        }, false);
+
+        context.fillRect(0, 0, 5, 5);
+
     }
 };
