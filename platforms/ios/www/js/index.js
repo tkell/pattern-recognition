@@ -34,8 +34,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        canvas = document.getElementById('#main-canvas');
-        var context = canvas.getContext("2d");
 
     },
 
@@ -48,17 +46,22 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
+        var audioContext = new webkitAudioContext();
+        oscillator = audioContext.createOscillator(); // Oscillator defaults to sine wave
+        oscillator.connect(audioContext.destination);
+        
         // Hmmmmm
         var canvas = parentElement.querySelector('#main-canvas');
-        var context = canvas.getContext("2d");
+        var canvasContext = canvas.getContext("2d");
 
         elemLeft = canvas.offsetLeft;
         elemTop = canvas.offsetTop;
         canvas.addEventListener('click', function(event) {              
-            context.fillRect(5, 5, 5, 5);
+            canvasContext.fillRect(5, 5, 5, 5);
+            oscillator.noteOn(0);
         }, false);
 
-        context.fillRect(0, 0, 5, 5);
+        canvasContext.fillRect(0, 0, 5, 5);
 
     }
 };
