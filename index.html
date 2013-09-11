@@ -18,9 +18,9 @@ function testClick() {
 
 // OK, raphael has:
 // and then 'path', with which I will make
-// pentagon, hexagon, 
 // trapezoid, diamond, rhombus, parralellogram
 
+// Default primitives
 function makeCircle(paper, location, size) {
     var button = paper.circle(location.x, location.y, size);
     return button;
@@ -36,14 +36,13 @@ function makeRect(paper, location, size) {
     return button;
 }
 
+// Fancy path things
 function makePathString(locations) {
-    console.log(locations);
     pathString = 'M';
     pathString = pathString + locations[0].x + ',' + locations[0].y + ',L';
     for (var i = 1; i < locations.length; i++) {
         pathString = pathString + locations[i].x + ',' + locations[i].y
         if (i < locations.length - 1) {
-            console.log(i);
             pathString = pathString + ',';
         }
     }
@@ -51,20 +50,64 @@ function makePathString(locations) {
     return pathString;
 }
 
+// via http://blog.furiousbob.com/2011/01/31/having-fun-with-javascript-and-raphael/
+// Note that startingAngle is in radians
+function makePolyPoints(location, numberSides, radius, startingAngle) {
+    locations = []
+    for (var i = 0; i < numberSides; i++) {
+        var point ={};
+        var angle = startingAngle + (i * (1 / numberSides) * 2 * Math.PI);
+        point.x = Math.round(location.x + (radius * Math.cos(angle)));
+        point.y = Math.round(location.y + (radius * Math.sin(angle)));
+        locations.push(point);
+    }
+    return locations;
+}
+
 function makeTri(paper, location, size) {
-    // Equilateral for now
-    var degreeRatio = Math.sin(Math.PI / 3);
-    locations = [location, {x: location.x + size, y: location.y}, {x: parseInt(location.x + (size / 2)), y: parseInt(location.y + (size * degreeRatio))}];
+    locations = makePolyPoints(location, 3, size, 0);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
-// button creation
+function makeDiamond(paper, location, size) {
+    locations = makePolyPoints(location, 4, size, 0);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+function makePenta(paper, location, size) {
+    locations = makePolyPoints(location, 5, size, 0);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+function makeHexa(paper, location, size) {
+    locations = makePolyPoints(location, 6, size, 0);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+function makeOcta(paper, location, size) {
+    locations = makePolyPoints(location, 8, size, 0);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+// Button creation
 var buttonFunctions = {circle: makeCircle,
                        square: makeSquare,
+                       diamond: makeDiamond,
                        rectangle: makeRect,
                        triangle: makeTri,
+                       pentagon: makePenta,
+                       hexagon: makeHexa,
+                       octagon: makeOcta,
                     };
 
 function makeButton(paper, location, color, type, size) {
@@ -83,7 +126,11 @@ function init() {
     makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
     makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
     makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 10, y: 25})
-    makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 15);
+    makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 10);
+    makeButton(paper, {x: 125, y: 20}, "#444444", 'pentagon', 10);
+    makeButton(paper, {x: 150, y: 20}, "#555555", 'hexagon', 10);
+    makeButton(paper, {x: 175, y: 20}, "#666666", 'octagon', 10);
+    makeButton(paper, {x: 200, y: 20}, "#777777", 'diamond', 10);
 
 
 
