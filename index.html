@@ -18,23 +18,9 @@ function testClick() {
 
 // OK, raphael has:
 // and then 'path', with which I will make
-// trapezoid, diamond, rhombus, parralellogram
+//  rhombus, parralellogram, trapezoid <-- do I want a trapezoid?
 
-// Default primitives
-function makeCircle(paper, location, size) {
-    var button = paper.circle(location.x, location.y, size);
-    return button;
-}
 
-function makeSquare(paper, location, size) {
-    var button = paper.rect(location.x, location.y, size, size);
-    return button;
-}
-
-function makeRect(paper, location, size) {
-    var button = paper.rect(location.x, location.y, size.x, size.y);
-    return button;
-}
 
 // Fancy path things
 function makePathString(locations) {
@@ -64,8 +50,36 @@ function makePolyPoints(location, numberSides, radius, startingAngle) {
     return locations;
 }
 
+function makeCircle(paper, location, size) {
+    var button = paper.circle(location.x, location.y, size);
+    return button;
+}
+
 function makeTri(paper, location, size) {
     locations = makePolyPoints(location, 3, size, 0);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+function makeSquare(paper, location, size) {
+    locations = makePolyPoints(location, 4, size, Math.PI / 4);
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
+// Rect is a special case:  maybe I'll generalize things up tomorrow
+function makeRect(paper, location, size) {
+    locations = []
+    for (var i = 0; i < 4; i++) {
+        var point ={};
+        var angle = Math.PI / 4 + (i * (1 / 4) * 2 * Math.PI);
+        point.x = Math.round(location.x + (size.x * Math.cos(angle)));
+        point.y = Math.round(location.y + (size.y * Math.sin(angle)));
+        locations.push(point);
+    }
+
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
@@ -125,7 +139,7 @@ function init() {
     // Button testers
     makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
     makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
-    makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 10, y: 25})
+    makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 3, y: 10})
     makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 10);
     makeButton(paper, {x: 125, y: 20}, "#444444", 'pentagon', 10);
     makeButton(paper, {x: 150, y: 20}, "#555555", 'hexagon', 10);
