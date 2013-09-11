@@ -11,15 +11,66 @@
 <script type="text/javascript">
 
 // Click functions
+// append with:  circle.click(clickFunction);
 function testClick() {
     console.log("click");
 }
 
+// OK, raphael has:
+// and then 'path', with which I will make
+// pentagon, hexagon, 
+// trapezoid, diamond, rhombus, parralellogram
+
+function makeCircle(paper, location, size) {
+    var button = paper.circle(location.x, location.y, size);
+    return button;
+}
+
+function makeSquare(paper, location, size) {
+    var button = paper.rect(location.x, location.y, size, size);
+    return button;
+}
+
+function makeRect(paper, location, size) {
+    var button = paper.rect(location.x, location.y, size.x, size.y);
+    return button;
+}
+
+function makePathString(locations) {
+    console.log(locations);
+    pathString = 'M';
+    pathString = pathString + locations[0].x + ',' + locations[0].y + ',L';
+    for (var i = 1; i < locations.length; i++) {
+        pathString = pathString + locations[i].x + ',' + locations[i].y
+        if (i < locations.length - 1) {
+            console.log(i);
+            pathString = pathString + ',';
+        }
+    }
+    pathString = pathString + 'z';
+    return pathString;
+}
+
+function makeTri(paper, location, size) {
+    // Equilateral for now
+    var degreeRatio = Math.sin(Math.PI / 3);
+    locations = [location, {x: location.x + size, y: location.y}, {x: parseInt(location.x + (size / 2)), y: parseInt(location.y + (size * degreeRatio))}];
+    pathString = makePathString(locations);
+    var button = paper.path(pathString);
+    return button;
+}
+
 // button creation
- function makeButton(paper, clickFunction, color) {
-    var circle = paper.circle(50, 40, 10);
-    circle.attr("fill", color);
-    circle.click(clickFunction);
+var buttonFunctions = {circle: makeCircle,
+                       square: makeSquare,
+                       rectangle: makeRect,
+                       triangle: makeTri,
+                    };
+
+function makeButton(paper, location, color, type, size) {
+    var button = buttonFunctions[type](paper, location, size)
+    button.attr("fill", color);
+
  }
 
 
@@ -27,7 +78,14 @@ function init() {
     // Creates canvas 
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
-    makeButton(paper, testClick, "#1279DD")
+
+    // Button testers
+    makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
+    makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
+    makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 10, y: 25})
+    makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 15);
+
+
 
 }
 
