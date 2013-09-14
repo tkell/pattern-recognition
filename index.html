@@ -17,11 +17,14 @@ function testClick() {
     console.log("click");
 }
 
-var allShapes = ['circle', 'triangle', 'square', 'diamond', 'rectangle', 'pentagon', 'hexagon', 'octagon'];
+var allSizes = ['tiny', 'small', 'medium', 'large', 'huge', 'gigantic'];
 var buttonData = [];
 var butttonDifferences = {};
 
 // I am mising 'area' / any way to disambiguate rectangles
+// For rects and ellipses, I should take the larger of the two dimensions
+// I should also compute area, dammit
+
 function addButton(b, location, color, shape, radius) {
     // Calculate brightness
     red = parseInt(color.substring(1, 3), 16);
@@ -64,19 +67,53 @@ function addButton(b, location, color, shape, radius) {
 
     var buttonObject = {
         button: b,
-        center: location, // eudlician and manhatten distance
-        shape: shape, // enumerate, subtract
-        sides: sides, // subtract
-        radius: radius, // subtract
-        size: size, // enumerate, subtract
-        color: color, //, subtract
-        brightness: brightness // subtract
+        location: location,
+        shape: shape,
+        sides: sides,
+        radius: radius,
+        size: size,
+        color: color,
+        brightness: brightness
     };
    buttonData.push(buttonObject);
 }
 
+function subtractButtons(buttonA, buttonB) {
+    var result = {
+        location: {x: buttonA.x - buttonB.x, y: buttonA.y - buttonB.y},
+        shape: buttonA.shape == buttonB.shape,
+        sides: buttonA.sides - buttonB.sides,
+        radius:  buttonA.radius - buttonB.radius, 
+        size: allSizes.indexOf(buttonA.size) - allSizes.indexOf(buttonB.size),
+        color:  parseInt(buttonA.color.substring(1, 7), 16) - parseInt(buttonB.color.substring(1, 7), 16),
+        brightness: buttonA.brightness - buttonB.brightness
+    };
+
+    return result;
+}
+
+// This is an important function!
+// This is basically creating the features 
+// that I will use to generate mappings and learn models
+// BE PREPARED FOR CHANGE
+// Just now, I am leery of how hard identifying buttons is going to be...
+function generateDifferences() {
+    for (var i = 0; i < buttonData.length; i++) {
+        butttonDifferences[i] = {};
+        for (var j = 0; j < buttonData.length; j++) {
+            if (j == i) {
+                continue;
+            }
+            butttonDifferences[i][j] = subtractButtons(buttonData[i], buttonData[j]);
+        
+        }
+    }
+    console.log(butttonDifferences);
+}
+
 //  ellipse, rhombus, parralellogram, trapezoid <-- do I want these?
 // I think I do want ellipse.  hrm.
+// These need to go into shapes.js
 
 function makeButton(paper, location, color, shape, radius, rotation) {
     var button = buttonFunctions[shape](paper, location, radius, rotation)
@@ -101,14 +138,15 @@ function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
-    var numberOfButtons = 10;
+    var numberOfButtons = 5;
 
-    // Let's create a random button
+    // Random Buttons
     for (var i = 0; i < numberOfButtons; i++) {
         makeRandomButton(paper);
     }
 
-    // generate differences here
+    // Create the differences
+    generateDifferences();
 
 
 }

@@ -10,7 +10,6 @@ function makePathString(locations) {
         }
     }
     pathString = pathString + 'z';
-    console.log(pathString);
     return pathString;
 }
 
@@ -92,6 +91,7 @@ function makeOcta(paper, location, radius, rotation) {
 }
 
 // Button creation
+var allShapes = ['circle', 'triangle', 'square', 'diamond', 'rectangle', 'pentagon', 'hexagon', 'octagon'];
 var buttonFunctions = {circle: makeCircle,
                        square: makeSquare,
                        diamond: makeDiamond,
