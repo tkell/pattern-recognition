@@ -10,19 +10,34 @@
 <body>
 <script type="text/javascript">
 
+// How does this deal with rectangles?!?!
+buttonData = {color: '#000000', // hex string
+              brightness:  0.0, // float, extracted from color
+              radius:  10, // int
+              area: 34.0, // float, may not need this
+              size: 'small', // string enumeration of tiny, small, medium, large, huge
+              center:  {x: 5, y: 5}, // point object of ints
+              rotation: Math.PI / 4, // float, in radians
+              shape:  'hexagon', // string enumeration
+    };
+
+var allShapes = ['circle', 'triangle', 'square', 'diamond', 'rectangle', 'pentagon', 'hexagon', 'octagon'];
+var buttonData = [];
+var butttonDifferences = {};
+
+
 // Click functions
 // append with:  circle.click(clickFunction);
 function testClick() {
     console.log("click");
 }
 
+
 // OK, raphael has:
 // and then 'path', with which I will make
 //  rhombus, parralellogram, trapezoid <-- do I want a trapezoid?
 
-
-
-// Fancy path things
+// Fancy SVG path things
 function makePathString(locations) {
     pathString = 'M';
     pathString = pathString + locations[0].x + ',' + locations[0].y + ',L';
@@ -33,6 +48,7 @@ function makePathString(locations) {
         }
     }
     pathString = pathString + 'z';
+    console.log(pathString);
     return pathString;
 }
 
@@ -130,21 +146,42 @@ function makeButton(paper, location, color, type, size) {
 
  }
 
+function makeRandomButton(paper) {
+    var location = {x: Math.floor((Math.random() * paper.width)), y: Math.floor((Math.random() * paper.height))};
+    var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    var shapeIndex =  Math.floor(Math.random() * allShapes.length);
+    var shape = allShapes[shapeIndex];
+
+    var radius;
+    if (shape == 'rectangle') {
+        radius = {x: Math.floor(Math.random() * 400) + 1, y: Math.floor(Math.random() * 400) + 1};
+    } else {
+       radius = Math.floor(Math.random() * 400) + 1; 
+    }
+
+    makeButton(paper, location, color, shape, radius);
+ }
 
 function init() {
-    // Creates canvas 
+    // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
+    var numberOfButtons = 1;
 
-    // Button testers
-    makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
-    makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
-    makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 3, y: 10})
-    makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 10);
-    makeButton(paper, {x: 125, y: 20}, "#444444", 'pentagon', 10);
-    makeButton(paper, {x: 150, y: 20}, "#555555", 'hexagon', 10);
-    makeButton(paper, {x: 175, y: 20}, "#666666", 'octagon', 10);
-    makeButton(paper, {x: 200, y: 20}, "#777777", 'diamond', 10);
+    // Let's create a random button
+    for (var i = 0; i < numberOfButtons; i++) {
+        makeRandomButton(paper);
+    }
+
+    // Formal button testers
+    // makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
+    // makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
+    // makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 3, y: 10})
+    // makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 10);
+    // makeButton(paper, {x: 125, y: 20}, "#444444", 'pentagon', 10);
+    // makeButton(paper, {x: 150, y: 20}, "#555555", 'hexagon', 10);
+    // makeButton(paper, {x: 175, y: 20}, "#666666", 'octagon', 10);
+    // makeButton(paper, {x: 200, y: 20}, "#777777", 'diamond', 10);
 
 
 
