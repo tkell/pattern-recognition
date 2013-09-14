@@ -12,19 +12,55 @@
 
 // How does this deal with rectangles?!?!
 buttonData = {color: '#000000', // hex string
-              brightness:  0.0, // float, extracted from color
+              brightness:  0.0, // float, extracted from color.  Mean of RGB
               radius:  10, // int
               area: 34.0, // float, may not need this
               size: 'small', // string enumeration of tiny, small, medium, large, huge
               center:  {x: 5, y: 5}, // point object of ints
               rotation: Math.PI / 4, // float, in radians
               shape:  'hexagon', // string enumeration
+              sides: 6, // int
     };
 
 var allShapes = ['circle', 'triangle', 'square', 'diamond', 'rectangle', 'pentagon', 'hexagon', 'octagon'];
 var buttonData = [];
 var butttonDifferences = {};
 
+
+function addButton(b, location, color, shape, radius) {
+    // Calculate brightness
+    red = parseInt(color.substring(1, 3), 16);
+    green = parseInt(color.substring(3, 5), 16);
+    blue = parseInt(color.substring(5, 7), 16);
+    brightness = red + green + blue / 3;
+
+    // Get side count
+    var sides;
+    if (shape == 'circle') {
+        sides = 0;
+    } else if (shape == 'triangle') {
+        sides = 3;
+    } else if (shape == 'pentagon') {
+        sides = 5;
+    } else if (shape == 'hexagon') {
+        sides = 6;
+    } else if (shape == 'octagon') {
+        sides = 8;
+    } else {
+        sides = 4;
+    }
+
+    var buttonObject = {
+        button: b,
+        center: location,
+        shape: shape,
+        sides: sides,
+        radius: radius,
+        color: color,
+        brightness: brightness
+    };
+   buttonData.push(buttonObject);
+}
 
 // Click functions
 // append with:  circle.click(clickFunction);
@@ -33,9 +69,7 @@ function testClick() {
 }
 
 
-// OK, raphael has:
-// and then 'path', with which I will make
-//  rhombus, parralellogram, trapezoid <-- do I want a trapezoid?
+//  rhombus, parralellogram, trapezoid <-- do I want these?
 
 // Fancy SVG path things
 function makePathString(locations) {
@@ -140,8 +174,9 @@ var buttonFunctions = {circle: makeCircle,
                        octagon: makeOcta,
                     };
 
-function makeButton(paper, location, color, type, size) {
-    var button = buttonFunctions[type](paper, location, size)
+function makeButton(paper, location, color, shape, radius) {
+    var button = buttonFunctions[shape](paper, location, radius)
+    addButton(button, location, color, shape, radius);
     button.attr("fill", color);
 
  }
@@ -158,7 +193,6 @@ function makeRandomButton(paper) {
     } else {
        radius = Math.floor(Math.random() * 400) + 1; 
     }
-
     makeButton(paper, location, color, shape, radius);
  }
 
@@ -173,16 +207,7 @@ function init() {
         makeRandomButton(paper);
     }
 
-    // Formal button testers
-    // makeButton(paper, {x: 25, y: 20}, "#000000", 'circle', 10);
-    // makeButton(paper, {x: 50, y: 20}, "#111111", 'square', 10);
-    // makeButton(paper, {x: 75, y: 20}, "#222222", 'rectangle', {x: 3, y: 10})
-    // makeButton(paper, {x: 100, y: 20}, "#333333", 'triangle', 10);
-    // makeButton(paper, {x: 125, y: 20}, "#444444", 'pentagon', 10);
-    // makeButton(paper, {x: 150, y: 20}, "#555555", 'hexagon', 10);
-    // makeButton(paper, {x: 175, y: 20}, "#666666", 'octagon', 10);
-    // makeButton(paper, {x: 200, y: 20}, "#777777", 'diamond', 10);
-
+    // generate differences here
 
 
 }
