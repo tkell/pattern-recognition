@@ -10,16 +10,10 @@
 <body>
 <script type="text/javascript">
 
-// How does this deal with rectangles?!?!
-buttonData = {color: '#000000', // hex string
-              brightness:  0.0, // float, extracted from color.  Mean of RGB
-              radius:  10, // int
+// I need to add these two.  Do I really need them?
+buttonData = {
               area: 34.0, // float, may not need this
-              size: 'small', // string enumeration of tiny, small, medium, large, huge
-              center:  {x: 5, y: 5}, // point object of ints
-              rotation: Math.PI / 4, // float, in radians
-              shape:  'hexagon', // string enumeration
-              sides: 6, // int
+              size: 'small', // string enumeration of tiny, small, medium, large, huge, gigantic
     };
 
 var allShapes = ['circle', 'triangle', 'square', 'diamond', 'rectangle', 'pentagon', 'hexagon', 'octagon'];
@@ -50,12 +44,30 @@ function addButton(b, location, color, shape, radius) {
         sides = 4;
     }
 
+    // I am sure there is a cute way to get this programmaticaly, but I won't sweat it for now
+    // also I need to sort out "radius" for rectangles
+    radius = radius.x;
+    if (radius < 8) {
+        size = 'tiny';
+    } else if (radius < 16) {
+        size = 'small';
+    } else if (radius < 32) {
+        size = 'medium';
+    } else if (radius < 64) {
+        size = 'large';
+    } else if (radius < 128) {
+        size = 'huge';
+    } else if (radius < 256) {
+        size = 'gigantic';
+    }
+
     var buttonObject = {
         button: b,
         center: location,
         shape: shape,
         sides: sides,
         radius: radius,
+        size: size,
         color: color,
         brightness: brightness
     };
@@ -69,7 +81,8 @@ function testClick() {
 }
 
 
-//  rhombus, parralellogram, trapezoid <-- do I want these?
+//  ellipse, rhombus, parralellogram, trapezoid <-- do I want these?
+// I think I do want ellipse.  hrm.
 
 // Fancy SVG path things
 function makePathString(locations) {
@@ -100,33 +113,33 @@ function makePolyPoints(location, numberSides, radius, startingAngle) {
     return locations;
 }
 
-function makeCircle(paper, location, size) {
-    var button = paper.circle(location.x, location.y, size);
+function makeCircle(paper, location, radius, rotation) {
+    var button = paper.circle(location.x, location.y, radius.x);
     return button;
 }
 
-function makeTri(paper, location, size) {
-    locations = makePolyPoints(location, 3, size, 0);
+function makeTri(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 3, radius.x, rotation);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
-function makeSquare(paper, location, size) {
-    locations = makePolyPoints(location, 4, size, Math.PI / 4);
+function makeSquare(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 4, radius.x, Math.PI / 4);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
 // Rect is a special case:  maybe I'll generalize things up tomorrow
-function makeRect(paper, location, size) {
+function makeRect(paper, location, radius, rotation) {
     locations = []
     for (var i = 0; i < 4; i++) {
         var point ={};
         var angle = Math.PI / 4 + (i * (1 / 4) * 2 * Math.PI);
-        point.x = Math.round(location.x + (size.x * Math.cos(angle)));
-        point.y = Math.round(location.y + (size.y * Math.sin(angle)));
+        point.x = Math.round(location.x + (radius.x * Math.cos(angle)));
+        point.y = Math.round(location.y + (radius.y * Math.sin(angle)));
         locations.push(point);
     }
 
@@ -135,29 +148,29 @@ function makeRect(paper, location, size) {
     return button;
 }
 
-function makeDiamond(paper, location, size) {
-    locations = makePolyPoints(location, 4, size, 0);
+function makeDiamond(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 4, radius.x, 0);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
-function makePenta(paper, location, size) {
-    locations = makePolyPoints(location, 5, size, 0);
+function makePenta(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 5, radius.x, rotation);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
-function makeHexa(paper, location, size) {
-    locations = makePolyPoints(location, 6, size, 0);
+function makeHexa(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 6, radius.x, rotation);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
 }
 
-function makeOcta(paper, location, size) {
-    locations = makePolyPoints(location, 8, size, 0);
+function makeOcta(paper, location, radius, rotation) {
+    locations = makePolyPoints(location, 8, radius.x, rotation);
     pathString = makePathString(locations);
     var button = paper.path(pathString);
     return button;
@@ -174,33 +187,33 @@ var buttonFunctions = {circle: makeCircle,
                        octagon: makeOcta,
                     };
 
-function makeButton(paper, location, color, shape, radius) {
-    var button = buttonFunctions[shape](paper, location, radius)
-    addButton(button, location, color, shape, radius);
+function makeButton(paper, location, color, shape, radius, rotation) {
+    var button = buttonFunctions[shape](paper, location, radius, rotation)
+    addButton(button, location, color, shape, radius, rotation);
     button.attr("fill", color);
 
  }
 
 function makeRandomButton(paper) {
+    var minDimension = Math.min(paper.width, paper.height);
+    var maxRadius = parseInt(minDimension / 3);
+
     var location = {x: Math.floor((Math.random() * paper.width)), y: Math.floor((Math.random() * paper.height))};
     var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
     var shapeIndex =  Math.floor(Math.random() * allShapes.length);
     var shape = allShapes[shapeIndex];
 
-    var radius;
-    if (shape == 'rectangle') {
-        radius = {x: Math.floor(Math.random() * 400) + 1, y: Math.floor(Math.random() * 400) + 1};
-    } else {
-       radius = Math.floor(Math.random() * 400) + 1; 
-    }
-    makeButton(paper, location, color, shape, radius);
+    var rotation = Math.random() * 2 * Math.PI;
+    var radius = {x: Math.floor(Math.random() * maxRadius) + 1, y: Math.floor(Math.random() * maxRadius) + 1};
+
+    makeButton(paper, location, color, shape, radius, rotation);
  }
 
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
-    var numberOfButtons = 1;
+    var numberOfButtons = 10;
 
     // Let's create a random button
     for (var i = 0; i < numberOfButtons; i++) {
