@@ -64,13 +64,13 @@ function addButton(b, location, color, shape, radius) {
 
     var buttonObject = {
         button: b,
-        center: location,
-        shape: shape,
-        sides: sides,
-        radius: radius,
-        size: size,
-        color: color,
-        brightness: brightness
+        center: location, // eudlician and manhatten distance
+        shape: shape, // enumerate, subtract
+        sides: sides, // subtract
+        radius: radius, // subtract
+        size: size, // enumerate, subtract
+        color: color, //, subtract
+        brightness: brightness // subtract
     };
    buttonData.push(buttonObject);
 }
