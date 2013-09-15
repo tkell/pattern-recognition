@@ -51,6 +51,7 @@ function addButton(b, location, color, shape, radius) {
     // I am sure there is a cute way to get this programmaticaly, but I won't sweat it for now
     // also I need to sort out "radius" for rectangles
     radius = radius.x;
+    var size;
     if (radius < 8) {
         size = 'tiny';
     } else if (radius < 16) {
@@ -78,6 +79,13 @@ function addButton(b, location, color, shape, radius) {
    buttonData.push(buttonObject);
 }
 
+
+
+// These are important functions!
+// This is basically creating the features 
+// that I will use to generate mappings and learn models
+// BE PREPARED FOR CHANGE
+// Just now, I am leery of how hard identifying buttons is going to be...
 function subtractButtons(buttonA, buttonB) {
     var result = {
         location: {x: buttonA.x - buttonB.x, y: buttonA.y - buttonB.y},
@@ -92,11 +100,6 @@ function subtractButtons(buttonA, buttonB) {
     return result;
 }
 
-// This is an important function!
-// This is basically creating the features 
-// that I will use to generate mappings and learn models
-// BE PREPARED FOR CHANGE
-// Just now, I am leery of how hard identifying buttons is going to be...
 function generateDifferences() {
     for (var i = 0; i < buttonData.length; i++) {
         butttonDifferences[i] = {};
@@ -108,7 +111,6 @@ function generateDifferences() {
         
         }
     }
-    console.log(butttonDifferences);
 }
 
 //  ellipse, rhombus, parralellogram, trapezoid <-- do I want these?
@@ -134,16 +136,30 @@ function makeRandomButton(paper) {
     makeButton(paper, location, color, shape, radius, rotation);
  }
 
+function makeGrid(paper, startingPoint, width, height, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation) {
+    for (var i = 0; i < width; i++) {
+        for (var j = 0; j < height; j++) {
+            var x = startingPoint.x + (i * (spacing.x + 2 * buttonRadius.x));
+            var y = startingPoint.y + (j * (spacing.y + 2 * buttonRadius.y));
+            var location = {x: x, y: y};
+            makeButton(paper, location, buttonColor, buttonShape, buttonRadius, buttonRotation)
+        }
+    }
+}
+
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
-    var numberOfButtons = 5;
+    
+    // Random Buttons:  
+    // var numberOfButtons = 5;
+    // for (var i = 0; i < numberOfButtons; i++) {
+    //     makeRandomButton(paper);
+    // }
 
-    // Random Buttons
-    for (var i = 0; i < numberOfButtons; i++) {
-        makeRandomButton(paper);
-    }
+    // Grid
+    makeGrid(paper, {x:50, y:50}, 3, 5, {x: 10, y:10}, '#AA0000', 'circle', {x:50, y:50}, 0);
 
     // Create the differences
     generateDifferences();
