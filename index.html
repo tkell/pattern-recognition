@@ -151,6 +151,14 @@ function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
+
+    // create webAudio code
+    var audioContext = new webkitAudioContext();
+    oscillator = audioContext.createOscillator(); // Oscillator defaults to sine wave
+    oscillator.connect(audioContext.destination);
+    oscillator.frequency.value = 440;
+    oscillator.noteOn(0);
+     oscillator.noteOff(2);
     
     // Random Buttons:  
     // var numberOfButtons = 5;
