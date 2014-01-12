@@ -1,0 +1,23 @@
+// This is just a list of prototypes.
+
+
+// Basic
+ - grid
+ - row
+ - column
+ - circle
+
+ // Variations
+ - half circle / arch
+ - concentric circles
+ - 'rows' out from center
+
+ // Subsets
+ - grid:  offset (like a brick wall)
+ - grid:  hex grid
+ - grid:  triangle grid
+ - grid:  changing length of rows or cols (like a histogram)
+ - grid:  "traffic" grids, like a mondrian painting
+ - row:  angled rows!
+ - row:  'rows' of interlocking shapes:  two triangles, etc
+
