@@ -2,9 +2,9 @@
 
 
 // Basic
- - grid
- - row
- - column
+ - grid - DONE
+ - row - DONE
+ - column - DONE
  - circle
 
  // Variations
