@@ -11,6 +11,12 @@
 <body>
 <script type="text/javascript">
 
+// from http://stackoverflow.com/questions/5999998
+// This may be Chrome-only
+function isFunction(functionToCheck) {
+    return typeof(functionToCheck) === 'function'
+}
+
 // From http://stackoverflow.com/questions/321113/
 function partial(func /*, 0..n args */) {
   var args = Array.prototype.slice.call(arguments, 1);
@@ -19,6 +25,7 @@ function partial(func /*, 0..n args */) {
     return func.apply(this, allArguments);
   };
 }
+
 
 // Click functions
 // append with:  circle.click(clickFunction);
@@ -124,8 +131,8 @@ function generateDifferences() {
 // These need to go into shapes.js
 
 function makeButton(paper, location, color, shape, radius, rotation) {
-    var button = buttonFunctions[shape](paper, location, radius, rotation)
-    addButton(button, location, color, shape, radius, rotation);
+    var button = buttonFunctions[actualShape](paper, location, actualRadius, rotation)
+    addButton(button, location, color, actualShape, actualRadius, rotation);
     button.attr("fill", color);
  }
 
@@ -159,6 +166,9 @@ function makeRow(paper, startingPoint, length, spacing, buttonColor, buttonShape
             var x = startingPoint.x + (i * (spacing + 2 * buttonRadius.x));
             var y = startingPoint.y;
             var location = {x: x, y: y};
+
+            // params = updateParams(i, params); // params = [spacing, buttonColor, buttonShape, buttonRadius, buttonRotation], or something like that
+
             makeButton(paper, location, buttonColor, buttonShape, buttonRadius, buttonRotation);
     } 
 }
@@ -175,14 +185,6 @@ function makeColumn(paper, startingPoint, length, spacing, buttonColor, buttonSh
 
 function makeCircle(paper, startingPoint, radius, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation) {
     // example:  makeCircle(paper, {x:400, y:400}, 200, 20, '#AA0000', 'circle', {x:10, y:10}, 0);
-
-    // the number of buttons I need is determined by the radius of the circle, the spacing of the buttons, and the buttonRadius
-    // so I have a radius of 100.  
-    // thus i have a circumerfence of 2 * pi * r, so 200pi
-    // and each button takes up buttonRadius *2 + spacing
-    // so numberOfButtons is:
-    //(should be the euclidian hypotenuse of buttonRadius...)
-
     var angledButtonRadius = Math.sqrt(buttonRadius.x * buttonRadius.x + buttonRadius.y * buttonRadius.y);
     var numberOfButtons = Math.floor((2 * Math.PI * radius) / (angledButtonRadius * 2 + spacing));
     var angle = (2 * Math.PI) / numberOfButtons;
@@ -216,8 +218,33 @@ function init() {
     var audioContext = new webkitAudioContext();
    
 
-    // Circle
-    makeCircle(paper, {x:400, y:400}, 200, 20, '#AA0000', 'circle', {x:10, y:10}, 0);
+    
+    // it would be nice to pass in functions that are keyed to the looping process, like this one
+    // i could tweak MakeButton to always evalute the function, using the x/y location as a parameter?
+    // that's not bad, actually.  
+    // it limits the functionality, but makes it always constant, and these are only for test layouts anyways...
+
+    // Grumbletron:  many of these functions depend on us already knowing, say, the radius.  
+
+    // could I pass in bases for all these things, and then pass in one ur-function that evaulates to modifiers for all of them?
+    // that will give me overlapping buttons though, in the case of radius.  
+
+    // I could pass in the ur-function, and then work it out for each index value?
+    // I'd have to change makeCircle to take a number of items, but I should probably be doing that anyways
+
+    // I WILL DO THIS TOMORROW
+
+
+    function randomShape(location) {
+        return allShapes[Math.floor(Math.random() * allShapes.length)]
+    }
+
+    function increaseRadius(location) {
+        return {x: 10 * location.x / 10, y: 10 * location.y / 10};
+    }
+
+    // Row, row, row your boat
+    makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', randomShape, increaseRadius, 0);
 
     // Create the differences
     generateDifferences();
