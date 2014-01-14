@@ -131,6 +131,27 @@ function generateDifferences() {
 // These need to go into shapes.js
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
+    var currentLocation = {}
+    if (modFunctions.location) {
+        currentLocation.x = location.x + modFunctions.location(modIndex);
+        currentLocation.y = location.y + modFunctions.location(modIndex);
+    } else {
+        currentLocation = location;
+    }
+
+    var currentColor;
+    if (modFunctions.color) {
+        currentColor = modFunctions.color(modIndex);
+    } else {
+        currentColor = color;
+    }
+
+    var currentShape;
+    if (modFunctions.shape) {
+        currentShape = modFunctions.shape(modIndex);
+    } else {
+        currentShape = shape;
+    }
 
     var currentRadius = {}
     if (modFunctions.radius) {
@@ -146,12 +167,10 @@ function makeButton(paper, location, color, shape, radius, rotation, modFunction
     } else {
         currentRotation = rotation;
     }
-    console.log(currentRotation);
 
-
-    var button = buttonFunctions[shape](paper, location, currentRadius, currentRotation)
-    addButton(button, location, color, shape, radius, rotation);
-    button.attr("fill", color);
+    var button = buttonFunctions[currentShape](paper, currentLocation, currentRadius, currentRotation)
+    addButton(button, currentLocation, currentColor, currentShape, radius, rotation);
+    button.attr("fill", currentColor);
  }
 
 function makeRandomButton(paper) {
@@ -203,7 +222,7 @@ function makeCircle(paper, startingPoint, radius, numberOfButtons, buttonColor, 
     //var angledButtonRadius = Math.sqrt(buttonRadius.x * buttonRadius.x + buttonRadius.y * buttonRadius.y);
     // var spacing = ((2 * Math.PI * radius) / numberOfButtons);
     var angle = (2 * Math.PI) / numberOfButtons;
-    for (var i = 0; i <= numberOfButtons; i++) {
+    for (var i = 0; i < numberOfButtons; i++) {
             var x = radius * Math.sin(i * angle) + startingPoint.x;
             var y = radius * Math.cos(i * angle) + startingPoint.y;
             var location = {x: x, y: y};
@@ -231,38 +250,37 @@ function init() {
 
     // create webAudio code
     var audioContext = new webkitAudioContext();
-   
-
-    
-    // it would be nice to pass in functions that are keyed to the looping process, like this one
-    // i could tweak MakeButton to always evalute the function, using the x/y location as a parameter?
-    // that's not bad, actually.  
-    // it limits the functionality, but makes it always constant, and these are only for test layouts anyways...
-
-    // Grumbletron:  many of these functions depend on us already knowing, say, the radius.  
-
-    // could I pass in bases for all these things, and then pass in one ur-function that evaulates to modifiers for all of them?
-    // that will give me overlapping buttons though, in the case of radius.  
 
     // I could pass in the ur-function, and then work it out for each index value?
     // I WILL DO THIS TOMORROW
 
+    function randomizeColor(index) {
+        return '#'+ Math.floor(Math.random() * 16777215).toString(16);
+    }
+
+    function randomizeShape(index) {
+        return allShapes[Math.floor(Math.random() * allShapes.length)]
+    }
 
     function randomizeIntegerParam(index) {
-        return Math.floor(Math.random() * 10);
+        return Math.floor(Math.random() * 100);
     }
 
     function randomizeRadianParam(index) {
         return Math.random() * Math.PI * 2;
     }
 
+    // I could, in the future, have one entry for location / radius X and one for Y...
     modFunctions = {
+        'location': randomizeIntegerParam,
+        'color':  randomizeColor,
+        'shape':  randomizeShape,
         'radius': randomizeIntegerParam, 
-        'rotation': randomizeRadianParam
+        'rotation': randomizeRadianParam,
     }
 
     // Re-doing circles
-    makeCircle(paper, {x:400, y:400}, 200, 20, '#AA0000', 'pentagon', {x:10, y:10}, 0, modFunctions);
+    makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'pentagon', {x:10, y:10}, 0, modFunctions);
 
     // Create the differences
     generateDifferences();
