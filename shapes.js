@@ -51,7 +51,7 @@ function makeRect(paper, location, radius, rotation) {
     locations = []
     for (var i = 0; i < 4; i++) {
         var point ={};
-        var angle = Math.PI / 4 + (i * (1 / 4) * 2 * Math.PI);
+        var angle = Math.PI / 4 + (i * (1 / 4) * 2 * Math.PI) + rotation;
         point.x = Math.round(location.x + (radius.x * Math.cos(angle)));
         point.y = Math.round(location.y + (radius.y * Math.sin(angle)));
         locations.push(point);
