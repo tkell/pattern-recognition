@@ -130,8 +130,26 @@ function generateDifferences() {
 // At some point I want non-regular things like 'cross', etc...
 // These need to go into shapes.js
 
-function makeButton(paper, location, color, shape, radius, rotation) {
-    var button = buttonFunctions[shape](paper, location, radius, rotation)
+function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
+
+    var currentRadius = {}
+    if (modFunctions.radius) {
+        currentRadius.x = radius.x + modFunctions.radius(modIndex);
+        currentRadius.y = radius.y + modFunctions.radius(modIndex);
+    } else {
+        currentRadius = radius;
+    }
+
+    var currentRotation;
+    if (modFunctions.rotation) {
+        currentRotation = rotation + modFunctions.rotation(modIndex);
+    } else {
+        currentRotation = rotation;
+    }
+    console.log(currentRotation);
+
+
+    var button = buttonFunctions[shape](paper, location, currentRadius, currentRotation)
     addButton(button, location, color, shape, radius, rotation);
     button.attr("fill", color);
  }
@@ -166,9 +184,6 @@ function makeRow(paper, startingPoint, length, spacing, buttonColor, buttonShape
             var x = startingPoint.x + (i * (spacing + 2 * buttonRadius.x));
             var y = startingPoint.y;
             var location = {x: x, y: y};
-
-            // params = updateParams(i, params); // params = [spacing, buttonColor, buttonShape, buttonRadius, buttonRotation], or something like that
-
             makeButton(paper, location, buttonColor, buttonShape, buttonRadius, buttonRotation);
     } 
 }
@@ -183,7 +198,7 @@ function makeColumn(paper, startingPoint, length, spacing, buttonColor, buttonSh
     } 
 }
 
-function makeCircle(paper, startingPoint, radius, numberOfButtons, buttonColor, buttonShape, buttonRadius, buttonRotation) {
+function makeCircle(paper, startingPoint, radius, numberOfButtons, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions) {
     // example:  makeCircle(paper, {x:400, y:400}, 200, 5, '#AA0000', 'circle', {x:10, y:10}, 0);
     //var angledButtonRadius = Math.sqrt(buttonRadius.x * buttonRadius.x + buttonRadius.y * buttonRadius.y);
     // var spacing = ((2 * Math.PI * radius) / numberOfButtons);
@@ -192,7 +207,7 @@ function makeCircle(paper, startingPoint, radius, numberOfButtons, buttonColor, 
             var x = radius * Math.sin(i * angle) + startingPoint.x;
             var y = radius * Math.cos(i * angle) + startingPoint.y;
             var location = {x: x, y: y};
-            makeButton(paper, location, buttonColor, buttonShape, buttonRadius, buttonRotation);
+            makeButton(paper, location, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, i);
     } 
 }
 
@@ -230,13 +245,24 @@ function init() {
     // that will give me overlapping buttons though, in the case of radius.  
 
     // I could pass in the ur-function, and then work it out for each index value?
-    // I'd have to change makeCircle to take a number of items, but I should probably be doing that anyways
-
     // I WILL DO THIS TOMORROW
 
 
+    function randomizeIntegerParam(index) {
+        return Math.floor(Math.random() * 10);
+    }
+
+    function randomizeRadianParam(index) {
+        return Math.random() * Math.PI * 2;
+    }
+
+    modFunctions = {
+        'radius': randomizeIntegerParam, 
+        'rotation': randomizeRadianParam
+    }
+
     // Re-doing circles
-    makeCircle(paper, {x:400, y:400}, 200, 50, '#AA0000', 'circle', {x:10, y:10}, 0);
+    makeCircle(paper, {x:400, y:400}, 200, 20, '#AA0000', 'pentagon', {x:10, y:10}, 0, modFunctions);
 
     // Create the differences
     generateDifferences();
