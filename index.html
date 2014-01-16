@@ -28,11 +28,23 @@ function testClick() {
     console.log("click");
 }
 
+function basicNoteClick(audioContext, freq) {
+    var oscillator = audioContext.createOscillator(); // Oscillator defaults to sine wave
+    oscillator.frequency.value = freq;
+    var vca = audioContext.createGain();
+    vca.gain.value = 0;
+    oscillator.connect(vca);
+    vca.connect(audioContext.destination)
+    oscillator.start(0);
+    vca.gain.value = 0.5;
+    setTimeout(function(){vca.gain.value = 0; vca.disconnect(); oscillator.disconnect()}, 500);
+}
+
 var allSizes = ['tiny', 'small', 'medium', 'large', 'huge', 'gigantic'];
 var buttonData = [];
 var butttonDifferences = {};
 
-// I am mising 'area' / any way to disambiguate rectangles
+// I am missing 'area' / any way to disambiguate rectangles
 // For rects and ellipses, I should take the larger of the two dimensions
 // I should also compute area, dammit
 
@@ -192,11 +204,6 @@ function makeGrid(paper, startingPoint, width, height, spacing, buttonColor, but
     }
 }
 
-
-// I can actually replace both of these with makeLine
-// so a Row is a Line with an angle of 0
-// and a Column is a line with an angle of 3PI / 2
-
 function makeLine(paper, startingPoint, length, spacing, angle, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions) {
         for (var i = 0; i < length; i++) {
             var x = Math.floor(Math.cos(angle) * (i * (spacing + 2 * buttonRadius.x))) + startingPoint.x;
@@ -229,7 +236,6 @@ function makeCircle(paper, startingPoint, radius, numberOfButtons, buttonColor, 
 
 function makeRadial(paper, startingPoint, startingRotation, numberOfRadials, length, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions) {
     // example:  makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, modFunctions);
-
     makeButton(paper, startingPoint, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, i);
     var angle = (2 * Math.PI) / numberOfRadials;
     for (var i = 0; i < numberOfRadials; i++) {
@@ -242,17 +248,28 @@ function makeRadial(paper, startingPoint, startingRotation, numberOfRadials, len
 }
 
 
-function basicNoteClick(audioContext, freq) {
-    var oscillator = audioContext.createOscillator(); // Oscillator defaults to sine wave
-    oscillator.frequency.value = freq;
-    var vca = audioContext.createGain();
-    vca.gain.value = 0;
-    oscillator.connect(vca);
-    vca.connect(audioContext.destination)
-    oscillator.start(0);
-    vca.gain.value = 0.5;
-    setTimeout(function(){vca.gain.value = 0; vca.disconnect(); oscillator.disconnect()}, 500);
+// Simple modification functions
+function randomizeColor(index) {
+    return '#'+ Math.floor(Math.random() * 16777215).toString(16);
 }
+
+function randomizeShape(index) {
+    return allShapes[Math.floor(Math.random() * allShapes.length)]
+}
+
+function randomizeIntegerParam(index) {
+    return Math.floor(Math.random() * 5);
+}
+
+function indexedIntegerParam(index) {
+    return Math.floor(Math.random() * index * 10);
+}
+
+function randomizeRadianParam(index) {
+    return Math.random() * Math.PI * 2;
+}
+
+
 
 function init() {
     // Creates canvas.
@@ -263,26 +280,7 @@ function init() {
     var audioContext = new webkitAudioContext();
 
 
-    // Simple modification functions
-    function randomizeColor(index) {
-        return '#'+ Math.floor(Math.random() * 16777215).toString(16);
-    }
 
-    function randomizeShape(index) {
-        return allShapes[Math.floor(Math.random() * allShapes.length)]
-    }
-
-    function randomizeIntegerParam(index) {
-        return Math.floor(Math.random() * 5);
-    }
-
-    function indexedIntegerParam(index) {
-        return Math.floor(Math.random() * index * 10);
-    }
-
-    function randomizeRadianParam(index) {
-        return Math.random() * Math.PI * 2;
-    }
 
     // I could, in the future, have one entry for location / radius X and one for Y...
     modFunctions = {
@@ -299,7 +297,7 @@ function init() {
     //makeColumn(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeGrid(paper, {x:50, y:50}, 3, 5, {x: 20, y:10}, '#AA0000', 'rectangle', {x:50, y:50}, 0, modFunctions);
-    //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, modFunctions);
+    makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
 
 
 
