@@ -24,7 +24,7 @@ function mapScaleOrdered(buttons, baseNoteNumber, scale) {
     // do the 0th button
     var freq = midiNoteToFrequency(baseNoteNumber)
     var fr = partial(basicNoteClick, audioContext, freq);
-    buttonData[0].button.click(fr);
+    buttons[0].button.click(fr);
 
     // do the other buttons!
     for (var i = 1; i < buttons.length; i++) {
@@ -32,6 +32,31 @@ function mapScaleOrdered(buttons, baseNoteNumber, scale) {
         baseNoteNumber = baseNoteNumber + theScale[index];
         var freq = midiNoteToFrequency(baseNoteNumber)
         var fr = partial(basicNoteClick, audioContext, freq);
-        buttonData[i].button.click(fr);
+        buttons[i].button.click(fr);
+    }
+}
+
+
+// we're going to do just distance, and just octaves, for now...
+// There's got to be a way to connect this to buttonDifferences, but they're coming in different orders, o
+function mapByRatio(buttons, baseNoteNumber) {
+    var baseLocation = buttons[0].location;
+    var baseFreq = midiNoteToFrequency(baseNoteNumber);
+
+    var maxDistance = 0;
+    for (var i = 0; i < buttons.length; i++) {
+        var distance = Math.sqrt(Math.pow(buttons[i].location.x - baseLocation.x, 2) + Math.pow(buttons[i].location.y - baseLocation.y, 2));
+        if (distance > maxDistance) {
+            maxDistance = distance;
+        }
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        var distance = Math.sqrt(Math.pow(buttons[i].location.x - baseLocation.x, 2) + Math.pow(buttons[i].location.y - baseLocation.y, 2));
+        var ratio = (distance / maxDistance) + 1;
+        var freq = ratio * baseFreq;
+        console.log(i, freq);
+        var fr = partial(basicNoteClick, audioContext, freq);
+        buttons[i].button.click(fr);
     }
 }

@@ -113,7 +113,7 @@ function addButton(b, location, color, shape, radius) {
 // Just now, I am leery of how hard identifying buttons is going to be...
 function subtractButtons(buttonA, buttonB) {
     var result = {
-        location: {x: buttonA.x - buttonB.x, y: buttonA.y - buttonB.y},
+        location: {x: buttonA.location.x - buttonB.location.x, y: buttonA.location.y - buttonB.location.y},
         shape: buttonA.shape == buttonB.shape,
         sides: buttonA.sides - buttonB.sides,
         radius:  buttonA.radius - buttonB.radius, 
@@ -286,7 +286,7 @@ function randomizeShape(index) {
 }
 
 function randomizeIntegerParam(index) {
-    return Math.floor(Math.random() * 5);
+    return Math.floor(Math.random() * 50);
 }
 
 function indexedIntegerParam(index) {
@@ -323,7 +323,7 @@ function init() {
     //makeColumn(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
-    makeColumnGrid(paper, {x:50, y:50}, 5, 3, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    makeColumnGrid(paper, {x:50, y:50}, 4, 4, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRowGrid(paper, {x:50, y:50}, 3, 5, {x: 20, y:10}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
 
     // Create the differences
@@ -331,7 +331,10 @@ function init() {
 
     // Order & map
     buttonData = orderFromBottomLeft(buttonData);
-    mapScaleOrdered(buttonData, 60, 'pentatonic')
+
+    //mapScaleOrdered(buttonData, 60, 'pentatonic');
+    mapByRatio(buttonData, 60);
+    
 
 }
 
