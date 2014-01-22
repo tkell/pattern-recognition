@@ -44,6 +44,7 @@ function basicNoteClick(audioContext, freq) {
 var allSizes = ['tiny', 'small', 'medium', 'large', 'huge', 'gigantic'];
 var buttonData = [];
 var butttonDifferences = {};
+var audioContext;
 
 // I am missing 'area' / any way to disambiguate rectangles
 // For rects and ellipses, I should take the larger of the two dimensions
@@ -302,9 +303,7 @@ function init() {
     var paper = Raphael(0, 0, screensize.x, screensize.y);
 
     // create webAudio code
-    var audioContext = new webkitAudioContext();
-
-
+    audioContext = new webkitAudioContext();
 
 
     // I could, in the future, have one entry for location / radius X and one for Y...
@@ -331,11 +330,13 @@ function init() {
     generateDifferences();
 
     // Hyper-rough faux mapping
-    for (var i = 0; i < buttonData.length; i++) {
-        var freq = mapPitchTest(buttonData[i]);
-        var fr = partial(basicNoteClick, audioContext, freq);
-        buttonData[i].button.click(fr);
-    }
+    //for (var i = 0; i < buttonData.length; i++) {
+    //    var freq = mapPitchTest(buttonData[i]);
+    //    var fr = partial(basicNoteClick, audioContext, freq);
+    //    buttonData[i].button.click(fr);
+    //}
+
+    mapPitchOrdered(buttonData, 60, 'diatonicMinor')
 
 }
 
