@@ -11,10 +11,8 @@
     </head>
     <body>
     
-
-
-        <script src="tsw.js"></script>
-        <script src="synth.js"></script>
+        <script src="synth/tsw.js"></script>
+        <script src="synth/synth.js"></script>
         <script>
             // Check if browser is capable
             if ((typeof webkitAudioContext === 'undefined') && (typeof AudioContext === 'undefined')) {
@@ -27,6 +25,8 @@
                     context: tsw.context(),
                     speakersOn: true
                 });
+
+            synth.playNote('C4');
 
             var inputs = document.getElementsByTagName('input'),
                 selects = document.getElementsByTagName('select');
@@ -120,8 +120,7 @@
                 updateSettings.call(inputs[i]);
             }
       
-        synth.playNote('C4');
-        synth.playNote('E4');
+
         </script>
     </body>
 </html>
