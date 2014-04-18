@@ -15,11 +15,7 @@
 <body>
 <script type="text/javascript">
 
-// Create the synth
-var synth = new Synth({
-    context: tsw.context(),
-    speakersOn: true
-});
+
 
 
 // From http://stackoverflow.com/questions/321113/
@@ -32,11 +28,11 @@ function partial(func /*, 0..n args */) {
 }
 
 // mouse on / off functions:
-function betterNoteClick(note) {
+function betterNoteClick(synth, note) {
     synth.playNote(note);
 }
 
-function betterNoteStop(note) {
+function betterNoteStop(synth, note) {
     synth.stopNote(note);
 }
 
@@ -299,12 +295,6 @@ function init() {
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
 
-    // create webAudio code
-    var audioContext = new webkitAudioContext();
-
-
-
-
     // I could, in the future, have one entry for location / radius X and one for Y...
     modFunctions = {
         'location': randomizeIntegerParam,
@@ -328,6 +318,16 @@ function init() {
 
     // Hyper-rough faux mapping
     for (var i = 0; i < buttonData.length; i++) {
+
+        // what if I make a synth for each button??
+        // Create the synth
+        var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
+
+        // Yes, we can change parameters per synth here
+
         var freq = buttonData[i].location.x * 2.1828 + buttonData[i].location.y / 1.618;
         
         var pitchString = 'C4';
@@ -335,8 +335,8 @@ function init() {
             pitchString = 'D3';
         }
 
-        var mouseDownFunc = partial(betterNoteClick, pitchString);
-        var mouseUpFunc = partial(betterNoteStop, pitchString);
+        var mouseDownFunc = partial(betterNoteClick, synth, pitchString);
+        var mouseUpFunc = partial(betterNoteStop, synth, pitchString);
         buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
         buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
     }
