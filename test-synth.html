@@ -168,7 +168,6 @@
                     MIDI 
                 </div>
             </div>
-            <div id="keyboard"></div>
         </div>
         <script src="tsw.js"></script>
         <script src="synth.js"></script>
@@ -184,13 +183,6 @@
             var synth = new Synth({
                     context: tsw.context(),
                     speakersOn: true
-                }),
-                keyboard = new QwertyHancock({
-                    id: 'keyboard',
-                    width: 910,
-                    height: 150,
-                    startKey: 'A3',
-                    hoverColour: '#FFE976'
                 });
 
             var inputs = document.getElementsByTagName('input'),
@@ -284,48 +276,9 @@
 
                 updateSettings.call(inputs[i]);
             }
-            
-            keyboard.keyDown = function (note, frequency) {
-                synth.playNote(note);
-            };
-
-            keyboard.keyUp = function (note, frequency) {
-                synth.stopNote(note);
-            };
-
-            var messageReceived = function (message) {
-
-                var note = tsw.note(message.data[1]),
-                    keys = document.querySelectorAll('#keyboard li');
-
-                // Only accept note data.
-                if (message.data[0] === 144) {
-                    if (message.data[2]) {
-
-                        // Change colour of key on keyboard.
-                        for (var i = 0; i < keys.length; i++) {
-                            if (keys[i].attributes.title.value === note) {
-                                keys[i].style.backgroundColor = '#FFE976';
-                            }
-                        }
-
-                        synth.playNote(note);
-                    } else {
-                        // Chance colour of key on keyboard.
-                        for (var i = 0; i < keys.length; i++) {
-                                if (keys[i].attributes.title.value === note) {
-                                    if (keys[i].attributes.title.value.match('#')) {
-                                        keys[i].style.backgroundColor = 'black';
-                                    } else {
-                                        keys[i].style.backgroundColor = 'white';
-                                    }
-                                }
-                        }
-                        synth.stopNote(tsw.midi.MIDINumberToNote(message.data[1]));
-                    }
-                }
-            };
-
+      
+        //synth.playNote('C3');
+        //synth.playNote('G3');
         </script>
     </body>
 </html>
