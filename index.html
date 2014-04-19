@@ -304,14 +304,22 @@ function init() {
         'rotation': randomizeRadianParam,
     }
 
-    // Re-doing circles
-    //makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, modFunctions);
-    //makeLine(paper, {x: 100, y: 100}, 6, 20, Math.PI / 4, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-    //makeColumn(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
-    //makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
-    //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
-    makeColumnGrid(paper, {x:50, y:50}, 2, 3, {x: 20, y:10}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-    //makeRowGrid(paper, {x:50, y:50}, 3, 5, {x: 20, y:10}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
+    // Let's make 12 small grids!
+    makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    makeColumnGrid(paper, {x:50, y:50}, 1, 4, {x:5, y:5}, 0, '#77FF22', 'triangle', {x:25, y:25}, 0, {});
+    makeColumnGrid(paper, {x:75, y:250}, 3, 3, {x:50, y:50}, 0, '#000000', 'square', {x:50, y:50}, 0, {});
+    makeColumnGrid(paper, {x:350, y:300}, 3, 2, {x:50, y:50}, 0, '#FFFFFF', 'pentagon', {x:10, y:10}, 0, {});
+    // New layer
+    makeColumnGrid(paper, {x:75, y:75}, 4, 1, {x:45, y:20}, 0, '#CCDDEE', 'hexagon', {x:50, y:50}, Math.PI / 4, {});
+    makeColumnGrid(paper, {x:125, y:250}, 2, 4, {x:15, y:50}, 0, '#BB3434', 'octagon', {x:50, y:50}, Math.PI / 7, {});
+    makeColumnGrid(paper, {x:125, y:250}, 3, 4, {x:10, y:75}, 20, '#123412', 'circle', {x:5, y:5}, Math.PI / 2, {});
+    makeColumnGrid(paper, {x:125, y:400}, 3, 3, {x:50, y:5}, 100, '#AA00BB', 'rectangle', {x:50, y:15}, 0, {});
+
+    // New layer!
+    makeColumnGrid(paper, {x:100, y:100}, 4, 2, {x:20, y:20}, 0, '#00BB11', 'rectangle', {x:30, y:60}, 0, {});
+    makeColumnGrid(paper, {x:100, y:300}, 2, 2, {x:100, y:100}, 50, '#FFEE00', 'rectangle', {x:50, y:75}, 0, modFunctions);
+    makeColumnGrid(paper, {x:250, y:175}, 3, 3, {x:60, y:20}, 10, '#00BB11', 'triangle', {x:0, y:5}, 0, modFunctions);
+    makeColumnGrid(paper, {x:250, y:375}, 1, 5, {x:15, y:15}, 10, '#CCBB11', 'square', {x:0, y:5}, 0, modFunctions);
 
     // Create the differences
     generateDifferences();
