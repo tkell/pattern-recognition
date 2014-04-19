@@ -267,16 +267,16 @@ function makeRadial(paper, startingPoint, startingRotation, numberOfRadials, len
 }
 
 
-function makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions) {
+function makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, verticalSpacingRatio) {
     // 7
     makeLine(paper, startingPoint, 7, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
 
     // 2
-    var newStartingPoint = {x: startingPoint.x + buttonRadius.x + (spacing / 2), y: startingPoint.y - 2 * buttonRadius.y}
+    var newStartingPoint = {x: startingPoint.x + buttonRadius.x + (spacing / 2), y: startingPoint.y - 2 * buttonRadius.y * verticalSpacingRatio}
     makeLine(paper, newStartingPoint, 2, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
 
     // 3
-    var newStartingPoint = {x: startingPoint.x + 7 * (buttonRadius.x + (spacing / 2)), y: startingPoint.y - 2 * buttonRadius.y}
+    var newStartingPoint = {x: startingPoint.x + 7 * (buttonRadius.x + (spacing / 2)), y: startingPoint.y - 2 * buttonRadius.y * verticalSpacingRatio}
     makeLine(paper, newStartingPoint, 3, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
 
 }
@@ -319,9 +319,39 @@ function init() {
         'rotation': randomizeRadianParam,
     }
 
-    // Re-doing circles
-    makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    pianoModFunctions = {
+        'location': null,
+        'color':  randomizeColor,
+        'shape':  randomizeShape,
+        'radius': null, 
+        'rotation': randomizeRadianParam,
+    }
 
+    pianoModFunctionsNoShape = {
+        'location': null,
+        'color':  randomizeColor,
+        'shape':  null,
+        'radius': null, 
+        'rotation': randomizeRadianParam,
+    }
+
+    // Let us make 12 pianos.  
+    makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
+    makePiano(paper, {x:600, y:350}, 5, '#AABB11', 'square', {x:5, y:5}, 0, {}, 1);
+    makePiano(paper, {x:100, y:575}, 10, '#000000', 'pentagon', {x:60, y:60}, Math.PI, {}, 1);
+    makePiano(paper, {x:200, y:700}, 100, '#FFFFFF', 'hexagon', {x:15, y:15}, Math.PI / 24, {}, 1);
+    
+    // New layer
+    makePiano(paper, {x:400, y:100}, 15, '#00CC00', 'octagon', {x:25, y:25}, Math.PI / 7, {}, 0.9);
+    makePiano(paper, {x:150, y:250}, 0, '#001177', 'triangle', {x:35, y:35}, 0, {}, 0.3);
+    makePiano(paper, {x:110, y:500}, 24, '#CCCCCC', 'rectangle', {x:10, y:50}, 0, {}, 0.7);
+    makePiano(paper, {x:225, y:725}, 3, '#EE8811', 'rectangle', {x:50, y:10}, 0, {}, 1);
+
+    // New layer
+    makePiano(paper, {x:75, y:150}, 60, '#45FC99', 'triangle', {x:5, y:5}, 0, pianoModFunctions, 1);
+    makePiano(paper, {x:500, y:300}, 0, '#003399', 'square', {x:15, y:15}, 0, pianoModFunctions, 1);
+    makePiano(paper, {x:200, y:525}, 0, '#DC2300', 'rectangle', {x:50, y:100}, 0, pianoModFunctionsNoShape, 1);
+    makePiano(paper, {x:200, y:700}, 0, '#007744', 'rectangle', {x:10, y:75}, 0, pianoModFunctionsNoShape, 0.5);
 
     // Create the differences
     generateDifferences();
