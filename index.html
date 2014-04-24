@@ -103,10 +103,10 @@ function addButton(b, location, color, shape, radius) {
 // This is basically creating the features 
 // that I will use to generate mappings and learn models
 // BE PREPARED FOR CHANGE
-// Just now, I am leery of how hard identifying buttons is going to be...
 function subtractButtons(buttonA, buttonB) {
     var result = {
-        location: {x: buttonA.x - buttonB.x, y: buttonA.y - buttonB.y},
+        location: {x: buttonA.location.x - buttonB.location.x, 
+            y: buttonA.location.y - buttonB.location.y},
         shape: buttonA.shape == buttonB.shape,
         sides: buttonA.sides - buttonB.sides,
         radius:  buttonA.radius - buttonB.radius, 
@@ -129,10 +129,9 @@ function generateDifferences() {
     }
 }
 
-//  ellipse, rhombus, parralellogram, trapezoid <-- do I want these?
-// I think I do want ellipse.  hrm.
-// At some point I want non-regular things like 'cross', etc...
-// These need to go into shapes.js
+// I will need to make one prototype function for each of my ~15 things.
+// (Piano, grid,etc)
+// Then, I will need to put them in their own file:  source-layouts.js, maybe
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
     var currentLocation = {}
@@ -337,41 +336,51 @@ function init() {
 
     // Let us make 12 pianos.  
     makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
-    makePiano(paper, {x:600, y:350}, 5, '#AABB11', 'square', {x:5, y:5}, 0, {}, 1);
-    makePiano(paper, {x:100, y:575}, 10, '#000000', 'pentagon', {x:60, y:60}, Math.PI, {}, 1);
-    makePiano(paper, {x:200, y:700}, 100, '#FFFFFF', 'hexagon', {x:15, y:15}, Math.PI / 24, {}, 1);
-    
-    // New layer
-    makePiano(paper, {x:400, y:100}, 15, '#00CC00', 'octagon', {x:25, y:25}, Math.PI / 7, {}, 0.9);
-    makePiano(paper, {x:150, y:250}, 0, '#001177', 'triangle', {x:35, y:35}, 0, {}, 0.3);
-    makePiano(paper, {x:110, y:500}, 24, '#CCCCCC', 'rectangle', {x:10, y:50}, 0, {}, 0.7);
-    makePiano(paper, {x:225, y:725}, 3, '#EE8811', 'rectangle', {x:50, y:10}, 0, {}, 1);
-
-    // New layer
-    makePiano(paper, {x:75, y:150}, 60, '#45FC99', 'triangle', {x:5, y:5}, 0, pianoModFunctions, 1);
-    makePiano(paper, {x:500, y:300}, 0, '#003399', 'square', {x:15, y:15}, 0, pianoModFunctions, 1);
-    makePiano(paper, {x:200, y:525}, 0, '#DC2300', 'rectangle', {x:50, y:100}, 0, pianoModFunctionsNoShape, 1);
-    makePiano(paper, {x:200, y:700}, 0, '#007744', 'rectangle', {x:10, y:75}, 0, pianoModFunctionsNoShape, 0.5);
-
-    // Let's make 12 small grids!
-    makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-    makeColumnGrid(paper, {x:50, y:50}, 1, 4, {x:5, y:5}, 0, '#77FF22', 'triangle', {x:25, y:25}, 0, {});
-    makeColumnGrid(paper, {x:75, y:250}, 3, 3, {x:50, y:50}, 0, '#000000', 'square', {x:50, y:50}, 0, {});
-    makeColumnGrid(paper, {x:350, y:300}, 3, 2, {x:50, y:50}, 0, '#FFFFFF', 'pentagon', {x:10, y:10}, 0, {});
-    // New layer
-    makeColumnGrid(paper, {x:75, y:75}, 4, 1, {x:45, y:20}, 0, '#CCDDEE', 'hexagon', {x:50, y:50}, Math.PI / 4, {});
-    makeColumnGrid(paper, {x:125, y:250}, 2, 4, {x:15, y:50}, 0, '#BB3434', 'octagon', {x:50, y:50}, Math.PI / 7, {});
-    makeColumnGrid(paper, {x:125, y:250}, 3, 4, {x:10, y:75}, 20, '#123412', 'circle', {x:5, y:5}, Math.PI / 2, {});
-    makeColumnGrid(paper, {x:125, y:400}, 3, 3, {x:50, y:5}, 100, '#AA00BB', 'rectangle', {x:50, y:15}, 0, {});
-
-    // New layer!
-    makeColumnGrid(paper, {x:100, y:100}, 4, 2, {x:20, y:20}, 0, '#00BB11', 'rectangle', {x:30, y:60}, 0, {});
-    makeColumnGrid(paper, {x:100, y:300}, 2, 2, {x:100, y:100}, 50, '#FFEE00', 'rectangle', {x:50, y:75}, 0, modFunctions);
-    makeColumnGrid(paper, {x:250, y:175}, 3, 3, {x:60, y:20}, 10, '#00BB11', 'triangle', {x:0, y:5}, 0, modFunctions);
-    makeColumnGrid(paper, {x:250, y:375}, 1, 5, {x:15, y:15}, 10, '#CCBB11', 'square', {x:0, y:5}, 0, modFunctions);
-
-    // Create the differences
     generateDifferences();
+    console.log(butttonDifferences);
+
+    // A clear function sure would be helpful here
+    buttonData = [];
+    butttonDifferences = {};
+
+
+    makePiano(paper, {x:600, y:350}, 5, '#AABB11', 'square', {x:5, y:5}, 0, {}, 1);
+    generateDifferences();
+    console.log(butttonDifferences);
+
+    // makePiano(paper, {x:100, y:575}, 10, '#000000', 'pentagon', {x:60, y:60}, Math.PI, {}, 1);
+    // makePiano(paper, {x:200, y:700}, 100, '#FFFFFF', 'hexagon', {x:15, y:15}, Math.PI / 24, {}, 1);
+    
+    // // New layer
+    // makePiano(paper, {x:400, y:100}, 15, '#00CC00', 'octagon', {x:25, y:25}, Math.PI / 7, {}, 0.9);
+    // makePiano(paper, {x:150, y:250}, 0, '#001177', 'triangle', {x:35, y:35}, 0, {}, 0.3);
+    // makePiano(paper, {x:110, y:500}, 24, '#CCCCCC', 'rectangle', {x:10, y:50}, 0, {}, 0.7);
+    // makePiano(paper, {x:225, y:725}, 3, '#EE8811', 'rectangle', {x:50, y:10}, 0, {}, 1);
+
+    // // New layer
+    // makePiano(paper, {x:75, y:150}, 60, '#45FC99', 'triangle', {x:5, y:5}, 0, pianoModFunctions, 1);
+    // makePiano(paper, {x:500, y:300}, 0, '#003399', 'square', {x:15, y:15}, 0, pianoModFunctions, 1);
+    // makePiano(paper, {x:200, y:525}, 0, '#DC2300', 'rectangle', {x:50, y:100}, 0, pianoModFunctionsNoShape, 1);
+    // makePiano(paper, {x:200, y:700}, 0, '#007744', 'rectangle', {x:10, y:75}, 0, pianoModFunctionsNoShape, 0.5);
+
+    // // Let's make 12 small grids!
+    // makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    // makeColumnGrid(paper, {x:50, y:50}, 1, 4, {x:5, y:5}, 0, '#77FF22', 'triangle', {x:25, y:25}, 0, {});
+    // makeColumnGrid(paper, {x:75, y:250}, 3, 3, {x:50, y:50}, 0, '#000000', 'square', {x:50, y:50}, 0, {});
+    // makeColumnGrid(paper, {x:350, y:300}, 3, 2, {x:50, y:50}, 0, '#FFFFFF', 'pentagon', {x:10, y:10}, 0, {});
+    // // New layer
+    // makeColumnGrid(paper, {x:75, y:75}, 4, 1, {x:45, y:20}, 0, '#CCDDEE', 'hexagon', {x:50, y:50}, Math.PI / 4, {});
+    // makeColumnGrid(paper, {x:125, y:250}, 2, 4, {x:15, y:50}, 0, '#BB3434', 'octagon', {x:50, y:50}, Math.PI / 7, {});
+    // makeColumnGrid(paper, {x:125, y:250}, 3, 4, {x:10, y:75}, 20, '#123412', 'circle', {x:5, y:5}, Math.PI / 2, {});
+    // makeColumnGrid(paper, {x:125, y:400}, 3, 3, {x:50, y:5}, 100, '#AA00BB', 'rectangle', {x:50, y:15}, 0, {});
+
+    // // New layer!
+    // makeColumnGrid(paper, {x:100, y:100}, 4, 2, {x:20, y:20}, 0, '#00BB11', 'rectangle', {x:30, y:60}, 0, {});
+    // makeColumnGrid(paper, {x:100, y:300}, 2, 2, {x:100, y:100}, 50, '#FFEE00', 'rectangle', {x:50, y:75}, 0, modFunctions);
+    // makeColumnGrid(paper, {x:250, y:175}, 3, 3, {x:60, y:20}, 10, '#00BB11', 'triangle', {x:0, y:5}, 0, modFunctions);
+    // makeColumnGrid(paper, {x:250, y:375}, 1, 5, {x:15, y:15}, 10, '#CCBB11', 'square', {x:0, y:5}, 0, modFunctions);
+
+    
 
     // Hyper-rough faux mapping
     for (var i = 0; i < buttonData.length; i++) {
