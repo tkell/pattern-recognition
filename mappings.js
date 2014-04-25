@@ -1,4 +1,6 @@
 // File with various and sundry mapping functions
+
+// Test function
 function mapPitchTest(button) {
     var freq = button.location.x * 2.1828 + button.location.y / 1.618;
     return freq
@@ -11,6 +13,25 @@ function orderFromBottomLeft(buttons) {
     // So left-to-right, by row from bottom-to-top.
     return buttons.sort(sort_by({name:'location.y', reverse: true}, {name:'location.x', reverse: false}));
 }
+function orderFromLeft(buttons) { 
+    // Takes an array of buttons, and orders them from the  left.  
+    // So left-to-right, regardless of y position.
+    // This is my piano / xylophone mapping!
+    return buttons.sort(sort_by({name:'location.x', reverse: false}));
+}
+function orderFromRight(buttons) { 
+    // Takes an array of buttons, and orders them from the right.  
+    return buttons.sort(sort_by({name:'location.x', reverse: true}));
+}
+function orderFromTop(buttons) { 
+    // Takes an array of buttons, and orders them from the top.  
+    return buttons.sort(sort_by({name:'location.y', reverse: false}));
+}
+function orderFromBottom(buttons) { 
+    // Takes an array of buttons, and orders them from the top.  
+    return buttons.sort(sort_by({name:'location.y', reverse: true}));
+}
+
 function orderByBrightness(buttons) {
     // Takes an array of buttons, and orders them by brightness
     return buttons.sort(sort_by({name:'brightness', reverse: true}));

@@ -319,21 +319,57 @@ function init() {
 
     // Re-doing circles
     //makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, modFunctions);
-    //makeLine(paper, {x: 100, y: 100}, 6, 20, Math.PI / 4, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    //makeLine(paper, {x: 50, y: 150}, 13, 5, 0, '#AA0000', 'circle', {x:25, y:25}, 0, {});
     //makeColumn(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
     //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
-    makeColumnGrid(paper, {x:50, y:50}, 4, 4, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
+    makeColumnGrid(paper, {x:50, y:50}, 2, 2, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
     //makeRowGrid(paper, {x:50, y:50}, 3, 5, {x: 20, y:10}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
 
     // Create the differences
     generateDifferences();
 
-    // Order & map
-    buttonData = orderFromBottomLeft(buttonData);
+    // Piano mapping:
+    // buttonData = orderFromLeft(buttonData);
+    // mapScaleOrdered(buttonData, 60, 'chromatic');
 
-    //mapScaleOrdered(buttonData, 60, 'pentatonic');
-    mapByRatio(buttonData, 60);
+    // Xylophone mapping:
+    //buttonData = orderFromLeft(buttonData);
+    //mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+
+    // Small Grid mapping - note that I will need to 
+    // talk to my synth a bit to make this work in the main thing.
+    // Remember that a lot of these guys need to LOWER the pitch.  
+    // I probably also want a 'monophonic / multiphonic' toggle, somewhere in my settings.
+    // Which will impact the exact tuning that I return
+    buttonData = orderFromBottomLeft(buttonData);
+    if (buttonData.length == 10) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    }
+    if (buttonData.length == 9) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    }
+    if (buttonData.length == 8) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 6) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 5) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 4) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    }
+    if (buttonData.length == 3) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    }
     
 
 }
