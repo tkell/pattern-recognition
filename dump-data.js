@@ -84,4 +84,24 @@ if (layoutType == 'small-grid') {
     dumpDifferences();
 }
 
+if (layoutType == 'test') {
+    // Four test pianos
+    makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
+    dumpDifferences();
+    makePiano(paper, {x:200, y:200}, 66, '#000011', 'rectangle', {x:45, y:25}, Math.PI, {}, 0.1);
+    dumpDifferences();
+    makePiano(paper, {x:75, y:150}, 100, '#45FC99', 'square', {x:5, y:5}, 0, pianoModFunctions, 1);
+    dumpDifferences();
+    makePiano(paper, {x:700, y:56}, 0, '#8849C0', 'circle', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
+    dumpDifferences();
 
+    // // Four test small grids
+    makeColumnGrid(paper, {x:77, y:19}, 1, 3, {x:25, y:80}, 0, '#123456', 'rectangle', {x:10, y:66}, Math.PI / 4, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:290, y:600}, 4, 2, {x:10, y:10}, 0, '#ABCDEF', 'pentagon', {x:45, y:45}, Math.PI / 17, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:500, y:13}, 3, 3, {x:150, y:150}, 0, '#0965DE', 'hexagon', {x:200, y:200}, 0, pianoModFunctions);
+    dumpDifferences();
+    makeColumnGrid(paper, {x:76, y:350}, 5, 1, {x:5, y:17}, 50, '#34BB81', 'square', {x:34, y:12}, 0, modFunctions);
+    dumpDifferences();
+} 

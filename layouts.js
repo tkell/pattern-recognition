@@ -82,13 +82,10 @@ function makeRadial(paper, startingPoint, startingRotation, numberOfRadials, len
 function makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, verticalSpacingRatio) {
     // 7
     makeLine(paper, startingPoint, 7, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
-
     // 2
     var newStartingPoint = {x: startingPoint.x + buttonRadius.x + (spacing / 2), y: startingPoint.y - 2 * buttonRadius.y * verticalSpacingRatio}
     makeLine(paper, newStartingPoint, 2, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
-
     // 3
     var newStartingPoint = {x: startingPoint.x + 7 * (buttonRadius.x + (spacing / 2)), y: startingPoint.y - 2 * buttonRadius.y * verticalSpacingRatio}
     makeLine(paper, newStartingPoint, 3, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
-
 }

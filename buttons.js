@@ -61,24 +61,27 @@ function addButton(b, location, color, shape, radius) {
 }
 
 // These are important functions!
-// This is basically creating the features 
-// that I will use to generate mappings and learn models
+// This is creating the features that I will use to train models
 // BE PREPARED FOR CHANGE
 function subtractButtons(buttonA, buttonB) {
     var result = {
         location: {x: buttonA.location.x - buttonB.location.x, 
             y: buttonA.location.y - buttonB.location.y},
-        shape: buttonA.shape == buttonB.shape,
-        sides: buttonA.sides - buttonB.sides,
-        radius:  buttonA.radius - buttonB.radius, 
-        size: allSizes.indexOf(buttonA.size) - allSizes.indexOf(buttonB.size),
-        color:  parseInt(buttonA.color.substring(1, 7), 16) - parseInt(buttonB.color.substring(1, 7), 16),
-        brightness: buttonA.brightness - buttonB.brightness
+
+        // Let's try only using location
+
+        //shape: buttonA.shape == buttonB.shape,
+        //sides: buttonA.sides - buttonB.sides,
+        //radius:  buttonA.radius - buttonB.radius, 
+        //size: allSizes.indexOf(buttonA.size) - allSizes.indexOf(buttonB.size),
+        //color:  parseInt(buttonA.color.substring(1, 7), 16) - parseInt(buttonB.color.substring(1, 7), 16),
+        //brightness: buttonA.brightness - buttonB.brightness
     };
     return result;
 }
 
 function generateDifferences() {
+    var max_distance = 0;
     for (var i = 0; i < buttonData.length; i++) {
         butttonDifferences[i] = {};
         for (var j = 0; j < buttonData.length; j++) {
@@ -86,13 +89,30 @@ function generateDifferences() {
                 continue;
             }
             butttonDifferences[i][j] = subtractButtons(buttonData[i], buttonData[j]);
+            if (max_distance < Math.abs(butttonDifferences[i][j].location.x)) {
+                max_distance = butttonDifferences[i][j].location.x;
+            }
+
+            if (max_distance < Math.abs(butttonDifferences[i][j].location.y)) {
+                max_distance = butttonDifferences[i][j].location.y;
+            }
+        }
+    }
+
+    // Divide each location by the max
+    for (var i = 0; i < buttonData.length; i++) { 
+        for (var j = 0; j < buttonData.length; j++) {
+            if (j == i) {
+                continue;
+            }
+            butttonDifferences[i][j].location.x = butttonDifferences[i][j].location.x / max_distance;
+            butttonDifferences[i][j].location.y = butttonDifferences[i][j].location.y / max_distance;
         }
     }
 }
 
 // I will need to make one prototype function for each of my ~15 things.
 // (Piano, grid,etc)
-// Then, I will need to put them in their own file:  source-layouts.js, maybe
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
     var currentLocation = {}
