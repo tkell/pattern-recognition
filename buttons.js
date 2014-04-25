@@ -90,12 +90,6 @@ function generateDifferences() {
     }
 }
 
-function clearDifferences() {
-    var buttonData = [];
-    var butttonDifferences = {};
-}
-
-
 // I will need to make one prototype function for each of my ~15 things.
 // (Piano, grid,etc)
 // Then, I will need to put them in their own file:  source-layouts.js, maybe

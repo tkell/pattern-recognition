@@ -19,10 +19,15 @@ eval(fs.readFileSync('mod-functions.js')+'');
 // Read command-line input
 var layoutType = process.argv[2];
 
+function clearDifferences() {
+    buttonData = [];
+    butttonDifferences = {};
+}
+
 function dumpDifferences() {
     generateDifferences();
     console.log(JSON.stringify(butttonDifferences));
-    clearDifferences()
+    clearDifferences();
 }
 
 if (layoutType == 'piano') {
