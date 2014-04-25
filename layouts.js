@@ -89,3 +89,17 @@ function makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, butt
     var newStartingPoint = {x: startingPoint.x + 7 * (buttonRadius.x + (spacing / 2)), y: startingPoint.y - 2 * buttonRadius.y * verticalSpacingRatio}
     makeLine(paper, newStartingPoint, 3, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
 }
+
+function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, useSize) {
+    // The number of buttons is always greater than 7.  
+    // Let us call it more than 7 but less than 15
+    function xyloSize(index) {
+        var averageRadius = (buttonRadius.x + buttonRadius.y / 2);
+        return Math.floor((numberOfButtons - index) * averageRadius / 7);
+    }
+    if (useSize == true) {
+        modFunctions.radius = xyloSize;
+    }
+    numberOfButtons = 7
+    makeLine(paper, startingPoint,  numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+}

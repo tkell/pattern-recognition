@@ -115,12 +115,16 @@ function generateDifferences() {
 // (Piano, grid,etc)
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
-    var currentLocation = {}
-    if (modFunctions.location) {
-        currentLocation.x = location.x + modFunctions.location(modIndex);
-        currentLocation.y = location.y + modFunctions.location(modIndex);
+    var currentLocation = {};
+    if (modFunctions.xLocation) {
+        currentLocation.x = location.x + modFunctions.xLocation(modIndex);
     } else {
-        currentLocation = location;
+        currentLocation.x = location.x;
+    }
+    if (modFunctions.yLocation) {
+        currentLocation.y = location.y + modFunctions.yLocation(modIndex);
+    } else {
+        currentLocation.y = location.y;
     }
 
     var currentColor;

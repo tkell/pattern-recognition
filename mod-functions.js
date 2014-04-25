@@ -23,7 +23,8 @@ function randomizeRadianParam(index) {
 }
 
 modFunctions = {
-    'location': randomizeIntegerParam,
+    'xLocation': randomizeIntegerParam,
+    'yLocation': randomizeIntegerParam,
     'color':  randomizeColor,
     'shape':  null,
     'radius': indexedIntegerParam, 
@@ -43,5 +44,14 @@ pianoModFunctionsNoShape = {
     'color':  randomizeColor,
     'shape':  null,
     'radius': null, 
+    'rotation': randomizeRadianParam,
+}
+
+xyloModFunctions = {
+    'xLocation': randomizeIntegerParam,
+    'yLocation': randomizeIntegerParam,
+    'color':  randomizeColor,
+    'shape':  null,
+    'radius': indexedIntegerParam, 
     'rotation': randomizeRadianParam,
 }

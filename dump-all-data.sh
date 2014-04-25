@@ -8,6 +8,10 @@ echo "Running small-grid..."
 node dump-data.js small-grid > small_grid.json
 mv small_grid.json /home/thor/Code/pattern-recognition-server/example_data/
 
+echo "Running xylophone..."
+node dump-data.js xylophone > xylophone.json
+mv xylophone.json /home/thor/Code/pattern-recognition-server/example_data/
+
 echo "Running test data"
 node dump-data.js test > test_data.json
 mv test_data.json /home/thor/Code/pattern-recognition-server/example_data/
