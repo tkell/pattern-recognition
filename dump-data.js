@@ -170,6 +170,33 @@ if (layoutType == 'zither') {
     dumpDifferences();
 }
 
+if (layoutType == 'large-grid') {
+    makeColumnGrid(paper, {x:25, y:25}, 5, 5, {x:5, y:5}, 0, '#AA0000', 'circle', {x:10, y:10}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:150, y:25}, 5, 7, {x:10, y:0}, 0, '#123456', 'triangle', {x:15, y:15}, Math.PI / 2, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:300, y:25}, 8, 6, {x:10, y:15}, 0, '#FFFF00', 'square', {x:5, y:5}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:225, y:25}, 7, 7, {x:20, y:7}, 0, '#00BB45', 'pentagon', {x:25, y:25}, Math.PI / 5, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:20, y:200}, 5, 6, {x:5, y:10}, 0, '#197723', 'hexagon', {x:10, y:10}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:175, y:200}, 9, 9, {x:20, y:0}, 0, '#000000', 'octagon', {x:15, y:15}, Math.PI / 2, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:200, y:200}, 8, 7, {x:50, y:5}, 0, '#BBA016', 'rectangle', {x:5, y:15}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:315, y:200}, 7, 9, {x:2, y:27}, 0, '#FFFFFF', 'rectangle', {x:25, y:10}, Math.PI / 5, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:55, y:350}, 9, 6, {x:15, y:60}, 0, '#CCCCCC', 'triangle', {x:11, y:19}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:145, y:350}, 9, 8, {x:30, y:30}, 0, '#455453', 'square', {x:15, y:15}, Math.PI / 2, modFunctions);
+    dumpDifferences();
+    makeColumnGrid(paper, {x:275, y:350}, 8, 8, {x:0, y:0}, 0, '#ABCCBA', 'rectangle', {x:25, y:35}, 0, pianoModFunctions);
+    dumpDifferences();
+    makeColumnGrid(paper, {x:385, y:350}, 7, 6, {x:20, y:20}, 0, '#120021', 'circle', {x:7, y:10}, Math.PI / 5, {});
+    dumpDifferences();
+}
+
 if (layoutType == 'test') {
     // Four test pianos
     makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);

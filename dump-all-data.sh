@@ -20,6 +20,10 @@ echo "Running zither..."
 node dump-data.js zither > zither.json
 mv zither.json /home/thor/Code/pattern-recognition-server/example_data/
 
+echo "Running large-grid..."
+node dump-data.js large-grid > large_grid.json
+mv large_grid.json /home/thor/Code/pattern-recognition-server/example_data/
+
 
 echo "Running test data"
 node dump-data.js test > test_data.json
