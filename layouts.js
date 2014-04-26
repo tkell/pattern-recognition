@@ -101,5 +101,25 @@ function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonCol
         modFunctions.radius = xyloSize;
     }
     numberOfButtons = 7
-    makeLine(paper, startingPoint,  numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+    makeLine(paper, startingPoint, numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+}
+
+function makePianoRoll(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, horizontalSpacingRatio) {
+    // 7
+    makeColumn(paper, startingPoint, 7, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+
+    // 3
+    var newStartingPoint = {
+        x: startingPoint.x - (2 * buttonRadius.x * horizontalSpacingRatio),
+        y: startingPoint.y + buttonRadius.y + (spacing / 2), 
+    }
+    makeColumn(paper, newStartingPoint, 3, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+    
+    // 2
+    var newStartingPoint = {
+        x: startingPoint.x - (2 * buttonRadius.x * horizontalSpacingRatio),
+        y: startingPoint.y + (9 * (buttonRadius.y + (spacing / 2))), 
+    }
+    makeColumn(paper, newStartingPoint, 2, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+
 }

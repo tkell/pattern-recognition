@@ -111,6 +111,32 @@ if (layoutType == 'xylophone') {
     dumpDifferences();
 }
 
+if (layoutType == 'piano-roll') {
+    makePianoRoll(paper, {x: 150, y: 100}, 10, '#AA0000', 'circle', {x:20, y:20}, 0, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 200, y: 100}, 2, '#000000', 'triangle', {x:5, y:5}, Math.PI / 3, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 400, y: 50}, 15, '#FFFFFF', 'square', {x:50, y:20}, 0, {}, 0.5);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 300, y: 75}, 25, '#335AA5', 'pentagon', {x:10, y:10}, Math.PI / 7, {}, 0.75);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 125, y: 200}, 20, '#008833', 'hexagon', {x:35, y:35}, 0, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 215, y: 250}, 50, '#AABBCC', 'octagon', {x:75, y:75}, Math.PI / 5, {}, 0.25);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 380, y: 200}, 7, '#567567', 'rectangle', {x:20, y:5}, 0, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 324, y: 225}, 30, '#0A0B0C', 'rectangle', {x:10, y:40}, 0, {}, 0.47);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 115, y: 300}, 35, '#993411', 'square', {x:25, y:25}, 0, {}, 0.1);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 190, y: 350}, 90, '#CCCCCC', 'pentagon', {x:5, y:5}, Math.PI / 17, {}, 0.25);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 410, y: 300}, 15, '#77A311', 'triangle', {x:15, y:15}, Math.PI / 4, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 305, y: 325}, 20, '#190023', 'rectangle', {x:25, y:25}, 0, {}, 1.0);
+}
+
 if (layoutType == 'test') {
     // Four test pianos
     makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
@@ -140,5 +166,15 @@ if (layoutType == 'test') {
     makeXylophone(paper, {x:500, y:488}, 16, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
     dumpDifferences();
     makeXylophone(paper, {x:19, y:700}, 8, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
+    dumpDifferences();
+
+    // Four test piano rolls
+    makePianoRoll(paper, {x: 0, y: 0}, 55, '#00FFCC', 'triangle', {x:5, y:5}, Math.PI / 2.5, {}, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 50, y: 734}, 34, '#ABCDEF', 'circle', {x:35, y:35}, 0, pianoModFunctions, 1.0);
+    dumpDifferences();
+    makePianoRoll(paper, {x: 231, y: 111}, 9, '#1866AB', 'rectangle', {x:40, y:5}, Math.PI / 10, {}, 0.3);
+    dumpDifferences();
+    makePianoRoll(paper, {x:700, y:56}, 0, '#AB44F1', 'hexagon', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
     dumpDifferences();
 } 
