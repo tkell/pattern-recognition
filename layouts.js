@@ -106,14 +106,12 @@ function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonCol
 function makePianoRoll(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, horizontalSpacingRatio) {
     // 7
     makeColumn(paper, startingPoint, 7, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
-
     // 3
     var newStartingPoint = {
         x: startingPoint.x - (2 * buttonRadius.x * horizontalSpacingRatio),
         y: startingPoint.y + buttonRadius.y + (spacing / 2), 
     }
     makeColumn(paper, newStartingPoint, 3, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
-    
     // 2
     var newStartingPoint = {
         x: startingPoint.x - (2 * buttonRadius.x * horizontalSpacingRatio),
@@ -121,4 +119,32 @@ function makePianoRoll(paper, startingPoint, spacing, buttonColor, buttonShape, 
     }
     makeColumn(paper, newStartingPoint, 2, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
 
+}
+
+function makeZither(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, alignment) {
+    // The number of buttons is always greater than 5.  
+    // Alignment is a string:  left, center, or right, that defines to the justification of the buttons
+    
+    // Change size
+    var averageRadius = (buttonRadius.x + buttonRadius.y / 2);
+    function zitherSize(index) {
+        return Math.floor((index) * averageRadius / 7);
+    }
+    modFunctions.radius = zitherSize;
+
+    // Functions for computing the alignment delta
+    function alignRight(index) {
+            return Math.floor((numberOfButtons - index) * averageRadius / 7);
+    }
+    function alignLeft(index) {
+            return -1 * Math.floor((numberOfButtons - index) * averageRadius / 7);
+    }
+
+    if (alignment == 'right') {
+        modFunctions.xLocation = alignRight;
+    }
+        if (alignment == 'left') {
+        modFunctions.xLocation = alignLeft;
+    }
+    makeColumn(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
 }

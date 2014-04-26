@@ -16,6 +16,11 @@ echo "Running piano-roll..."
 node dump-data.js piano-roll > piano_roll.json
 mv piano_roll.json /home/thor/Code/pattern-recognition-server/example_data/
 
+echo "Running zither..."
+node dump-data.js zither > zither.json
+mv zither.json /home/thor/Code/pattern-recognition-server/example_data/
+
+
 echo "Running test data"
 node dump-data.js test > test_data.json
 mv test_data.json /home/thor/Code/pattern-recognition-server/example_data/

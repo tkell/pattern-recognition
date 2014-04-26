@@ -141,6 +141,35 @@ if (layoutType == 'piano-roll') {
     makePianoRoll(paper, {x: 305, y: 325}, 20, '#190023', 'rectangle', {x:25, y:25}, 0, {}, 1.0);
 }
 
+if (layoutType == 'zither') {
+    makeZither(paper, {x:50, y:50}, 7, 15, '#AA0000', 'circle',  {x:10, y:10}, 0, {}, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:60, y:100}, 7, 10, '#AA0000', 'circle',  {x:15, y:15}, 0, {}, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:150, y:50}, 8, 20, '#000000', 'triangle',  {x:20, y:20}, 0, {}, 'right');
+    dumpDifferences();
+    makeZither(paper, {x:250, y:50}, 7, 35, '#FFFFFF', 'square',  {x:35, y:35}, 0, {}, 'left');
+    dumpDifferences();
+    makeZither(paper, {x:300, y:50}, 8, 50, '#123456', 'pentagon',  {x:45, y:45}, Math.PI / 3, {}, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:150, y:100}, 7, 20, '#00BB11', 'hexagon',  {x:15, y:15}, 0, {}, 'left');
+    dumpDifferences();
+    makeZither(paper, {x:250, y:200}, 8, 35, '#997132', 'octagon',  {x:22, y:22}, Math.PI / 7, modFunctions, 'right');
+    dumpDifferences();
+    makeZither(paper, {x:60, y:35}, 7, 15, '#18745AC', 'rectangle',  {x:10, y:50}, 0, {}, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:145, y:78}, 8, 25, '#909090', 'rectangle',  {x:50, y:20}, 0, {}, 'right');
+    dumpDifferences();
+    makeZither(paper, {x:222, y:45}, 7, 22, '#00FFEE', 'rectangle',  {x:16, y:14}, 0, modFunctions, 'left');
+    dumpDifferences();
+    makeZither(paper, {x:367, y:100}, 8, 33, '#5423CC', 'pentagon',  {x:45, y:45}, 0, modFunctions, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:120, y:350}, 7, 14, '#193333', 'circle',  {x:15, y:15}, 0, {}, 'right');
+    dumpDifferences();
+    makeZither(paper, {x:275, y:254}, 8, 5, '#23521A', 'triangle',  {x:5, y:5}, 0, {}, 'left');
+    dumpDifferences();
+}
+
 if (layoutType == 'test') {
     // Four test pianos
     makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
@@ -180,5 +209,15 @@ if (layoutType == 'test') {
     makePianoRoll(paper, {x: 231, y: 111}, 9, '#1866AB', 'rectangle', {x:40, y:5}, Math.PI / 10, {}, 0.3);
     dumpDifferences();
     makePianoRoll(paper, {x:700, y:56}, 0, '#AB44F1', 'hexagon', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
+    dumpDifferences();
+
+    // Test zithers?!
+    makeZither(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
+    dumpDifferences();
+    makeZither(paper, {x:190, y:56}, 8, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
+    dumpDifferences();
+    makeZither(paper, {x:95, y:205}, 16, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
+    dumpDifferences();
+    makeZither(paper, {x:345, y:220}, 12, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     dumpDifferences();
 } 
