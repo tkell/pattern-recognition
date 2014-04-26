@@ -100,7 +100,6 @@ function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonCol
     if (useSize == true) {
         modFunctions.radius = xyloSize;
     }
-    numberOfButtons = 7
     makeLine(paper, startingPoint, numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
 }
 
