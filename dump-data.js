@@ -91,23 +91,23 @@ if (layoutType == 'xylophone') {
     dumpDifferences(); 
     makeXylophone(paper, {x:350, y:450}, 7, 5, '#6734DD', 'rectangle', {x:20, y:45}, 0, {}, true);
     dumpDifferences(); 
-    makeXylophone(paper, {x:50, y:450}, 5, 50, '#000000', 'circle', {x:20, y:45}, 0, {}, true);
+    makeXylophone(paper, {x:50, y:450}, 9, 50, '#000000', 'circle', {x:20, y:45}, 0, {}, true);
     dumpDifferences(); 
-    makeXylophone(paper, {x:50, y:100}, 10, 50, '#CCffEE', 'pentagon', {x:50, y:50}, 0, {}, false);
+    makeXylophone(paper, {x:50, y:100}, 8, 50, '#CCffEE', 'pentagon', {x:50, y:50}, 0, {}, false);
     dumpDifferences(); 
-    makeXylophone(paper, {x:125, y:200}, 15, 17, '#FFFFFF', 'hexagon', {x:35, y:45}, 0, {}, false);
+    makeXylophone(paper, {x:125, y:200}, 10, 17, '#FFFFFF', 'hexagon', {x:35, y:45}, 0, {}, false);
     dumpDifferences(); 
-    makeXylophone(paper, {x:300, y:600}, 12, 25, '#123456', 'octagon', {x:30, y:45}, 0, {}, true);
+    makeXylophone(paper, {x:300, y:600}, 9, 25, '#123456', 'octagon', {x:30, y:45}, 0, {}, true);
     dumpDifferences(); 
-    makeXylophone(paper, {x:125, y:450}, 8, 100, '#AA7623', 'triangle', {x:1, y:1}, 0, {}, true);
+    makeXylophone(paper, {x:125, y:450}, 11, 100, '#AA7623', 'triangle', {x:1, y:1}, 0, {}, true);
     dumpDifferences(); 
-    makeXylophone(paper, {x:50, y:100}, 60, 50, '#ABCEDF', 'rectangle', {x:25, y:50}, 0, pianoModFunctions, false);
+    makeXylophone(paper, {x:50, y:100}, 10, 50, '#ABCEDF', 'rectangle', {x:25, y:50}, 0, pianoModFunctions, false);
     dumpDifferences(); 
-    makeXylophone(paper, {x:125, y:200}, 15,20, '#FEDCBA', 'hexagon', {x:19, y:45}, 0, pianoModFunctions, false);
+    makeXylophone(paper, {x:125, y:200}, 12, 20, '#FEDCBA', 'hexagon', {x:19, y:45}, 0, pianoModFunctions, false);
     dumpDifferences(); 
-    makeXylophone(paper, {x:300, y:600}, 12, 5, '#654321', 'rectangle', {x:10, y:45}, 0, xyloModFunctions, true);
+    makeXylophone(paper, {x:300, y:600}, 11, 5, '#654321', 'rectangle', {x:10, y:45}, 0, xyloModFunctions, true);
     dumpDifferences();
-    makeXylophone(paper, {x:125, y:450}, 8, -5, '#880055', 'triangle', {x:7, y:7}, 0, xyloModFunctions, true);
+    makeXylophone(paper, {x:125, y:450}, 13, -5, '#880055', 'triangle', {x:7, y:7}, 0, xyloModFunctions, true);
     dumpDifferences();
 }
 
@@ -122,13 +122,23 @@ if (layoutType == 'test') {
     makePiano(paper, {x:700, y:56}, 0, '#8849C0', 'circle', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
     dumpDifferences();
 
-    // // Four test small grids
+    // Four test small grids
     makeColumnGrid(paper, {x:77, y:19}, 1, 3, {x:25, y:80}, 0, '#123456', 'rectangle', {x:10, y:66}, Math.PI / 4, {});
     dumpDifferences();
     makeColumnGrid(paper, {x:290, y:600}, 4, 2, {x:10, y:10}, 0, '#ABCDEF', 'pentagon', {x:45, y:45}, Math.PI / 17, {});
     dumpDifferences();
     makeColumnGrid(paper, {x:500, y:13}, 3, 3, {x:150, y:150}, 0, '#0965DE', 'hexagon', {x:200, y:200}, 0, pianoModFunctions);
     dumpDifferences();
-    makeColumnGrid(paper, {x:76, y:350}, 5, 1, {x:5, y:17}, 50, '#34BB81', 'square', {x:34, y:12}, 0, modFunctions);
+    makeColumnGrid(paper, {x:76, y:350}, 4, 1, {x:5, y:17}, 50, '#34BB81', 'square', {x:34, y:12}, 0, modFunctions);
+    dumpDifferences();
+
+    // Four test xylophones
+    makeXylophone(paper, {x:78, y:45}, 7, 5, '#00FFCC', 'square', {x:10, y:45}, 0, {}, false);
+    dumpDifferences();
+    makeXylophone(paper, {x:234, y:103}, 10, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
+    dumpDifferences();
+    makeXylophone(paper, {x:500, y:488}, 12, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
+    dumpDifferences();
+    makeXylophone(paper, {x:19, y:700}, 8, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
     dumpDifferences();
 } 
