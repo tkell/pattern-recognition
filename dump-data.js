@@ -137,7 +137,7 @@ if (layoutType == 'test') {
     dumpDifferences();
     makeXylophone(paper, {x:234, y:103}, 10, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
     dumpDifferences();
-    makeXylophone(paper, {x:500, y:488}, 12, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
+    makeXylophone(paper, {x:500, y:488}, 16, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
     dumpDifferences();
     makeXylophone(paper, {x:19, y:700}, 8, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
     dumpDifferences();
