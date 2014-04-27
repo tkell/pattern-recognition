@@ -43,20 +43,30 @@ function mapScaleOrdered(buttons, baseNoteNumber, scale) {
     var theScale = scales[scale];
 
     // do the 0th button
-    var freq = midiNoteToFrequency(baseNoteNumber)
-    var fr = partial(basicNoteClick, audioContext, freq);
-    buttons[0].button.click(fr);
+    var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+    });
+    var mouseDownFunc = partial(betterNoteClick, synth, baseNoteNumber);
+    var mouseUpFunc = partial(betterNoteStop, synth, baseNoteNumber);
+    buttons[0].button.node.addEventListener('mousedown', mouseDownFunc);
+    buttons[0].button.node.addEventListener('mouseup', mouseUpFunc);
 
     // do the other buttons!
     for (var i = 1; i < buttons.length; i++) {
+        var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
         var index = (i - 1) % theScale.length;
-        baseNoteNumber = baseNoteNumber + theScale[index];
-        var freq = midiNoteToFrequency(baseNoteNumber)
-        var fr = partial(basicNoteClick, audioContext, freq);
-        buttons[i].button.click(fr);
+        var baseNoteNumber = baseNoteNumber + theScale[index];
+
+        var mouseDownFunc = partial(betterNoteClick, synth, baseNoteNumber);
+        var mouseUpFunc = partial(betterNoteStop, synth, baseNoteNumber);
+        buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
+        buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
     }
 }
-
 
 // we're going to do just distance, and just octaves, for now...
 // There's got to be a way to connect this to buttonDifferences, but they're coming in different orders, o

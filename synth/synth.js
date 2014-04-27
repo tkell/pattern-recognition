@@ -229,15 +229,24 @@
         Synth.prototype.playNote = function (note) {
             var timeToStart = tsw.now();
 
+            // Thor hacking to suppport midi numbers
+            var noteFreq = 0;
+            if (typeof note === 'number') {
+                noteFreq = midiNoteToFrequency(note);
+            } else if (typeof note === 'string') {
+                noteFreq = tsw.frequency(note);
+            }
+
             if (typeof note === 'object') {
                 timeToStart= note.startTime;
                 note = note.note;
+                noteFreq = tsw.frequency(note);
             }
 
-            var noteOscillators = createOscillators.call(this, tsw.frequency(note)),
+            var noteOscillators = createOscillators.call(this, noteFreq),
                 that = this;
 
-            that.noiseFrequency.frequency = tsw.frequency(note);
+            that.noiseFrequency.frequency = noteFreq;
             this.keysDown.push(note);
             that.noiseGate.gain.value = 1;
 
@@ -280,12 +289,18 @@
                 frequency,
                 match = false;
 
+            var noteFreq = 0;
+            if (typeof note === 'number') {
+                frequency = midiNoteToFrequency(note);
+            } else if (typeof note === 'string') {
+                frequency = tsw.frequency(note);
+            }
+
             if (typeof note === 'object') {
                 timeToStop = note.stopTime;
                 note = note.note;
+                frequency = tsw.frequency(note);
             }
-
-            frequency = tsw.frequency(note);
 
             for (var i = 0; i < this.activeOscillators.length; i++) {
                 for (oscillator in this.oscillators) {
