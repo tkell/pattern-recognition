@@ -13,6 +13,9 @@
 <script type="text/javascript" src="buttons.js"></script>
 <script type="text/javascript" src="layouts.js"></script>
 <script type="text/javascript" src="mod-functions.js"></script>
+<script type="text/javascript" src="sort.js"></script>
+<script type="text/javascript" src="scales.js"></script>
+<script type="text/javascript" src="mappings.js"></script>
 </head>
 
 <body>
@@ -39,52 +42,70 @@ function betterNoteStop(synth, note) {
 // Global button data
 var buttonData = [];
 var butttonDifferences = {};
+var audioContext;
 
 
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(0, 0, screensize.x, screensize.y);
-
-    // Let us make 12 large grids - 5x5 to 9x9
-    // We are going to IGNORE offset for now, and make all of these orthongonal
-    makeColumnGrid(paper, {x:25, y:25}, 5, 5, {x:5, y:5}, 0, '#AA0000', 'circle', {x:10, y:10}, 0, {});
-    makeColumnGrid(paper, {x:150, y:25}, 5, 7, {x:10, y:0}, 0, '#123456', 'triangle', {x:15, y:15}, Math.PI / 2, {});
-    makeColumnGrid(paper, {x:300, y:25}, 8, 6, {x:10, y:15}, 0, '#FFFF00', 'square', {x:5, y:5}, 0, {});
-    makeColumnGrid(paper, {x:225, y:25}, 7, 7, {x:20, y:7}, 0, '#00BB45', 'pentagon', {x:25, y:25}, Math.PI / 5, {});
-
-    makeColumnGrid(paper, {x:20, y:200}, 5, 6, {x:5, y:10}, 0, '#197723', 'hexagon', {x:10, y:10}, 0, {});
-    makeColumnGrid(paper, {x:175, y:200}, 9, 9, {x:20, y:0}, 0, '#000000', 'octagon', {x:15, y:15}, Math.PI / 2, {});
-    makeColumnGrid(paper, {x:200, y:200}, 8, 7, {x:50, y:5}, 0, '#BBA016', 'rectangle', {x:5, y:15}, 0, {});
-    makeColumnGrid(paper, {x:315, y:200}, 7, 9, {x:2, y:27}, 0, '#FFFFFF', 'rectangle', {x:25, y:10}, Math.PI / 5, {});
+    // create webAudio code
+    audioContext = new webkitAudioContext();
 
 
-        makeColumnGrid(paper, {x:55, y:350}, 9, 6, {x:15, y:60}, 0, '#CCCCCC', 'triangle', {x:11, y:19}, 0, {});
-    makeColumnGrid(paper, {x:145, y:350}, 9, 8, {x:30, y:30}, 0, '#455453', 'square', {x:15, y:15}, Math.PI / 2, modFunctions);
-    makeColumnGrid(paper, {x:275, y:350}, 8, 8, {x:0, y:0}, 0, '#ABCCBA', 'rectangle', {x:25, y:35}, 0, pianoModFunctions);
-    makeColumnGrid(paper, {x:385, y:350}, 7, 6, {x:20, y:20}, 0, '#120021', 'circle', {x:7, y:10}, Math.PI / 5, {});
+    // Set of samples
+    //makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, modFunctions);
+    //makeLine(paper, {x: 50, y: 150}, 13, 5, 0, '#AA0000', 'circle', {x:25, y:25}, 0, {});
+    //makeColumn(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
+    //makeRow(paper, {x: 50, y: 100}, 6, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
+    //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
+    //makeColumnGrid(paper, {x:50, y:50}, 2, 2, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    //makeRowGrid(paper, {x:50, y:50}, 3, 5, {x: 20, y:10}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, modFunctions);
 
-    // Hyper-rough faux mapping
-    for (var i = 0; i < buttonData.length; i++) {
-        // Create the synth for each button:  this may run me out of processor.
-        var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-        });
+    // Create the differences
+    generateDifferences();
 
-        // Yes, we can change parameters per synth here
-        var freq = buttonData[i].location.x * 2.1828 + buttonData[i].location.y / 1.618;
-        
-        var pitchString = 'C4';
-        if (i % 2 == 0) {
-            pitchString = 'D3';
-        }
+    // Piano mapping:
+    // buttonData = orderFromLeft(buttonData);
+    // mapScaleOrdered(buttonData, 60, 'chromatic');
 
-        var mouseDownFunc = partial(betterNoteClick, synth, pitchString);
-        var mouseUpFunc = partial(betterNoteStop, synth, pitchString);
-        buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
-        buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
+    // Xylophone mapping:
+    //buttonData = orderFromLeft(buttonData);
+    //mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+
+    // Small Grid mapping - note that I will need to 
+    // talk to my synth a bit to make this work in the main thing.
+    // Remember that a lot of these guys need to LOWER the pitch.  
+    // I probably also want a 'monophonic / multiphonic' toggle, somewhere in my settings.
+    // Which will impact the exact tuning that I return
+    buttonData = orderFromBottomLeft(buttonData);
+    if (buttonData.length == 10) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
     }
+    if (buttonData.length == 9) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    }
+    if (buttonData.length == 8) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 6) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 5) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 4) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    }
+    if (buttonData.length == 3) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    } 
 }
 
 window.onload = init;
