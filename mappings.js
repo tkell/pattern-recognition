@@ -90,7 +90,6 @@ function mapByRatio(buttons, baseNoteNumber) {
         var distance = Math.sqrt(Math.pow(buttons[i].location.x - baseLocation.x, 2) + Math.pow(buttons[i].location.y - baseLocation.y, 2));
         var ratio = (distance / maxDistance) + 1;
         var freq = ratio * baseFreq;
-        console.log(i, freq);
 
         var synth = new Synth({
             context: tsw.context(),
@@ -101,9 +100,6 @@ function mapByRatio(buttons, baseNoteNumber) {
         var mouseUpFunc = partial(betterNoteStop, synth, freq);
         buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
         buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
-
-        //var fr = partial(basicNoteClick, audioContext, freq);
-        //buttons[i].button.click(fr);
     }
 }
 
