@@ -142,8 +142,41 @@ function mapAsSmallGrid(buttonData) {
     }
 }
 
-function mapAsLargeGrid(buttonData) {
+function mapAsLargeGrid(buttonData, numCols, numRows) {
+    // Note that my classification is going to have to return
+    // numRows and numCols, or I will need to work them out from buttonData
+
+    var theScale = '';
+    if (numCols == 10) {
+        theScale = 'diatonicBoth';
+    }
+    if (numCols == 9) {
+        theScale = 'diatonicBoth';
+    }
+    if (numCols == 8) {
+        theScale = 'diatonicMajor';
+    }
+    if (numCols == 7) {
+        theScale = 'diatonicMajor';
+    }
+    if (numCols == 6) {
+        theScale = 'pentatonic';
+    }
+    if (numCols == 5) {
+        theScale = 'pentatonic';
+    }
+
     buttonData = orderFromBottomLeft(buttonData);
     // Need a scale per row and an interval per-column
-    var ColumnInterval  = 5; // Start with P4
+    var columnInterval = 5; // Start with P4
+    var rowScale = 'pentatonic'
+    var baseNoteNumber = 60;
+
+    for (var i = 0; i < numRows; i++) {
+        var startingIndex = i * 5;
+        var endingIndex = (i + 1) * 5;
+        var noteNumber = baseNoteNumber + i * columnInterval;
+
+        mapScaleOrdered(buttonData.slice(startingIndex, endingIndex), noteNumber, theScale);
+    }
 }
