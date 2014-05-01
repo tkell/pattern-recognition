@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-/* Script for dumping data out for machine-learning
-
+/* 
+Script for dumping data out for machine-learning
 */
 
 // Dummy variables

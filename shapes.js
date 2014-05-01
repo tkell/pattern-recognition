@@ -46,7 +46,7 @@ function makeSquare(paper, location, radius, rotation) {
     return button;
 }
 
-// Rect is a special case:  maybe I'll generalize things up tomorrow
+// Rect is a special case.  Should probably be generalized at some point.
 function makeRect(paper, location, radius, rotation) {
     locations = []
     for (var i = 0; i < 4; i++) {

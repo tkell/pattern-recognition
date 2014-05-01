@@ -41,28 +41,32 @@ function orderByBrightness(buttons) {
 // This assumes an ordered list of buttons
 function mapScaleOrdered(buttons, baseNoteNumber, scale) {
     var theScale = scales[scale];
+    var noteFreq;
 
     // do the 0th button
     var synth = new Synth({
             context: tsw.context(),
             speakersOn: true
     });
-    var mouseDownFunc = partial(betterNoteClick, synth, baseNoteNumber);
-    var mouseUpFunc = partial(betterNoteStop, synth, baseNoteNumber);
+    noteFreq = midiNoteToFrequency(baseNoteNumber);
+    var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
+    var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
     buttons[0].button.node.addEventListener('mousedown', mouseDownFunc);
     buttons[0].button.node.addEventListener('mouseup', mouseUpFunc);
 
-    // do the other buttons!
+    // do the other buttons
+    var noteNumber = baseNoteNumber;
     for (var i = 1; i < buttons.length; i++) {
         var synth = new Synth({
             context: tsw.context(),
             speakersOn: true
         });
         var index = (i - 1) % theScale.length;
-        var baseNoteNumber = baseNoteNumber + theScale[index];
+        noteNumber = noteNumber + theScale[index];
+        noteFreq = midiNoteToFrequency(noteNumber);
 
-        var mouseDownFunc = partial(betterNoteClick, synth, baseNoteNumber);
-        var mouseUpFunc = partial(betterNoteStop, synth, baseNoteNumber);
+        var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
+        var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
         buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
         buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
     }
@@ -87,7 +91,54 @@ function mapByRatio(buttons, baseNoteNumber) {
         var ratio = (distance / maxDistance) + 1;
         var freq = ratio * baseFreq;
         console.log(i, freq);
-        var fr = partial(basicNoteClick, audioContext, freq);
-        buttons[i].button.click(fr);
+
+        var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
+
+        var mouseDownFunc = partial(betterNoteClick, synth, freq);
+        var mouseUpFunc = partial(betterNoteStop, synth, freq);
+        buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
+        buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
+
+        //var fr = partial(basicNoteClick, audioContext, freq);
+        //buttons[i].button.click(fr);
     }
 }
+
+
+// Notes for small grid mapping
+// Small Grid mapping - note that I will need to 
+    // talk to my synth a bit to make this work in the main thing.
+    // Remember that a lot of these guys need to LOWER the pitch.  
+    // I probably also want a 'monophonic / multiphonic' toggle, somewhere in my settings.
+    // Which will impact the exact tuning that I return
+    // buttonData = orderFromBottomLeft(buttonData);
+    // if (buttonData.length == 10) {
+    //     mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    // }
+    // if (buttonData.length == 9) {
+    //     mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    // }
+    // if (buttonData.length == 8) {
+    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    // }
+    // if (buttonData.length == 7) {
+    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    // }
+    // if (buttonData.length == 7) {
+    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    // }
+    // if (buttonData.length == 6) {
+    //     mapScaleOrdered(buttonData, 60, 'pentatonic');
+    // }
+    // if (buttonData.length == 5) {
+    //     mapScaleOrdered(buttonData, 60, 'pentatonic');
+    // }
+    // if (buttonData.length == 4) {
+    //     mapScaleOrdered(buttonData, 60, 'trumpet');
+    // }
+    // if (buttonData.length == 3) {
+    //     mapScaleOrdered(buttonData, 60, 'trumpet');
+    // } 

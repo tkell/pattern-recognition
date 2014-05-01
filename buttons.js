@@ -68,7 +68,7 @@ function subtractButtons(buttonA, buttonB) {
         location: {x: buttonA.location.x - buttonB.location.x, 
             y: buttonA.location.y - buttonB.location.y},
 
-        // Let's try only using location
+        // Let's try only using location deltas
 
         //shape: buttonA.shape == buttonB.shape,
         //sides: buttonA.sides - buttonB.sides,
@@ -110,9 +110,6 @@ function generateDifferences() {
         }
     }
 }
-
-// I will need to make one prototype function for each of my ~15 things.
-// (Piano, grid,etc)
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
     var currentLocation = {};

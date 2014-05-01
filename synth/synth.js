@@ -229,10 +229,10 @@
         Synth.prototype.playNote = function (note) {
             var timeToStart = tsw.now();
 
-            // Thor hacking to suppport midi numbers
+            // Thor hacking to suppport direct frequency input.
             var noteFreq = 0;
             if (typeof note === 'number') {
-                noteFreq = midiNoteToFrequency(note);
+                noteFreq = note;
             } else if (typeof note === 'string') {
                 noteFreq = tsw.frequency(note);
             }
@@ -291,7 +291,7 @@
 
             var noteFreq = 0;
             if (typeof note === 'number') {
-                frequency = midiNoteToFrequency(note);
+                frequency = note;
             } else if (typeof note === 'string') {
                 frequency = tsw.frequency(note);
             }
