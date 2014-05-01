@@ -238,7 +238,7 @@ if (layoutType == 'test') {
     makePianoRoll(paper, {x:700, y:56}, 0, '#AB44F1', 'hexagon', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
     dumpDifferences();
 
-    // Test zithers?!
+    // Test zithers
     makeZither(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
     dumpDifferences();
     makeZither(paper, {x:190, y:56}, 8, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
@@ -246,5 +246,15 @@ if (layoutType == 'test') {
     makeZither(paper, {x:95, y:205}, 16, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
     dumpDifferences();
     makeZither(paper, {x:345, y:220}, 12, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
+    dumpDifferences();
+
+    // Test large grids
+    makeColumnGrid(paper, {x:45, y:76}, 5, 5, {x:10, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:80, y:600}, 5, 6, {x:15, y:30}, 0, '#123456', 'triangle', {x:7, y:7}, Math.PI / 2, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:350, y:15}, 7, 5, {x:5, y:45}, 0, '#FFFF00', 'rectangle', {x:15, y:25}, 0, {});
+    dumpDifferences();
+    makeColumnGrid(paper, {x:100, y:500}, 8, 8, {x:15, y:19}, 0, '#00BB45', 'pentagon', {x:2, y:2}, Math.PI / 5, {});
     dumpDifferences();
 } 
