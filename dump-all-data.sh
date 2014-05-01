@@ -24,6 +24,9 @@ echo "Running large-grid..."
 node dump-data.js large-grid > large_grid.json
 mv large_grid.json /home/thor/Code/pattern-recognition-server/example_data/
 
+echo "Running big-piano..."
+node dump-data.js big-piano > big_piano.json
+mv big_piano.json /home/thor/Code/pattern-recognition-server/example_data/
 
 echo "Running test data"
 node dump-data.js test > test_data.json

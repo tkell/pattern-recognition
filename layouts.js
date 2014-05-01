@@ -90,6 +90,15 @@ function makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, butt
     makeLine(paper, newStartingPoint, 3, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions)
 }
 
+function makeBigPiano(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, verticalSpacingRatio) {
+    makePiano(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, verticalSpacingRatio)
+
+    var newStartingPoint = {x: startingPoint.x + 14 * (buttonRadius.x + (spacing / 2)), y: startingPoint.y}
+    makePiano(paper, newStartingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, verticalSpacingRatio)
+
+}
+
+
 function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, useSize) {
     // The number of buttons is always greater than 7.  
     // Let us call it more than 7 but less than 15
