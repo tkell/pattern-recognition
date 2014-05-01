@@ -7,7 +7,7 @@ Script for dumping data out for machine-learning
 // Dummy variables
 var paper = 'fake-paper';
 var buttonData = [];
-var butttonDifferences = {};
+var buttonDifferences = {};
 
 // Terrible hack to include external files
 var fs = require('fs');
@@ -21,12 +21,12 @@ var layoutType = process.argv[2];
 
 function clearDifferences() {
     buttonData = [];
-    butttonDifferences = {};
+    buttonDifferences = {};
 }
 
 function dumpDifferences() {
     generateDifferences();
-    console.log(JSON.stringify(butttonDifferences));
+    console.log(JSON.stringify(buttonDifferences));
     clearDifferences();
 }
 

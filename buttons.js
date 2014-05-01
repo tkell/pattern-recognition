@@ -83,18 +83,18 @@ function subtractButtons(buttonA, buttonB) {
 function generateDifferences() {
     var max_distance = 0;
     for (var i = 0; i < buttonData.length; i++) {
-        butttonDifferences[i] = {};
+        buttonDifferences[i] = {};
         for (var j = 0; j < buttonData.length; j++) {
             if (j == i) {
                 continue;
             }
-            butttonDifferences[i][j] = subtractButtons(buttonData[i], buttonData[j]);
-            if (max_distance < Math.abs(butttonDifferences[i][j].location.x)) {
-                max_distance = butttonDifferences[i][j].location.x;
+            buttonDifferences[i][j] = subtractButtons(buttonData[i], buttonData[j]);
+            if (max_distance < Math.abs(buttonDifferences[i][j].location.x)) {
+                max_distance = buttonDifferences[i][j].location.x;
             }
 
-            if (max_distance < Math.abs(butttonDifferences[i][j].location.y)) {
-                max_distance = butttonDifferences[i][j].location.y;
+            if (max_distance < Math.abs(buttonDifferences[i][j].location.y)) {
+                max_distance = buttonDifferences[i][j].location.y;
             }
         }
     }
@@ -105,8 +105,8 @@ function generateDifferences() {
             if (j == i) {
                 continue;
             }
-            butttonDifferences[i][j].location.x = butttonDifferences[i][j].location.x / max_distance;
-            butttonDifferences[i][j].location.y = butttonDifferences[i][j].location.y / max_distance;
+            buttonDifferences[i][j].location.x = buttonDifferences[i][j].location.x / max_distance;
+            buttonDifferences[i][j].location.y = buttonDifferences[i][j].location.y / max_distance;
         }
     }
 }
