@@ -110,31 +110,40 @@ function mapByRatio(buttons, baseNoteNumber) {
     // Remember that a lot of these guys need to LOWER the pitch.  
     // I probably also want a 'monophonic / multiphonic' toggle, somewhere in my settings.
     // Which will impact the exact tuning that I return
-    // buttonData = orderFromBottomLeft(buttonData);
-    // if (buttonData.length == 10) {
-    //     mapScaleOrdered(buttonData, 60, 'diatonicBoth');
-    // }
-    // if (buttonData.length == 9) {
-    //     mapScaleOrdered(buttonData, 60, 'diatonicBoth');
-    // }
-    // if (buttonData.length == 8) {
-    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    // }
-    // if (buttonData.length == 7) {
-    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    // }
-    // if (buttonData.length == 7) {
-    //     mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    // }
-    // if (buttonData.length == 6) {
-    //     mapScaleOrdered(buttonData, 60, 'pentatonic');
-    // }
-    // if (buttonData.length == 5) {
-    //     mapScaleOrdered(buttonData, 60, 'pentatonic');
-    // }
-    // if (buttonData.length == 4) {
-    //     mapScaleOrdered(buttonData, 60, 'trumpet');
-    // }
-    // if (buttonData.length == 3) {
-    //     mapScaleOrdered(buttonData, 60, 'trumpet');
-    // } 
+
+function mapAsSmallGrid(buttonData) {
+    buttonData = orderFromBottomLeft(buttonData);
+    if (buttonData.length == 10) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    }
+    if (buttonData.length == 9) {
+        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
+    }
+    if (buttonData.length == 8) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 7) {
+        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
+    }
+    if (buttonData.length == 6) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 5) {
+        mapScaleOrdered(buttonData, 60, 'pentatonic');
+    }
+    if (buttonData.length == 4) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    }
+    if (buttonData.length == 3) {
+        mapScaleOrdered(buttonData, 60, 'trumpet');
+    }
+}
+
+function mapAsLargeGrid(buttonData) {
+    buttonData = orderFromBottomLeft(buttonData);
+    // Need a scale per row and an interval per-column
+    var ColumnInterval  = 5; // Start with P4
+}
