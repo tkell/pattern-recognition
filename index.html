@@ -45,10 +45,35 @@ var buttonDifferences = {};
 var audioContext;
 
 
+function sendDataToServer() {  
+    console.log('yes');
+    var req = new XMLHttpRequest();
+
+    // Feature detection for CORS
+    if ('withCredentials' in req) {
+        var url = 'http://quiet-wildwood-4860.herokuapp.com/hello'
+        req.open('GET', url, true);
+        // Just like regular ol' XHR
+        req.onreadystatechange = function() {
+            if (req.readyState === 4) {
+                if (req.status >= 200 && req.status < 400) {
+                    console.log(req);
+                    console.log(req.responseText);
+                    // JSON.parse(req.responseText) etc.
+                } else {
+                    // Handle error case
+                    console.log('error!');
+                }
+            }
+        };
+        req.send();
+    }
+}
+
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
-    var paper = Raphael(0, 0, screensize.x, screensize.y);
+    var paper = Raphael(100, 100, screensize.x, screensize.y);
     // create webAudio code
     audioContext = new webkitAudioContext();
 
@@ -103,11 +128,11 @@ function init() {
 
 
     mapAsLargeGrid(buttonData, 10, 5)
-
-    
 }
 
 window.onload = init;
 </script>
+
+<button id="test-button" onclick="sendDataToServer()">Talk to the server!</button>
 </body>
 </html>
