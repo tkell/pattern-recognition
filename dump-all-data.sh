@@ -32,4 +32,10 @@ echo "Running test data"
 node dump-data.js test > test_data.json
 mv test_data.json /home/thor/Code/pattern-recognition-server/example_data/
 
-echo "Done!"
+echo "Done creation of data, preparing for rsync to tide-pool.ca"
+
+# This will upload the example data to the tide pool folder
+# Changing paths will shatter this!
+rsync /home/thor/Code/pattern-recognition-server/example_data/*.json --exclude "test_data.json" tidepool@tide-pool.ca:/home/tidepool/www/pattern-recognition/example-data
+
+echo "Done rsync!"
