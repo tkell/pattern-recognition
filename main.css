@@ -1,3 +1,61 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 svg {
-border: 1px solid black;
+    border: 1px solid black;
+}
+
+div#controls {
+    width: 215px;
+    font-weight: bold;
+}
+
+div#button-info {
+    text-align: center;
+}
+
+
+.all-buttons {
+    -moz-box-shadow: 0px 1px 0px 0px #caefab;
+    -webkit-box-shadow: 0px 1px 0px 0px #caefab;
+    box-shadow: 0px 1px 0px 0px #caefab;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #56a312), color-stop(1, #5cb811) );
+    background:-moz-linear-gradient( center top, #56a312 5%, #5cb811 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#56a312', endColorstr='#5cb811');
+    background-color:#56a312;
+    -webkit-border-top-left-radius:6px;
+    -moz-border-radius-topleft:6px;
+    border-top-left-radius:6px;
+    -webkit-border-top-right-radius:6px;
+    -moz-border-radius-topright:6px;
+    border-top-right-radius:6px;
+    -webkit-border-bottom-right-radius:6px;
+    -moz-border-radius-bottomright:6px;
+    border-bottom-right-radius:6px;
+    -webkit-border-bottom-left-radius:6px;
+    -moz-border-radius-bottomleft:6px;
+    border-bottom-left-radius:6px;
+    text-indent:0;
+    border:1px solid #268a16;
+    display:inline-block;
+    color:#193304;
+    font-size:15px;
+    font-weight:normal;
+    font-style:normal;
+    height:35px;
+    line-height:30px;
+    width:100px;
+    margin-top: 5px;
+    text-decoration:none;
+    text-align:center;
+}
+.classname:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #56a312) );
+    background:-moz-linear-gradient( center top, #5cb811 5%, #56a312 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#56a312');
+    background-color:#5cb811;
+}.classname:active {
+    position:relative;
+    top:1px;
 }

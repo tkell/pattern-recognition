@@ -42,31 +42,31 @@ var buttonBrush = {};
 
 // Functions to draw sample layouts.
 function drawExamplePiano() {
-    makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
+    makePiano(paper, {x:75, y:200}, 20, '#11BB00', 'circle', {x:50, y:50}, 0, {}, 1);
 }
 
 function drawExampleXylophone() {
-    makeLine(paper, {x: 50, y: 150}, 8, 5, 0, '#AA0000', 'circle', {x:25, y:25}, 0, {});
+    makeLine(paper, {x: 50, y: 150}, 8, 5, 0, '#AA0000', 'triangle', {x:25, y:25}, 0, {});
 }
 
 function drawExampleZither() {
-    makeZither(paper, {x:145, y:78}, 8, 25, '#909090', 'rectangle',  {x:50, y:20}, 0, {}, 'right');
+    makeZither(paper, {x:145, y:25}, 8, 25, '#900FF0', 'rectangle',  {x:25, y:15}, 0, {}, 'right');
 }
 
 function drawExamplePianoRoll() {
-    makePianoRoll(paper, {x: 100, y: 100}, 30, '#0A0B0C', 'square', {x:30, y:30}, 0, {}, 0.47);  
+    makePianoRoll(paper, {x: 500, y: 25}, 15, '#0A0B0C', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
 }
 
 function drawExampleSmallGrid() {
-    makeColumnGrid(paper, {x:100, y:100}, 2, 3, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    makeColumnGrid(paper, {x:450, y:100}, 2, 3, {x: 20, y:10}, 0, '#0900BB', 'hexagon', {x:50, y:50}, 0, {});
 }
 
 function drawExampleLargeGrid() {
-    makeColumnGrid(paper, {x:100, y:100}, 7, 5, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:25, y:25}, 0, {});    
+    makeColumnGrid(paper, {x:100, y:100}, 7, 5, {x: 20, y:10}, 0, '#AA1599', 'octagon', {x:25, y:25}, 0, {});    
 }
 
 function drawExampleBigPiano() {
-    makeBigPiano(paper, {x:50, y:200}, 10, '#AA0000', 'circle', {x:15, y:15}, 0, {}, 1);
+    makeBigPiano(paper, {x:50, y:400}, 10, '#123456', 'circle', {x:15, y:15}, 0, {}, 1);
 }
 
 function clearCanvas() {
@@ -78,6 +78,8 @@ function clearCanvas() {
     $('svg').click(function(e) {
         createButton(e);
     });
+
+    updatePreview();
 }
 
 // We can't JSONify the DOM reference in buttonData, 
@@ -98,8 +100,9 @@ function cleanButtonData() {
 }
 
 function sendDataToServer() {
-    // Remove the click-to-make-a-button
+    // Remove the click-to-make-a-button, update preview
     $('svg').off('click');
+    playbackPreview();
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     cleanedButtonData = cleanButtonData()
@@ -169,10 +172,28 @@ function createButton(e) {
 }
 
 
+function updatePreview() {
+    var radiusVal = $('#radius-slider')[0].value;
+    var radius = radiusVal.toString() + 'px';
+    $('#radius-info').text(radius);
+
+    var shapeVal = $('#shape-slider')[0].value;
+    var shape = allShapes[shapeVal];
+    $('#shape-info').text(shape);
+
+    $('#button-info').css('color', $('#color-input')[0].value)
+}
+
+function playbackPreview() {
+    $('#shape-info').text('');
+    $('#radius-info').text('-playback-');
+    $('#button-info').css('color', '#00FF33');
+}
+
 function init() {
     // Creates canvas.
-    var screensize = {x: 1024, y: 768};
-    offset = {'x': 100, 'y':  125};
+    var screensize = {x: 1024, y: 512};
+    offset = {'x': 250, 'y':  25};
     paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
 
     // Assign the button creation function to clicking on the canvas
@@ -180,31 +201,58 @@ function init() {
         createButton(e);
     });
 
+    // Update the preview functions
+    $('#color-input').change(function() {
+        updatePreview();
+    });
+
+    $('#shape-slider').change(function() {
+        updatePreview();
+    });
+
+    $('#radius-slider').change(function() {
+        updatePreview();
+    });
+
     // Samples that we don't know how to map, yet..
     //makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, modFunctions);
     //makeRadial(paper, {x:400, y:200}, Math.PI, 5, 5, 55, '#AA0000', 'circle', {x:25, y:25}, 0, {});
+
+    // Intial load of preview
+    updatePreview();
 }
 
 window.onload = init;
 </script>
 
 
-<button onclick="drawExamplePiano()">Example:  Piano</button>
-<button onclick="drawExampleXylophone()">Example:  Xylophone</button>
-<button onclick="drawExampleZither()">Example:  Zither</button>
-<button onclick="drawExamplePianoRoll()">Example:  Piano Roll</button>
-<button onclick="drawExampleSmallGrid()">Example:  Small Grid</button>
-<button onclick="drawExampleLargeGrid()">Example:  Large Grid</button>
-<button onclick="drawExampleBigPiano()">Example:  Big Piano</button>
+<h2> pattern recognition </h2>
 
+<div id="controls">
 <br />
-<button id="test-button" onclick="sendDataToServer()">Talk to the server!</button>
-<button id="clear-button" onclick="clearCanvas()">Clear canvas</button>
+radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=20><br />
 
+shape:  <input type="range" name="shape" id="shape-slider" min="0" max="7" value=0><br />
+colour:  <input type="text" id="color-input" name="color" value="#11AAFF"><br />
 <br />
-Radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=20>
-Shape:  <input type="range" name="shape" id="shape-slider" min="0" max="7" value=0>
-Colour:  <input type="text" id="color-input" name="color" value="#11AAFF">
+
+<div id="button-info">
+<span id="shape-info"></span> <span id="radius-info"></span>
+</div>
+
+<hr />
+<button class="all-buttons" id="test-button" onclick="sendDataToServer()">recognize</button>
+<button class="all-buttons" id="clear-button" onclick="clearCanvas()">clear</button><br />
+<br /><hr />
+examples:  <br />
+<button class="all-buttons" onclick="drawExamplePiano()">piano</button><br />
+<button class="all-buttons" onclick="drawExampleXylophone()">xylophone</button><br />
+<button class="all-buttons" onclick="drawExampleZither()">zither</button><br />
+<button class="all-buttons" onclick="drawExamplePianoRoll()">piano roll</button><br />
+<button class="all-buttons" onclick="drawExampleSmallGrid()">small grid</button><br />
+<button class="all-buttons" onclick="drawExampleLargeGrid()">large grid</button><br />
+<button class="all-buttons" onclick="drawExampleBigPiano()">big piano</button><br />
+</div>
 
 </body>
 </html>
