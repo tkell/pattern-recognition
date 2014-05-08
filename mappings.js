@@ -153,11 +153,30 @@ function mapAsSmallGrid(buttonData) {
 }
 
 function mapAsLargeGrid(buttonData) {
-    // Note that my classification is going to have to return
-    // numRows and numCols, or I will need to work them out from buttonData
+    // Get the number of rows and columns.
+    // This will break if there is any difference in location
+    var rows = {};
+    for (var i = 0; i < buttonData.length; i++) {
+        if (buttonData[i].location.y in rows) {
+            continue;
+        } else {
+            rows[buttonData[i].location.y] = true;
+        }
+    }
+    var numRows = Object.keys(rows).length;
+
+    var cols = {};
+    for (var i = 0; i < buttonData.length; i++) {
+        if (buttonData[i].location.x in cols) {
+            continue;
+        } else {
+            cols[buttonData[i].location.x] = true;
+        }
+    }
+    var numCols = Object.keys(cols).length;
 
 
-
+    console.log(numRows, numCols);
 
     var theScale = '';
     if (numCols == 10) {
@@ -186,8 +205,8 @@ function mapAsLargeGrid(buttonData) {
     var baseNoteNumber = 60;
 
     for (var i = 0; i < numRows; i++) {
-        var startingIndex = i * 5;
-        var endingIndex = (i + 1) * 5;
+        var startingIndex = i * numCols;
+        var endingIndex = (i + 1) * numCols;
         var noteNumber = baseNoteNumber + i * columnInterval;
 
         mapScaleOrdered(buttonData.slice(startingIndex, endingIndex), noteNumber, theScale);
