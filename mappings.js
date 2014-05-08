@@ -152,9 +152,12 @@ function mapAsSmallGrid(buttonData) {
     }
 }
 
-function mapAsLargeGrid(buttonData, numCols, numRows) {
+function mapAsLargeGrid(buttonData) {
     // Note that my classification is going to have to return
     // numRows and numCols, or I will need to work them out from buttonData
+
+
+
 
     var theScale = '';
     if (numCols == 10) {
