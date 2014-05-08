@@ -7,8 +7,6 @@ Script for dumping data out for machine-learning
 // Dummy variables
 var paper = 'fake-paper';
 var buttonData = [];
-var buttonDifferences = {};
-var allButtonDifferences = [];
 var allButtonData = [];
 
 // Terrible hack to include external files
@@ -21,17 +19,19 @@ eval(fs.readFileSync('mod-functions.js')+'');
 // Read command-line input
 var layoutType = process.argv[2];
 
-// Soon we'll move the subtraction / feature generation to python...
+// Helper to organize the button data
 function appendData() {
     allButtonData.push(buttonData);
     buttonData = [];
 }
 
+// Helper to organize the button data
 function writeData() {
     console.log(JSON.stringify(allButtonData));
     buttonData = [];
     allButtonData = []; 
 }
+
 
 if (layoutType == 'piano') {
     makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);

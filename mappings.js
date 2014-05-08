@@ -1,5 +1,15 @@
 // File with various and sundry mapping functions
 
+// Mouse on / off functions:
+function betterNoteClick(synth, note) {
+    synth.playNote(note);
+}
+
+function betterNoteStop(synth, note) {
+    synth.stopNote(note);
+}
+
+
 // Test function
 function mapPitchTest(button) {
     var freq = button.location.x * 2.1828 + button.location.y / 1.618;

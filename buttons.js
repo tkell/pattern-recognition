@@ -60,58 +60,6 @@ function addButton(b, location, color, shape, radius) {
    buttonData.push(buttonObject);
 }
 
-// These are important functions!
-// This is creating the features that I will use to train models
-// BE PREPARED FOR CHANGE
-// IN PROGRESS ON MOVING THESE TO PYTHON
-function subtractButtons(buttonA, buttonB) {
-    var result = {
-        location: {x: buttonA.location.x - buttonB.location.x, 
-            y: buttonA.location.y - buttonB.location.y},
-
-        // Let's try only using location deltas
-
-        //shape: buttonA.shape == buttonB.shape,
-        //sides: buttonA.sides - buttonB.sides,
-        //radius:  buttonA.radius - buttonB.radius, 
-        //size: allSizes.indexOf(buttonA.size) - allSizes.indexOf(buttonB.size),
-        //color:  parseInt(buttonA.color.substring(1, 7), 16) - parseInt(buttonB.color.substring(1, 7), 16),
-        //brightness: buttonA.brightness - buttonB.brightness
-    };
-    return result;
-}
-
-// IN PROGRESS ON MOVING THESE TO PYTHON
-function generateDifferences() {
-    var max_distance = 0;
-    for (var i = 0; i < buttonData.length; i++) {
-        buttonDifferences[i] = {};
-        for (var j = 0; j < buttonData.length; j++) {
-            if (j == i) {
-                continue;
-            }
-            buttonDifferences[i][j] = subtractButtons(buttonData[i], buttonData[j]);
-            if (max_distance < Math.abs(buttonDifferences[i][j].location.x)) {
-                max_distance = buttonDifferences[i][j].location.x;
-            }
-
-            if (max_distance < Math.abs(buttonDifferences[i][j].location.y)) {
-                max_distance = buttonDifferences[i][j].location.y;
-            }
-        }
-    }
-
-    // Divide each location by the max
-    for (var i = 0; i < buttonData.length; i++) { 
-        for (var j = 0; j < buttonData.length; j++) {
-            if (j == i) {
-                continue;
-            }
-            buttonDifferences[i][j].location.x = buttonDifferences[i][j].location.x / max_distance;
-            buttonDifferences[i][j].location.y = buttonDifferences[i][j].location.y / max_distance;
-        }
-    }
-}
 
 function makeButton(paper, location, color, shape, radius, rotation, modFunctions, modIndex) {
     var currentLocation = {};
@@ -155,7 +103,7 @@ function makeButton(paper, location, color, shape, radius, rotation, modFunction
         currentRotation = rotation;
     }
 
-    // This is where we actually draw the button
+    // This is where we actually draw the button.
     // This odd conditional is so we can use these functions to generate
     // raw button difference data, without having to futz with drawing the data
     if (paper != 'fake-paper') {

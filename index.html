@@ -30,26 +30,13 @@ function partial(func /*, 0..n args */) {
   };
 }
 
-// mouse on / off functions:
-function betterNoteClick(synth, note) {
-    synth.playNote(note);
-}
-
-function betterNoteStop(synth, note) {
-    synth.stopNote(note);
-}
 
 // Global button data
 var buttonData = [];
-var buttonDifferences = {};
-var audioContext;
 
-
-function sendDataToServer() {  
-    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-
-    // we need to clean the actual DOM button reference out of buttonData
-    // I don't think that this is the right place to do it, in the long run
+// We can't JSONify the DOM reference in buttonData, 
+// so we take it out before sending the data to the server.
+function cleanButtonData() {
     cleanedButtonData = [];
     for (var i = 0; i < buttonData.length; i++) {
         cleanButton = {};
@@ -61,9 +48,13 @@ function sendDataToServer() {
         }
         cleanedButtonData.push(cleanButton);
     } 
+    return cleanedButtonData;
+}
 
-
-    var body = JSON.stringify(cleanedButtonData); // here we go magic
+function sendDataToServer() {
+    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
+    cleanedButtonData = cleanButtonData()
+    var body = JSON.stringify(cleanedButtonData);
     var req = new XMLHttpRequest();
     if ('withCredentials' in req) {
         req.open('POST', url, true);
@@ -84,6 +75,7 @@ function sendDataToServer() {
     }
 }
 
+
 function applyMapping(result) {
     if (result == 'piano') {
         buttonData = orderFromLeft(buttonData);
@@ -98,14 +90,6 @@ function init() {
     // Creates canvas.
     var screensize = {x: 1024, y:  768}
     var paper = Raphael(100, 100, screensize.x, screensize.y);
-    // create webAudio code
-    audioContext = new webkitAudioContext();
-
-
- 
-
-
-
 
     // Set of samples
     // makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
@@ -124,11 +108,7 @@ function init() {
     //makeColumnGrid(paper, {x:100, y:100}, 10, 5, {x: 20, y:10}, 0, '#AA0000', 'circle', {x:25, y:25}, 0, {});
 
 
-    // Create the differences
-    generateDifferences();
-
-    // Piano mapping:
-
+    // Mappings that have not been moved into ApplyMappings, yet
     // Xylophone mapping:
     //buttonData = orderFromLeft(buttonData);
     //mapScaleOrdered(buttonData, 60, 'diatonicMajor');
