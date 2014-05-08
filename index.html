@@ -154,11 +154,10 @@ function applyMapping(result) {
 // Currently with dummy params
 function createButton(e) {
     var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
-    console.log(location);
 
-    var color = '#CCFFCC';
+    var colorVal = $('#color-input')[0].value;
+    var color = colorVal;
 
-    
     var shapeVal = $('#shape-slider')[0].value;
     var shape = allShapes[shapeVal];
 
@@ -173,7 +172,7 @@ function createButton(e) {
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y: 768};
-    offset = {'x': 100, 'y':  200};
+    offset = {'x': 100, 'y':  125};
     paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
 
     // Assign the button creation function to clicking on the canvas
@@ -203,9 +202,9 @@ window.onload = init;
 <button id="clear-button" onclick="clearCanvas()">Clear canvas</button>
 
 <br />
-Radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250">
-<br />
-Shape:  <input type="range" name="shahpe" id="shape-slider" min="0" max="7">
+Radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=20>
+Shape:  <input type="range" name="shape" id="shape-slider" min="0" max="7" value=0>
+Colour:  <input type="text" id="color-input" name="color" value="#11AAFF">
 
 </body>
 </html>
