@@ -63,6 +63,7 @@ function addButton(b, location, color, shape, radius) {
 // These are important functions!
 // This is creating the features that I will use to train models
 // BE PREPARED FOR CHANGE
+// IN PROGRESS ON MOVING THESE TO PYTHON
 function subtractButtons(buttonA, buttonB) {
     var result = {
         location: {x: buttonA.location.x - buttonB.location.x, 
@@ -80,6 +81,7 @@ function subtractButtons(buttonA, buttonB) {
     return result;
 }
 
+// IN PROGRESS ON MOVING THESE TO PYTHON
 function generateDifferences() {
     var max_distance = 0;
     for (var i = 0; i < buttonData.length; i++) {

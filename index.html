@@ -21,16 +21,6 @@
 <body>
 <script type="text/javascript">
 
-/**
- * Make a X-Domain request to url and callback.
- *
- * @param url {String}
- * @param method {String} HTTP verb ('GET', 'POST', 'DELETE', etc.)
- * @param data {String} request body
- * @param callback {Function} to callback on completion
- * @param errback {Function} to callback on error
- */
-
 // From http://stackoverflow.com/questions/321113/
 function partial(func /*, 0..n args */) {
   var args = Array.prototype.slice.call(arguments, 1);
@@ -58,21 +48,17 @@ var audioContext;
 function sendDataToServer() {  
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     var body = JSON.stringify(buttonDifferences); // here we go here we go
-
     var req = new XMLHttpRequest();
-
     if ('withCredentials' in req) {
         req.open('POST', url, true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.onreadystatechange = function() {
                 if (req.readyState === 4) {
                     if (req.status >= 200 && req.status < 400) {
+                        // Magic happens here
                         console.log(req.responseText);
                         var jsonRes = JSON.parse(req.responseText);
-
                         applyMapping(jsonRes['result']);
-
-
                     } else {
                         console.log('Response returned with non-OK status');
                     }
@@ -80,7 +66,6 @@ function sendDataToServer() {
             };
         req.send(body);
     }
-
 }
 
 function applyMapping(result) {
@@ -127,7 +112,6 @@ function init() {
     generateDifferences();
 
     // Piano mapping:
-
 
     // Xylophone mapping:
     //buttonData = orderFromLeft(buttonData);
