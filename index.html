@@ -37,6 +37,7 @@ function partial(func /*, 0..n args */) {
 var buttonData = [];
 var paper;
 var offset;
+var buttonBrush = {};
 
 
 // Functions to draw sample layouts.
@@ -154,9 +155,13 @@ function applyMapping(result) {
 function createButton(e) {
     var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
     console.log(location);
+
     var color = '#CCFFCC';
     var shape = 'circle';
-    var radius = {'x': 15, 'y': 15};
+
+    var radiusVal = $('#radius-slider')[0].value;
+    var radius = {'x': radiusVal, 'y': radiusVal};
+    
     var rotation = 0;
     makeButton(paper, location, color, shape, radius, rotation, {}, 0);
 }
@@ -168,6 +173,7 @@ function init() {
     offset = {'x': 100, 'y':  100};
     paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
 
+    // Assign the button creation function to clicking on the canvas
     $('svg').click(function(e) {
         createButton(e);
     });
@@ -194,6 +200,8 @@ window.onload = init;
 <button id="clear-button" onclick="clearCanvas()">Clear canvas</button>
 
 <br />
+Radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250">
+
 
 </body>
 </html>
