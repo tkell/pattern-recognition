@@ -33,9 +33,11 @@ function partial(func /*, 0..n args */) {
 }
 
 
-// Global button data
+// Globals: button data, things about the canvas, etc
 var buttonData = [];
 var paper;
+var offset;
+
 
 // Functions to draw sample layouts.
 function drawExamplePiano() {
@@ -69,6 +71,12 @@ function drawExampleBigPiano() {
 function clearCanvas() {
     paper.clear();
     buttonData = [];
+
+    // Make sure that we remove the click function, and then make it again..
+    $('svg').off('click');
+    $('svg').click(function(e) {
+        createButton(e);
+    });
 }
 
 // We can't JSONify the DOM reference in buttonData, 
@@ -89,6 +97,9 @@ function cleanButtonData() {
 }
 
 function sendDataToServer() {
+    // Remove the click-to-make-a-button
+    $('svg').off('click');
+
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     cleanedButtonData = cleanButtonData()
     var body = JSON.stringify(cleanedButtonData);
@@ -138,23 +149,27 @@ function applyMapping(result) {
     }
 }
 
+// onClick function to create buttons
+// Currently with dummy params
+function createButton(e) {
+    var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
+    console.log(location);
+    var color = '#CCFFCC';
+    var shape = 'circle';
+    var radius = {'x': 15, 'y': 15};
+    var rotation = 0;
+    makeButton(paper, location, color, shape, radius, rotation, {}, 0);
+}
+
 
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y: 768};
-    var offset = {'x': 100, 'y':  100};
+    offset = {'x': 100, 'y':  100};
     paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
 
-
     $('svg').click(function(e) {
-        var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
-        console.log(location);
-        var color = '#CCFFCC';
-        var shape = 'circle';
-        var radius = {'x': 15, 'y': 15};
-        var rotation = 0;
-        makeButton(paper, location, color, shape, radius, rotation, {}, 0);
-
+        createButton(e);
     });
 
     // Samples that we don't know how to map, yet..
