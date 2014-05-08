@@ -47,7 +47,23 @@ var audioContext;
 
 function sendDataToServer() {  
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-    var body = JSON.stringify(buttonDifferences); // here we go here we go
+
+    // we need to clean the actual DOM button reference out of buttonData
+    // I don't think that this is the right place to do it, in the long run
+    cleanedButtonData = [];
+    for (var i = 0; i < buttonData.length; i++) {
+        cleanButton = {};
+        keys = Object.keys(buttonData[i]);
+        for (var j = 0; j < keys.length; j++) {
+            if (keys[j] != 'button') {
+                cleanButton[keys[j]] = buttonData[i][keys[j]];
+            }
+        }
+        cleanedButtonData.push(cleanButton);
+    } 
+
+
+    var body = JSON.stringify(cleanedButtonData); // here we go magic
     var req = new XMLHttpRequest();
     if ('withCredentials' in req) {
         req.open('POST', url, true);
