@@ -9,6 +9,7 @@
 <script src="tsw.js"></script>
 <script src="synth.js"></script>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 <script type="text/javascript" src="raphael-min.js"></script>
 <script type="text/javascript" src="shapes.js"></script>
 <script type="text/javascript" src="buttons.js"></script>
@@ -137,10 +138,24 @@ function applyMapping(result) {
     }
 }
 
+
 function init() {
     // Creates canvas.
-    var screensize = {x: 1024, y: 768}
-    paper = Raphael(100, 100, screensize.x, screensize.y);
+    var screensize = {x: 1024, y: 768};
+    var offset = {'x': 100, 'y':  100};
+    paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
+
+
+    $('svg').click(function(e) {
+        var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
+        console.log(location);
+        var color = '#CCFFCC';
+        var shape = 'circle';
+        var radius = {'x': 15, 'y': 15};
+        var rotation = 0;
+        makeButton(paper, location, color, shape, radius, rotation, {}, 0);
+
+    });
 
     // Samples that we don't know how to map, yet..
     //makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, modFunctions);
@@ -162,6 +177,8 @@ window.onload = init;
 <br />
 <button id="test-button" onclick="sendDataToServer()">Talk to the server!</button>
 <button id="clear-button" onclick="clearCanvas()">Clear canvas</button>
+
+<br />
 
 </body>
 </html>
