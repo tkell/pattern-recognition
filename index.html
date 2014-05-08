@@ -3,6 +3,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="main.css" rel="stylesheet" type="text/css">
 
 <!-- Synth scripts from Stuart Memo:  http://stuartmemo.com/synth/ -->
 <script src="tsw.js"></script>
@@ -138,7 +139,7 @@ function applyMapping(result) {
 
 function init() {
     // Creates canvas.
-    var screensize = {x: 1024, y:  768}
+    var screensize = {x: 1024, y: 768}
     paper = Raphael(100, 100, screensize.x, screensize.y);
 
     // Samples that we don't know how to map, yet..
@@ -161,5 +162,6 @@ window.onload = init;
 <br />
 <button id="test-button" onclick="sendDataToServer()">Talk to the server!</button>
 <button id="clear-button" onclick="clearCanvas()">Clear canvas</button>
+
 </body>
 </html>
