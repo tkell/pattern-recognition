@@ -157,11 +157,14 @@ function createButton(e) {
     console.log(location);
 
     var color = '#CCFFCC';
-    var shape = 'circle';
+
+    
+    var shapeVal = $('#shape-slider')[0].value;
+    var shape = allShapes[shapeVal];
 
     var radiusVal = $('#radius-slider')[0].value;
     var radius = {'x': radiusVal, 'y': radiusVal};
-    
+
     var rotation = 0;
     makeButton(paper, location, color, shape, radius, rotation, {}, 0);
 }
@@ -170,7 +173,7 @@ function createButton(e) {
 function init() {
     // Creates canvas.
     var screensize = {x: 1024, y: 768};
-    offset = {'x': 100, 'y':  100};
+    offset = {'x': 100, 'y':  200};
     paper = Raphael(offset.x, offset.y, screensize.x, screensize.y);
 
     // Assign the button creation function to clicking on the canvas
@@ -201,7 +204,8 @@ window.onload = init;
 
 <br />
 Radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250">
-
+<br />
+Shape:  <input type="range" name="shahpe" id="shape-slider" min="0" max="7">
 
 </body>
 </html>
