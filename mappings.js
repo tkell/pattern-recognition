@@ -174,10 +174,7 @@ function mapAsLargeGrid(buttonData) {
         }
     }
     var numCols = Object.keys(cols).length;
-
-
-    console.log(numRows, numCols);
-
+    
     var theScale = '';
     if (numCols == 10) {
         theScale = 'diatonicBoth';
