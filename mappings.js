@@ -1,4 +1,4 @@
-// File with various and sundry mapping functions
+// File with various and sundry synth / mapping functions
 
 // Mouse on / off functions:
 function betterNoteClick(synth, note) {
@@ -9,79 +9,38 @@ function betterNoteStop(synth, note) {
     synth.stopNote(note);
 }
 
-
-// Test function
-function mapPitchTest(button) {
-    var freq = button.location.x * 2.1828 + button.location.y / 1.618;
-    return freq
+function midiNoteToFrequency(noteNumber) {
+    return 440 * Math.pow(2, (noteNumber - 69) / 12)
 }
 
-
-// Ordering functions
-function orderFromBottomLeft(buttons) { 
-    // Takes an array of buttons, and orders them from the bottom left.  
-    // So left-to-right, by row from bottom-to-top.
-    return buttons.sort(sort_by({name:'location.y', reverse: true}, {name:'location.x', reverse: false}));
-}
-function orderFromLeft(buttons) { 
-    // Takes an array of buttons, and orders them from the  left.  
-    // So left-to-right, regardless of y position.
-    // This is my piano / xylophone mapping!
-    return buttons.sort(sort_by({name:'location.x', reverse: false}));
-}
-function orderFromRight(buttons) { 
-    // Takes an array of buttons, and orders them from the right.  
-    return buttons.sort(sort_by({name:'location.x', reverse: true}));
-}
-function orderFromTop(buttons) { 
-    // Takes an array of buttons, and orders them from the top.  
-    return buttons.sort(sort_by({name:'location.y', reverse: false}));
-}
-function orderFromBottom(buttons) { 
-    // Takes an array of buttons, and orders them from the top.  
-    return buttons.sort(sort_by({name:'location.y', reverse: true}));
-}
-
-function orderByBrightness(buttons) {
-    // Takes an array of buttons, and orders them by brightness
-    return buttons.sort(sort_by({name:'brightness', reverse: true}));
-}
-
-
-// This assumes an ordered list of buttons
-function mapScaleOrdered(buttons, baseNoteNumber, scale) {
-    var theScale = scales[scale];
-    var noteFreq;
-
-    // do the 0th button
-    var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-    });
-    noteFreq = midiNoteToFrequency(baseNoteNumber);
-    var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
-    var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-    buttons[0].button.node.addEventListener('mousedown', mouseDownFunc);
-    buttons[0].button.node.addEventListener('mouseup', mouseUpFunc);
-
-    // do the other buttons
-    var noteNumber = baseNoteNumber;
-    for (var i = 1; i < buttons.length; i++) {
+// Takes a list of buttonData, with mapping info, and applies it.
+// This data will, 9999/10000 times, come from the server
+function applyKnownMapping(returnedButtonData) {
+    console.log(returnedButtonData);
+    for (var i = 0; i < buttonData.length; i++) {
+        // find the match in returnedButtonData, 
+        for (var j = 0; j < returnedButtonData.length; j++) {
+            if (buttonData[i].location.x == returnedButtonData[j].location.x && buttonData[i].location.y == returnedButtonData[j].location.y) {
+                noteFreq = midiNoteToFrequency(returnedButtonData[j].noteNumber);
+                console.log('matched', returnedButtonData[j].noteNumber);
+                break;
+            }
+        }
+      
+        // make the synth & apply the function
         var synth = new Synth({
             context: tsw.context(),
             speakersOn: true
         });
-        var index = (i - 1) % theScale.length;
-        noteNumber = noteNumber + theScale[index];
-        noteFreq = midiNoteToFrequency(noteNumber);
-
         var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
         var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-        buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
-        buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
-    }
+        buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
+        buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
+    } // end for i
 }
 
+
+// Legacy!
 // we're going to do just distance, and just octaves, for now...
 // There's got to be a way to connect this to buttonDifferences, but they're coming in different orders, o
 function mapByRatio(buttons, baseNoteNumber) {
@@ -110,102 +69,5 @@ function mapByRatio(buttons, baseNoteNumber) {
         var mouseUpFunc = partial(betterNoteStop, synth, freq);
         buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
         buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
-    }
-}
-
-
-// Notes for small grid mapping
-// Small Grid mapping - note that I will need to 
-    // talk to my synth a bit to make this work in the main thing.
-    // Remember that a lot of these guys need to LOWER the pitch.  
-    // I probably also want a 'monophonic / multiphonic' toggle, somewhere in my settings.
-    // Which will impact the exact tuning that I return
-
-function mapAsSmallGrid(buttonData) {
-    buttonData = orderFromBottomLeft(buttonData);
-    if (buttonData.length == 10) {
-        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
-    }
-    if (buttonData.length == 9) {
-        mapScaleOrdered(buttonData, 60, 'diatonicBoth');
-    }
-    if (buttonData.length == 8) {
-        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    }
-    if (buttonData.length == 7) {
-        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    }
-    if (buttonData.length == 7) {
-        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    }
-    if (buttonData.length == 6) {
-        mapScaleOrdered(buttonData, 60, 'pentatonic');
-    }
-    if (buttonData.length == 5) {
-        mapScaleOrdered(buttonData, 60, 'pentatonic');
-    }
-    if (buttonData.length == 4) {
-        mapScaleOrdered(buttonData, 60, 'trumpet');
-    }
-    if (buttonData.length == 3) {
-        mapScaleOrdered(buttonData, 60, 'trumpet');
-    }
-}
-
-function mapAsLargeGrid(buttonData) {
-    // Get the number of rows and columns.
-    // This will break if there is any difference in location
-    var rows = {};
-    for (var i = 0; i < buttonData.length; i++) {
-        if (buttonData[i].location.y in rows) {
-            continue;
-        } else {
-            rows[buttonData[i].location.y] = true;
-        }
-    }
-    var numRows = Object.keys(rows).length;
-
-    var cols = {};
-    for (var i = 0; i < buttonData.length; i++) {
-        if (buttonData[i].location.x in cols) {
-            continue;
-        } else {
-            cols[buttonData[i].location.x] = true;
-        }
-    }
-    var numCols = Object.keys(cols).length;
-    
-    var theScale = '';
-    if (numCols == 10) {
-        theScale = 'diatonicBoth';
-    }
-    if (numCols == 9) {
-        theScale = 'diatonicBoth';
-    }
-    if (numCols == 8) {
-        theScale = 'diatonicMajor';
-    }
-    if (numCols == 7) {
-        theScale = 'diatonicMajor';
-    }
-    if (numCols == 6) {
-        theScale = 'pentatonic';
-    }
-    if (numCols == 5) {
-        theScale = 'pentatonic';
-    }
-
-    buttonData = orderFromBottomLeft(buttonData);
-    // Need a scale per row and an interval per-column
-    var columnInterval = 5; // Start with P4
-    var rowScale = 'pentatonic'
-    var baseNoteNumber = 60;
-
-    for (var i = 0; i < numRows; i++) {
-        var startingIndex = i * numCols;
-        var endingIndex = (i + 1) * numCols;
-        var noteNumber = baseNoteNumber + i * columnInterval;
-
-        mapScaleOrdered(buttonData.slice(startingIndex, endingIndex), noteNumber, theScale);
     }
 }

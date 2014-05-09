@@ -16,7 +16,6 @@
 <script type="text/javascript" src="layouts.js"></script>
 <script type="text/javascript" src="mod-functions.js"></script>
 <script type="text/javascript" src="sort.js"></script>
-<script type="text/javascript" src="scales.js"></script>
 <script type="text/javascript" src="mappings.js"></script>
 </head>
 
@@ -38,7 +37,6 @@ var buttonData = [];
 var paper;
 var offset;
 var buttonBrush = {};
-
 
 // Functions to draw sample layouts.
 function drawExamplePiano() {
@@ -72,14 +70,12 @@ function drawExampleBigPiano() {
 function clearCanvas() {
     paper.clear();
     buttonData = [];
-
     // Make sure that we remove the click function, and then make it again..
     $('svg').off('click');
     $('svg').click(function(e) {
         createButton(e);
     });
     $('#result-info').text('');
-
     updatePreview();
 }
 
@@ -100,10 +96,8 @@ function prepButtonData(mappingFlag) {
     } 
 
     var preppedButtonData = {};
-
     preppedButtonData['mapping-flag'] = mappingFlag;
     preppedButtonData['locations'] = cleanedButtonData
-
     return preppedButtonData;
 }
 
@@ -113,7 +107,7 @@ function sendDataToServer() {
     playbackPreview();
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-    var mappingFlag = true;
+    var mappingFlag = true;  // This app always asks for mappings
 
     preppedButtonData = prepButtonData(mappingFlag);
     var body = JSON.stringify(preppedButtonData);
@@ -144,58 +138,9 @@ function sendDataToServer() {
     }
 }
 
-// Takes a list of buttonData, with mapping info, and applies it.
-function applyKnownMapping(returnedButtonData) {
-    console.log(returnedButtonData);
-    for (var i = 0; i < buttonData.length; i++) {
-        // find the match in returnedButtonData, 
-        for (var j = 0; j < returnedButtonData.length; j++) {
-            if (buttonData[i].location.x == returnedButtonData[j].location.x && buttonData[i].location.y == returnedButtonData[j].location.y) {
-                noteFreq = midiNoteToFrequency(returnedButtonData[j].noteNumber);
-                console.log('matched', returnedButtonData[j].noteNumber);
-                break;
-            }
-        }
-      
-        // make the synth & apply the function
-        var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-        });
-        var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
-        var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-        buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
-        buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
-    } // end for i
-}
 
-// Function that apples the apropriate mapping,
-// based on the server response.
-function applyMapping(result) {
-    if (result == 'piano') {
-        buttonData = orderFromLeft(buttonData);
-        mapScaleOrdered(buttonData, 60, 'chromatic');
-    } else if (result == 'xylophone') {
-        buttonData = orderFromLeft(buttonData);
-        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    } else if (result == 'small_grid') {
-        mapAsSmallGrid(buttonData);
-    } else if (result == 'zither') {
-        buttonData = orderFromBottom(buttonData);
-        mapScaleOrdered(buttonData, 60, 'diatonicMajor');
-    } else if (result == 'piano_roll') {
-        buttonData = orderFromBottom(buttonData);
-        mapScaleOrdered(buttonData, 60, 'chromatic');
-    } else if (result == 'large_grid') {
-        mapAsLargeGrid(buttonData);
-    } else if (result == 'big_piano') {
-        buttonData = orderFromLeft(buttonData);
-        mapScaleOrdered(buttonData, 60, 'chromatic');
-    }
-}
 
 // onClick function to create buttons
-// Currently with dummy params
 function createButton(e) {
     var location = {'x': e.pageX - offset.x, 'y': e.pageY - offset.y}
 
