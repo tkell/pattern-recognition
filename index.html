@@ -84,7 +84,8 @@ function clearCanvas() {
 
 // We can't JSONify the DOM reference in buttonData, 
 // so we take it out before sending the data to the server.
-function cleanButtonData() {
+// We also set the mapping flag here.
+function prepButtonData(mappingFlag) {
     cleanedButtonData = [];
     for (var i = 0; i < buttonData.length; i++) {
         cleanButton = {};
@@ -96,7 +97,13 @@ function cleanButtonData() {
         }
         cleanedButtonData.push(cleanButton);
     } 
-    return cleanedButtonData;
+
+    var preppedButtonData = {};
+
+    preppedButtonData['mapping-flag'] = mappingFlag;
+    preppedButtonData['locations'] = cleanedButtonData
+
+    return preppedButtonData;
 }
 
 function sendDataToServer() {
@@ -105,8 +112,9 @@ function sendDataToServer() {
     playbackPreview();
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-    cleanedButtonData = cleanButtonData()
-    var body = JSON.stringify(cleanedButtonData);
+    var mappingFlag = false;
+    preppedButtonData = prepButtonData(mappingFlag);
+    var body = JSON.stringify(preppedButtonData);
     var req = new XMLHttpRequest();
     if ('withCredentials' in req) {
         req.open('POST', url, true);
