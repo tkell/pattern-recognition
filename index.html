@@ -112,7 +112,8 @@ function sendDataToServer() {
     playbackPreview();
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-    var mappingFlag = false;
+    var mappingFlag = true;
+
     preppedButtonData = prepButtonData(mappingFlag);
     var body = JSON.stringify(preppedButtonData);
     var req = new XMLHttpRequest();
@@ -122,10 +123,15 @@ function sendDataToServer() {
         req.onreadystatechange = function() {
                 if (req.readyState === 4) {
                     if (req.status >= 200 && req.status < 400) {
-                        // Magic happens here
-                        console.log(req.responseText);
                         var jsonRes = JSON.parse(req.responseText);
-                        applyMapping(jsonRes['result']);
+
+                        if ('mapping' in jsonRes) {
+                            applyKnownMapping(jsonRes['mapping'])
+                        } else {
+                            console.log(req.responseText);
+                            applyMapping(jsonRes['result']);
+                        }
+
                     } else {
                         console.log('Response returned with non-OK status');
                     }
@@ -135,6 +141,30 @@ function sendDataToServer() {
     }
 }
 
+// Takes a list of buttonData, with mapping info, and applies it.
+function applyKnownMapping(returnedButtonData) {
+    console.log(returnedButtonData);
+    for (var i = 0; i < buttonData.length; i++) {
+        // find the match in returnedButtonData, 
+        for (var j = 0; j < returnedButtonData.length; j++) {
+            if (buttonData[i].location.x == returnedButtonData[j].location.x && buttonData[i].location.y == returnedButtonData[j].location.y) {
+                noteFreq = midiNoteToFrequency(returnedButtonData[j].noteNumber);
+                console.log('matched', returnedButtonData[j].noteNumber);
+                break;
+            }
+        }
+      
+        // make the synth & apply the function
+        var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
+        var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
+        var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
+        buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
+        buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
+    } // end for i
+}
 
 // Function that apples the apropriate mapping,
 // based on the server response.
