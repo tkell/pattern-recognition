@@ -13,10 +13,22 @@ function midiNoteToFrequency(noteNumber) {
     return 440 * Math.pow(2, (noteNumber - 69) / 12)
 }
 
+function makeAndMap(theButton, noteFreq) {
+        var synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
+        var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
+        var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
+        theButton.button.node.addEventListener('mousedown', mouseDownFunc);
+        theButton.button.node.addEventListener('mouseup', mouseUpFunc);
+}
+
 // Takes a list of buttonData, with mapping info, and applies it.
 // This data will, 9999/10000 times, come from the server
 function applyKnownMapping(returnedButtonData) {
     console.log(returnedButtonData);
+    var noteFreq;
     for (var i = 0; i < buttonData.length; i++) {
         // find the match in returnedButtonData, 
         for (var j = 0; j < returnedButtonData.length; j++) {
@@ -26,17 +38,9 @@ function applyKnownMapping(returnedButtonData) {
                 break;
             }
         }
-      
-        // make the synth & apply the function
-        var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-        });
-        var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
-        var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-        buttonData[i].button.node.addEventListener('mousedown', mouseDownFunc);
-        buttonData[i].button.node.addEventListener('mouseup', mouseUpFunc);
-    } // end for i
+        // make the synth, map the playback functions
+        makeAndMap(buttonData[i], noteFreq);
+    } // e
 }
 
 
