@@ -78,6 +78,7 @@ function clearCanvas() {
     $('svg').click(function(e) {
         createButton(e);
     });
+    $('#result-info').text('');
 
     updatePreview();
 }
@@ -124,6 +125,8 @@ function sendDataToServer() {
                 if (req.readyState === 4) {
                     if (req.status >= 200 && req.status < 400) {
                         var jsonRes = JSON.parse(req.responseText);
+
+                        $('#result-info').text(jsonRes['result']);
 
                         if ('mapping' in jsonRes) {
                             applyKnownMapping(jsonRes['mapping'])
@@ -291,6 +294,8 @@ examples:  <br />
 <button class="all-buttons" onclick="drawExampleLargeGrid()">large grid</button><br />
 <button class="all-buttons" onclick="drawExampleBigPiano()">big piano</button><br />
 </div>
+
+<div id="result-info"></div>
 
 </body>
 </html>
