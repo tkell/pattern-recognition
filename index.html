@@ -51,8 +51,80 @@ function clearCanvas() {
     $('svg').click(function(e) {
         createButton(e);
     });
-    $('#result-info').text('');
     updatePreview();
+}
+
+function drawConnectingLines() {
+    var allLines = [];
+    for (var i = 0; i < buttonData.length; i++) {
+        var x1 = buttonData[i].location.x;
+        var y1= buttonData[i].location.y;
+
+        for (var j = 0; j < buttonData.length; j++) {
+            if (i == j) {
+                continue;
+            }
+            var x2 = buttonData[j].location.x;
+            var y2= buttonData[j].location.y;
+
+            var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
+            line.attr("stroke", "#00FF33");
+            line.attr("opacity", 0);
+            allLines.push(line);
+        }
+    }
+
+    for (var i = 0; i < allLines.length; i++) {
+        allLines[i].show().animate({opacity: 0.95}, 1500, function() {
+            this.animate({opacity : 0}, 2500, function() {
+                this.remove();})
+            ;});
+    }
+}
+
+function drawAnnotations(returnedButtonData) {
+    var allAnnotations = [];
+    for (var i = 0; i < returnedButtonData.length; i++) {
+        var x = returnedButtonData[i].location.x;
+        var y = returnedButtonData[i].location.y;
+        
+        var midiNum = Math.log(returnedButtonData[i].noteFreq / 440) / Math.LN2 * 12 + 69
+        var noteName = midiToNoteName(Math.round(midiNum))
+
+        var t = paper.text(x, y, noteName);
+        allAnnotations.push(t);
+    }   
+    for (var i = 0; i < allAnnotations.length; i++) {
+        allAnnotations[i].animate({opacity: 0}, 10000, function() {this.remove();});
+    }
+}
+
+
+function drawConnectionsFromButton(button) {
+    var x1 = button.location.x;
+    var y1 = button.location.y;
+    var allLines = [];
+
+    for (var i = 0; i < buttonData.length; i++) {
+        var x2 = buttonData[i].location.x;
+        var y2= buttonData[i].location.y;
+
+        var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
+        line.attr("stroke", "#00FF33");
+        allLines.push(line);
+    }
+
+    for (var i = 0; i < allLines.length; i++) {
+        allLines[i].animate({opacity: 0}, 500, function() {this.remove()});
+    }
+
+}
+
+function applyButtonDrawings() {
+    for (var i = 0; i < buttonData.length; i++) {
+        var drawClick = partial(drawConnectionsFromButton, buttonData[i]);
+        buttonData[i].button.node.addEventListener('mousedown', drawClick);
+    }
 }
 
 // We can't JSONify the DOM reference in buttonData, 
@@ -76,7 +148,7 @@ function prepButtonData() {
 function sendDataToServer() {
     // Remove the click-to-make-a-button, update preview
     $('svg').off('click');
-    playbackPreview();
+    playbackPreview('playback:  pending...');
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     preppedButtonData = prepButtonData();
@@ -89,8 +161,15 @@ function sendDataToServer() {
                 if (req.readyState === 4) {
                     if (req.status >= 200 && req.status < 400) {
                         var jsonRes = JSON.parse(req.responseText);
-                        $('#result-info').text(jsonRes['result']);
-                        applyKnownMapping(jsonRes['mapping'])
+                        playbackPreview('playback:  ' + jsonRes['result']);
+
+                        applyKnownMapping(jsonRes['mapping']);
+
+                        drawConnectingLines();
+                        drawAnnotations(jsonRes['mapping']);
+                        applyButtonDrawings();
+
+
                     } else {
                         console.log('Response returned with non-OK status');
                     }
@@ -133,9 +212,9 @@ function updatePreview() {
 }
 
 // Set the preview area to playback mode
-function playbackPreview() {
+function playbackPreview(previewText) {
     $('#shape-info').text('');
-    $('#radius-info').text('-playback-');
+    $('#radius-info').text(previewText);
     $('#button-info').css('color', '#00FF33');
 }
 
@@ -179,7 +258,7 @@ window.onload = init;
 
 <div id="controls">
 <br />
-radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=20><br />
+radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=40><br />
 
 shape:  <input type="range" name="shape" id="shape-slider" min="0" max="7" value=0><br />
 colour:  <input type="text" id="color-input" name="color" value="#11AAFF"><br />
@@ -202,8 +281,6 @@ examples:  <br />
 <button class="all-buttons" onclick="drawExampleLargeGrid()">large grid</button><br />
 <button class="all-buttons" onclick="drawExampleBigPiano()">big piano</button><br />
 </div>
-
-<div id="result-info"></div>
 
 </body>
 </html>

@@ -1,4 +1,11 @@
 // File with various and sundry synth / mapping functions
+var noteNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
+
+function midiToNoteName(midiNumber) {
+    var noteName = noteNames[midiNumber % 12];
+    var octave = Math.floor(midiNumber / 12) - 2;
+    return noteName + octave.toString();
+}
 
 // Mouse on / off functions:
 function betterNoteClick(synth, note) {

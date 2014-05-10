@@ -3,11 +3,11 @@
 
 // Functions to draw sample layouts.
 function drawExamplePiano() {
-    makePiano(paper, {x:75, y:200}, 20, '#11BB00', 'circle', {x:50, y:50}, 0, {}, 1);
+    makePiano(paper, {x:75, y:200}, 20, '#FEFEFE', 'circle', {x:50, y:50}, 0, {}, 1);
 }
 
 function drawExampleXylophone() {
-    makeLine(paper, {x: 50, y: 150}, 8, 5, 0, '#AA0000', 'triangle', {x:25, y:25}, 0, {});
+    makeLine(paper, {x: 150, y: 150}, 8, 5, 0, '#0000AA', 'triangle', {x:25, y:25}, 0, {});
 }
 
 function drawExampleZither() {
@@ -15,7 +15,7 @@ function drawExampleZither() {
 }
 
 function drawExamplePianoRoll() {
-    makePianoRoll(paper, {x: 500, y: 25}, 15, '#0A0B0C', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
+    makePianoRoll(paper, {x: 500, y: 25}, 15, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
 }
 
 function drawExampleSmallGrid() {
