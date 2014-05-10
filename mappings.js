@@ -9,10 +9,6 @@ function betterNoteStop(synth, note) {
     synth.stopNote(note);
 }
 
-function midiNoteToFrequency(noteNumber) {
-    return 440 * Math.pow(2, (noteNumber - 69) / 12)
-}
-
 function makeAndMap(theButton, noteFreq) {
         var synth = new Synth({
             context: tsw.context(),
@@ -27,19 +23,15 @@ function makeAndMap(theButton, noteFreq) {
 // Takes a list of buttonData, with mapping info, and applies it.
 // This data will, 9999/10000 times, come from the server
 function applyKnownMapping(returnedButtonData) {
-    var noteFreq;
     for (var i = 0; i < buttonData.length; i++) {
-        // find the match in returnedButtonData, 
+        // find the match in returnedButtonData, and map it
         for (var j = 0; j < returnedButtonData.length; j++) {
             if (buttonData[i].location.x == returnedButtonData[j].location.x && buttonData[i].location.y == returnedButtonData[j].location.y) {
-                noteFreq = midiNoteToFrequency(returnedButtonData[j].noteNumber);
-                console.log('matched', returnedButtonData[j].noteNumber);
+                makeAndMap(buttonData[i], returnedButtonData[j].noteFreq);
                 break;
             }
         }
-        // make the synth, map the playback functions
-        makeAndMap(buttonData[i], noteFreq);
-    } // e
+    }
 }
 
 
