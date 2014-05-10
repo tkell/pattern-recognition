@@ -27,7 +27,6 @@ function makeAndMap(theButton, noteFreq) {
 // Takes a list of buttonData, with mapping info, and applies it.
 // This data will, 9999/10000 times, come from the server
 function applyKnownMapping(returnedButtonData) {
-    console.log(returnedButtonData);
     var noteFreq;
     for (var i = 0; i < buttonData.length; i++) {
         // find the match in returnedButtonData, 
