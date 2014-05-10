@@ -41,6 +41,7 @@ var synth = new Synth({
     context: tsw.context(),
     speakersOn: true
 });
+var mostRecentNote;
 
 // Clear the canvas, clear the button data, and update the UI accordingly
 function clearCanvas() {
@@ -99,6 +100,10 @@ function drawAnnotations(returnedButtonData) {
     }
 }
 
+// Workaround for drawing things on top of the actual buttons
+function mouseUpStop() {
+    synth.stopNote(mostRecentNote);
+}
 
 function drawConnectionsFromButton(button) {
     var x1 = button.location.x;
@@ -111,6 +116,10 @@ function drawConnectionsFromButton(button) {
 
         var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
         line.attr("stroke", "#00FF33");
+
+
+        line.node.addEventListener('mouseup', mouseUpStop);
+
         allLines.push(line);
     }
 

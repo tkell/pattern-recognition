@@ -10,6 +10,7 @@ function midiToNoteName(midiNumber) {
 // Mouse on / off functions:
 function betterNoteClick(synth, note) {
     synth.playNote(note);
+    mostRecentNote = note
 }
 
 function betterNoteStop(synth, note) {
