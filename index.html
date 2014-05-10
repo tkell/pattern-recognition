@@ -37,6 +37,11 @@ var paper;
 var offset;
 var buttonBrush = {};
 
+var synth = new Synth({
+    context: tsw.context(),
+    speakersOn: true
+});
+
 // Clear the canvas, clear the button data, and update the UI accordingly
 function clearCanvas() {
     paper.clear();

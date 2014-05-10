@@ -49,7 +49,7 @@
             this.keysDown = [];
             this.allNodes = [],
             this.speakersOn = false;
-            this.volume = 1;
+            this.volume = 0.25;
             that = this;
 
             this.output = tsw.gain();
@@ -58,17 +58,17 @@
             this.oscillators = {
                 osc1: {
                     range: 8,
-                    waveform: 'square',
+                    waveform: 'sine',
                     detune: 0
                 },
                 osc2: {
-                    range: 4,
-                    waveform: 'sawtooth',
+                    range: 8,
+                    waveform: 'triangle',
                     detune: 0
                 },
                 osc3: {
-                    range: 16,
-                    waveform: 'square',
+                    range: 8,
+                    waveform: 'sawtooth',
                     detune: 0
                 }
             };
@@ -82,29 +82,29 @@
             this.mixer = {
                 osc1: {
                     node: tsw.gain(),
-                    volume: 0.5,
+                    volume: 0.2,
                     active: true
                 },
                 osc2: {
                     node: tsw.gain(),
-                    volume: 0.5,
-                    active: true
+                    volume: 0.0,
+                    active: false
                 },
                 osc3: {
                     node: tsw.gain(),
-                    volume: 0.5,
-                    active: true
+                    volume: 0.0,
+                    active: false
                 }
             };
 
             // Filter Envelope Settings
             this.filterEnvelopeSettings = {
                 name: 'Filter Envelope',
-                attackTime: 0.1,
-                decayTime: 0.5,
-                sustainLevel: 5000,
+                attackTime: 10,
+                decayTime: 5,
+                sustainLevel: 5,
                 Q: 5,
-                releaseTime: 1,
+                releaseTime: 2,
                 maxLevel: 10000,
                 autoStop: false
             };
@@ -112,10 +112,10 @@
             // Volume Envelope settings.
             this.volumeEnvelopeSettings = {
                 name: 'Volume Envelope',
-                attackTime: 1.0,
-                decayTime: 0.5,
+                attackTime: 0,
+                decayTime: 0,
                 sustainLevel: 0.4,
-                releaseTime: 0,
+                releaseTime: 2.0,
                 startLevel: 0,
                 autoStop: false
             };

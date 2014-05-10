@@ -10,10 +10,6 @@ function betterNoteStop(synth, note) {
 }
 
 function makeAndMap(theButton, noteFreq) {
-        var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-        });
         var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
         var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
         theButton.button.node.addEventListener('mousedown', mouseDownFunc);
