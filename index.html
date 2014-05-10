@@ -74,9 +74,8 @@ function drawConnectingLines() {
             allLines.push(line);
         }
     }
-
     for (var i = 0; i < allLines.length; i++) {
-        allLines[i].show().animate({opacity: 0.95}, 1500, function() {
+        allLines[i].animate({opacity: 0.95}, 1500, function() {
             this.animate({opacity : 0}, 2500, function() {
                 this.remove();})
             ;});
@@ -93,6 +92,16 @@ function drawAnnotations(returnedButtonData) {
         var noteName = midiToNoteName(Math.round(midiNum))
 
         var t = paper.text(x, y, noteName);
+
+        var mouseDownFunc = partial(betterNoteClick, synth, returnedButtonData[i].noteFreq);
+        var mouseUpFunc = partial(betterNoteStop, synth, returnedButtonData[i].noteFreq);
+
+        var drawClick = partial(drawConnectionsFromButton, returnedButtonData[i]);
+        t.node.addEventListener('mousedown', drawClick);
+        
+        t.node.addEventListener('mousedown', mouseDownFunc);
+        t.node.addEventListener('mouseup', mouseUpFunc);
+
         allAnnotations.push(t);
     }   
     for (var i = 0; i < allAnnotations.length; i++) {
@@ -116,10 +125,7 @@ function drawConnectionsFromButton(button) {
 
         var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
         line.attr("stroke", "#00FF33");
-
-
         line.node.addEventListener('mouseup', mouseUpStop);
-
         allLines.push(line);
     }
 
