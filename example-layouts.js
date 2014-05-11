@@ -7,15 +7,15 @@ function drawExamplePiano() {
 }
 
 function drawExampleXylophone() {
-    makeLine(paper, {x: 150, y: 150}, 8, 5, 0, '#0000AA', 'triangle', {x:25, y:25}, 0, {});
+    makeLine(paper, {x: 150, y: 150}, 8, 5, 0, '#0000AA', 'rectangle', {x:40, y:80}, 0, {});
 }
 
 function drawExampleZither() {
-    makeZither(paper, {x:145, y:25}, 8, 25, '#900FF0', 'rectangle',  {x:25, y:15}, 0, {}, 'right');
+    makeZither(paper, {x:256, y:100}, 8, -5, '#FFFF11', 'triangle',  {x:25, y:25}, Math.PI / 6, {}, 'right');
 }
 
 function drawExamplePianoRoll() {
-    makePianoRoll(paper, {x: 500, y: 25}, 15, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
+    makePianoRoll(paper, {x: 500, y: 25}, 20, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
 }
 
 function drawExampleSmallGrid() {
@@ -27,5 +27,5 @@ function drawExampleLargeGrid() {
 }
 
 function drawExampleBigPiano() {
-    makeBigPiano(paper, {x:50, y:400}, 10, '#123456', 'circle', {x:15, y:15}, 0, {}, 1);
+    makeBigPiano(paper, {x:50, y:200}, 5, '#123456', 'circle', {x:25, y:25}, 0, {}, 1);
 }
