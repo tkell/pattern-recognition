@@ -6,6 +6,10 @@ svg {
     border: 1px solid black;
 }
 
+input#color-input {
+    width: 75px;
+}
+
 div#controls {
     width: 215px;
     font-weight: bold;
