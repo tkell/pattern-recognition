@@ -22,6 +22,7 @@ function makeAndMap(theButton, noteFreq) {
         var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
         theButton.button.node.addEventListener('mousedown', mouseDownFunc);
         theButton.button.node.addEventListener('mouseup', mouseUpFunc);
+        theButton.button.node.addEventListener('mouseout', mouseUpFunc);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
