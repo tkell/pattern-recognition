@@ -281,9 +281,9 @@ if (layoutType == 'test') {
     appendData();
     makeZither(paper, {x:190, y:56}, 8, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
     appendData();
-    makeZither(paper, {x:95, y:205}, 13, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
+    makeZither(paper, {x:95, y:205}, 8, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
     appendData();
-    makeZither(paper, {x:345, y:220}, 12, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
+    makeZither(paper, {x:345, y:220}, 7, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     appendData();
 
     // Four test big pianos
