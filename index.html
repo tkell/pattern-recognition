@@ -144,7 +144,7 @@ function applyButtonDrawings() {
 
 // We can't JSONify the DOM reference in buttonData, 
 // so we take it out before sending the data to the server.
-// We also set the mapping flag here.
+// We also set the adventure flag here.
 function prepButtonData() {
     cleanedButtonData = [];
     for (var i = 0; i < buttonData.length; i++) {
@@ -157,7 +157,10 @@ function prepButtonData() {
         }
         cleanedButtonData.push(cleanButton);
     } 
-    return cleanedButtonData;
+
+    var adventureVal = parseInt($('#adventure-slider')[0].value);
+    var adventureVal = adventureVal - 1; // Convert down
+    return {'buttons': cleanedButtonData, 'adventure': adventureVal};
 }
 
 function sendDataToServer() {
@@ -167,6 +170,7 @@ function sendDataToServer() {
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     preppedButtonData = prepButtonData();
+
     var body = JSON.stringify(preppedButtonData);
     var req = new XMLHttpRequest();
     if ('withCredentials' in req) {
@@ -274,7 +278,6 @@ window.onload = init;
 <div id="controls">
 <br />
 radius:  <input type="range" name="radius" id="radius-slider" min="5" max="250" value=40><br />
-
 shape:  <input type="range" name="shape" id="shape-slider" min="0" max="7" value=0><br />
 colour:  <input type="text" id="color-input" name="color" value="#11AAFF"><br />
 <br />
@@ -284,6 +287,7 @@ colour:  <input type="text" id="color-input" name="color" value="#11AAFF"><br />
 </div>
 
 <hr />
+adventure:  <input type="range" name="adventure" id="adventure-slider" min="1" max="5" value=1><br />
 <button class="all-buttons" id="test-button" onclick="sendDataToServer()">recognize</button>
 <button class="all-buttons" id="clear-button" onclick="clearCanvas()">clear</button><br />
 <br /><hr />
