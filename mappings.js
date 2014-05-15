@@ -1,5 +1,5 @@
 // File with various and sundry synth / mapping functions
-var noteNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
+var noteNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
 
 function midiToNoteName(midiNumber) {
     var noteName = noteNames[midiNumber % 12];
