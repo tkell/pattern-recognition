@@ -159,8 +159,7 @@ function prepButtonData() {
     } 
 
     var adventureVal = parseInt($('#adventure-slider')[0].value);
-    var adventureVal = adventureVal - 1; // Convert down
-    return {'buttons': cleanedButtonData, 'adventure': adventureVal};
+    return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
 
 function sendDataToServer() {
@@ -287,7 +286,7 @@ colour:  <input type="text" id="color-input" name="color" value="#11AAFF"><br />
 </div>
 
 <hr />
-adventure:  <input type="range" name="adventure" id="adventure-slider" min="1" max="5" value=1><br />
+adventure:  <input type="range" name="adventure" id="adventure-slider" min="0" max="4" value=0><br />
 <button class="all-buttons" id="test-button" onclick="sendDataToServer()">recognize</button>
 <button class="all-buttons" id="clear-button" onclick="clearCanvas()">clear</button><br />
 <br /><hr />
