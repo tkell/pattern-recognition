@@ -19,6 +19,13 @@ div#button-info {
     text-align: center;
 }
 
+div#about {
+    font-size: 75%;
+    position: absolute;
+    left: 250px;
+    top: 550px;
+}
+
 
 .all-buttons {
     -moz-box-shadow: 0px 1px 0px 0px #caefab;
