@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+echo "Changing dir to training data"
+cd training-data
+echo "Generating piano data"
+python generate.py piano
+echo "Generating xylophone data"
+python generate.py xylophone
+echo "Generating small grid data"
+python generate.py small-grid
+echo "Generating piano-roll data"
+python generate.py piano-roll
+echo "Generating zither data"
+python generate.py zither
+
+echo "Coming up a directory"
+cd ..
+
 echo "Running piano..."
 node dump-data.js piano > piano.json
 mv piano.json /home/thor/Code/pattern-recognition-server/example_data/
