@@ -11,7 +11,7 @@ function randomizeShape(index) {
 }
 
 function randomizeIntegerParam(index) {
-    return Math.floor(Math.random() * 5);
+    return Math.floor(Math.random() * 15);
 }
 
 function indexedIntegerParam(index) {
@@ -21,6 +21,22 @@ function indexedIntegerParam(index) {
 function randomizeRadianParam(index) {
     return Math.random() * Math.PI * 2;
 }
+
+function setIntegerParam(size) {
+    return Math.floor(Math.random() * size);
+}
+
+
+var locationJitterFunctions = {
+    'xLocation': randomizeIntegerParam,
+    'yLocation': randomizeIntegerParam,
+    'color':  null,
+    'shape':  null,
+    'radius': null, 
+    'rotation': null,
+};
+
+
 
 modFunctions = {
     'xLocation': randomizeIntegerParam,

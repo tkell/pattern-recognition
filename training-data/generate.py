@@ -10,7 +10,7 @@ import random
 
 classification = sys.argv[1]
 
-number_of_things = 1000
+number_of_things = 100
 
 if classification == 'piano':
     with open('piano-data.js', 'w') as f:
@@ -33,7 +33,9 @@ if classification == 'piano':
             params['spacing'] = random.randint(0, 100)
 
             # modFunctions can stay as a blank object during testing
+            # Jesus.  A jitter of 15 makes everything terrible
             params['mod_function'] = '{}'
+
 
             #makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
             function_string = 'makePiano(paper, {x:%(x)d, y:%(y)d}, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, %(vertical_spacing)f);' % params

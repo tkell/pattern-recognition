@@ -122,23 +122,23 @@ if (layoutType == 'test') {
     appendData();
 
     // Four test small grids
-    makeColumnGrid(paper, {x:77, y:19}, 4, 3, {x:25, y:80}, 0, '#123456', 'rectangle', {x:10, y:66}, Math.PI / 4, {});
+    makeColumnGrid(paper, {x:77, y:19}, 1, 4, {x:25, y:80}, 0, '#123456', 'rectangle', {x:10, y:66}, Math.PI / 4, {});
     appendData();
-    makeColumnGrid(paper, {x:290, y:600}, 3, 4, {x:10, y:10}, 0, '#ABCDEF', 'pentagon', {x:45, y:45}, Math.PI / 17, {});
+    makeColumnGrid(paper, {x:290, y:600}, 2, 3, {x:10, y:10}, 0, '#ABCDEF', 'pentagon', {x:45, y:45}, Math.PI / 17, {});
     appendData();
-    makeColumnGrid(paper, {x:500, y:13}, 4, 3, {x:150, y:150}, 0, '#0965DE', 'hexagon', {x:200, y:200}, 0, pianoModFunctions);
+    makeColumnGrid(paper, {x:500, y:13}, 3, 4, {x:150, y:150}, 0, '#0965DE', 'hexagon', {x:200, y:200}, 0, pianoModFunctions);
     appendData();
-    makeColumnGrid(paper, {x:76, y:350}, 3, 4, {x:5, y:17}, 50, '#34BB81', 'square', {x:34, y:12}, 0, modFunctions);
+    makeColumnGrid(paper, {x:76, y:350}, 6, 2, {x:5, y:17}, 50, '#34BB81', 'square', {x:34, y:12}, 0, modFunctions);
     appendData();
 
     // Four test xylophones
-    makeXylophone(paper, {x:78, y:45}, 12, 5, '#00FFCC', 'square', {x:10, y:45}, 0, {}, false);
+    makeXylophone(paper, {x:78, y:45}, 7, 5, '#00FFCC', 'square', {x:10, y:45}, 0, {}, false);
     appendData();
-    makeXylophone(paper, {x:234, y:103}, 12, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
+    makeXylophone(paper, {x:234, y:103}, 9, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
     appendData();
-    makeXylophone(paper, {x:500, y:488}, 12, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
+    makeXylophone(paper, {x:500, y:488}, 11, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
     appendData();
-    makeXylophone(paper, {x:19, y:700}, 12, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
+    makeXylophone(paper, {x:19, y:700}, 13, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
     appendData();
 
     // Four test piano rolls
@@ -154,11 +154,11 @@ if (layoutType == 'test') {
     // Test zithers
     makeZither(paper, {x:0, y:0}, 12, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
     appendData();
-    makeZither(paper, {x:190, y:56}, 12, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
+    makeZither(paper, {x:190, y:56}, 10, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
     appendData();
-    makeZither(paper, {x:95, y:205}, 12, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
+    makeZither(paper, {x:95, y:205}, 8, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
     appendData();
-    makeZither(paper, {x:345, y:220}, 12, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
+    makeZither(paper, {x:345, y:220}, 7, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     appendData();
 
     // Four test big pianos
