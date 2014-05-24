@@ -10,7 +10,7 @@ import random
 
 classification = sys.argv[1]
 
-number_of_things = 100
+number_of_things = 1000
 
 if classification == 'piano':
     with open('piano-data.js', 'w') as f:
@@ -65,7 +65,7 @@ if classification == 'xylophone':
             # The useSize toggle matters because that impacts the radius
             params['radius'] = random.randint(3, 200)
             params['spacing'] = random.randint(0, 100)
-            params['number']  = random.randint(7, 13)
+            params['number']  = random.randint(7, 24)
             if random.randint(0, 1) == 0:
                 params['useSize'] = 'false'
             else:
@@ -104,14 +104,14 @@ if classification == 'small-grid':
             params['spacing_y'] = random.randint(0, 100)
 
             valid_sizes = {1: [4, 5, 6], 
-                   2: [2, 3, 4, 5, 6],
+                   2: [3, 4, 5, 6],
                    3: [2, 3, 4],
                    4: [2, 3],
                    5: [1, 2],
                    6: [2],
             }
 
-            params['number_x'] = random.randint(1, 6)
+            params['number_x'] = random.choice([1, 2, 3, 4, 6])
             params['number_y'] = random.choice(valid_sizes[params['number_x']])
 
             # We're totally ignoring offset for now!
@@ -147,7 +147,7 @@ if classification == 'zither':
             # Offset matters because of distance
             params['radius'] = random.randint(3, 200)
             params['spacing'] = random.randint(0, 100)
-            params['number']  = random.randint(7, 13)
+            params['number']  = random.randint(7, 24)
 
             params['offset'] = random.choice(['left', 'right', 'center'])
  

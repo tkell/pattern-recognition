@@ -134,11 +134,11 @@ if (layoutType == 'test') {
     // Four test xylophones
     makeXylophone(paper, {x:78, y:45}, 7, 5, '#00FFCC', 'square', {x:10, y:45}, 0, {}, false);
     appendData();
-    makeXylophone(paper, {x:234, y:103}, 9, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
+    makeXylophone(paper, {x:234, y:103}, 8, 25, '#183431', 'pentagon', {x:35, y:45}, 0, {}, true);
     appendData();
-    makeXylophone(paper, {x:500, y:488}, 11, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
+    makeXylophone(paper, {x:500, y:488}, 21, 90, '#AD0F0F', 'rectangle', {x:65, y:15}, 0, pianoModFunctions, false);
     appendData();
-    makeXylophone(paper, {x:19, y:700}, 13, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
+    makeXylophone(paper, {x:19, y:700}, 18, 100, '#999444', 'rectangle', {x:20, y:45}, modFunctions, {}, true);
     appendData();
 
     // Four test piano rolls
@@ -152,35 +152,38 @@ if (layoutType == 'test') {
     appendData();
 
     // Test zithers
-    makeZither(paper, {x:0, y:0}, 12, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
+    makeZither(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
     appendData();
-    makeZither(paper, {x:190, y:56}, 10, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
+    makeZither(paper, {x:190, y:56}, 15, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
     appendData();
-    makeZither(paper, {x:95, y:205}, 8, 5, '#ABED00', 'triangele',  {x:5, y:5}, 0, {}, 'center');
+    makeZither(paper, {x:95, y:205}, 20, 5, '#ABED00', 'triangle',  {x:5, y:5}, 0, {}, 'center');
     appendData();
-    makeZither(paper, {x:345, y:220}, 7, 20, '#BBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
+    makeZither(paper, {x:345, y:220}, 12, 20, '#CBBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     appendData();
 
     // Four test big pianos
     // Adding these breaks everything, because of dimensions!
-    makeBigPiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
-    appendData();
-    makeBigPiano(paper, {x:200, y:200}, 66, '#000011', 'rectangle', {x:45, y:25}, Math.PI, {}, 0.1);
-    appendData();
-    makeBigPiano(paper, {x:75, y:150}, 100, '#45FC99', 'square', {x:5, y:5}, 0, pianoModFunctions, 1);
-    appendData();
-    makeBigPiano(paper, {x:700, y:56}, 0, '#8849C0', 'circle', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
-    appendData();
+    // Turning these off so I can wrestle with things of size 13 or smallers
+    // makeBigPiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
+    // appendData();
+    // makeBigPiano(paper, {x:200, y:200}, 66, '#000011', 'rectangle', {x:45, y:25}, Math.PI, {}, 0.1);
+    // appendData();
+    // makeBigPiano(paper, {x:75, y:150}, 100, '#45FC99', 'square', {x:5, y:5}, 0, pianoModFunctions, 1);
+    // appendData();
+    // makeBigPiano(paper, {x:700, y:56}, 0, '#8849C0', 'circle', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
+    // appendData();
 
-    // Test large grids
-    // Adding these breaks everything, because of dimensions!
-    makeColumnGrid(paper, {x:45, y:76}, 5, 5, {x:10, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:80, y:600}, 5, 6, {x:15, y:30}, 0, '#123456', 'triangle', {x:7, y:7}, Math.PI / 2, {});
-    appendData();
-    makeColumnGrid(paper, {x:350, y:15}, 7, 5, {x:5, y:45}, 0, '#FFFF00', 'rectangle', {x:15, y:25}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:100, y:500}, 7, 7, {x:15, y:19}, 0, '#00BB45', 'pentagon', {x:2, y:2}, Math.PI / 5, {});
-    appendData();
+    // // Test large grids
+    // // Adding these breaks everything, because of dimensions!
+    // makeColumnGrid(paper, {x:45, y:76}, 5, 5, {x:10, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+    // appendData();
+    // makeColumnGrid(paper, {x:80, y:600}, 5, 6, {x:15, y:30}, 0, '#123456', 'triangle', {x:7, y:7}, Math.PI / 2, {});
+    // appendData();
+    // makeColumnGrid(paper, {x:350, y:15}, 7, 5, {x:5, y:45}, 0, '#FFFF00', 'rectangle', {x:15, y:25}, 0, {});
+    // appendData();
+    // makeColumnGrid(paper, {x:100, y:500}, 7, 7, {x:15, y:19}, 0, '#00BB45', 'pentagon', {x:2, y:2}, Math.PI / 5, {});
+    // appendData();
+    
+
     writeData();
 } 

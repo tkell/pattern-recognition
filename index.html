@@ -209,7 +209,7 @@ function createButton(e) {
     var shapeVal = $('#shape-slider')[0].value;
     var shape = allShapes[shapeVal];
 
-    var radiusVal = $('#radius-slider')[0].value;
+    var radiusVal = parseInt($('#radius-slider')[0].value);
     var radius = {'x': radiusVal, 'y': radiusVal};
 
     var rotation = 0;
