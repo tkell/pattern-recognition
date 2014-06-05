@@ -13,6 +13,9 @@ python generate.py piano-roll
 echo "Generating zither data"
 python generate.py zither
 
+echo "Generating circle data"
+python generate.py circle
+
 echo "Coming up a directory"
 cd ..
 
@@ -43,6 +46,10 @@ mv large_grid.json /home/thor/Code/pattern-recognition-server/example_data/
 echo "Running big-piano..."
 node dump-data.js big-piano > big_piano.json
 mv big_piano.json /home/thor/Code/pattern-recognition-server/example_data/
+
+echo "Running circle"
+node dump-data.js circle > circle.json
+mv circle.json /home/thor/Code/pattern-recognition-server/example_data/
 
 echo "Running test data"
 node dump-data.js test > test_data.json

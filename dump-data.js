@@ -51,7 +51,10 @@ eval(fs.readFileSync('training-data/piano-roll-data.js')+'');
 
 if (layoutType == 'zither') {
     eval(fs.readFileSync('training-data/zither-data.js')+'');
+}
 
+if (layoutType == 'circle') {
+    eval(fs.readFileSync('training-data/circle-data.js')+'');
 }
 
 if (layoutType == 'large-grid') {
@@ -160,6 +163,12 @@ if (layoutType == 'test') {
     appendData();
     makeZither(paper, {x:345, y:220}, 12, 20, '#CBBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     appendData();
+
+    // Test circles
+    makeCircle(paper, {x:0, y:400}, 300, 5, '#CBBC11', 'square', {x:75, y:75}, 0, {});
+    makeCircle(paper, {x:250, y:400}, 200, 10, '#AA0000', 'circle', {x:10, y:10}, 0, modFunctions);
+    makeCircle(paper, {x:400, y:275}, 175, 12, '#FF44AC', 'rectangle', {x:10, y:25}, 0, {});
+    makeCircle(paper, {x:400, y:0}, 200, 16, '#113D44', 'hexagon', {x:20, y:20}, 0, modFunctions);
 
     // Four test big pianos
     // Adding these breaks everything, because of dimensions!

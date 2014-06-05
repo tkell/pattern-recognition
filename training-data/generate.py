@@ -191,3 +191,32 @@ if classification == 'piano-roll':
             f.write('appendData();' + '\n')
 
         f.write('writeData();' + '\n')
+
+if classification == 'circle':
+    with open('circle-data.js', 'w') as f:
+        for x in range(number_of_things):
+             # generate params
+            params = {}
+
+            # For the moment, colour, shape, initial location, 
+            # and button rotation don't matter.
+            params['color'] = '#000000'
+            params['shape'] = 'circle'
+            params['x'] = 0
+            params['y'] = 0
+            params['rotation'] = 0 
+
+            # These do matter!
+            params['circle_radius'] = random.randint(20, 500)
+            params['number_of_buttons'] = random.randint(5, 20)
+            params['button_radius'] = random.randint(0, 100)
+            
+            # modFunctions can stay as a blank object during testing
+            params['mod_function'] = '{}'
+
+            # makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, {});   
+            function_string = 'makeCircle(paper, {x:%(x)d, y:%(x)d}, %(circle_radius)d, %(number_of_buttons)d, "%(color)s", "%(shape)s", {x:%(button_radius)d, y:%(button_radius)d}, %(rotation)d, %(mod_function)s);' % params
+            f.write(function_string + '\n')
+            f.write('appendData();' + '\n')
+
+        f.write('writeData();' + '\n')
