@@ -170,28 +170,11 @@ if (layoutType == 'test') {
     makeCircle(paper, {x:400, y:275}, 175, 12, '#FF44AC', 'rectangle', {x:10, y:25}, 0, {});
     makeCircle(paper, {x:400, y:0}, 200, 16, '#113D44', 'hexagon', {x:20, y:20}, 0, modFunctions);
 
-    // Four test big pianos
-    // Adding these breaks everything, because of dimensions!
-    // Turning these off so I can wrestle with things of size 13 or smallers
-    // makeBigPiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 0.5);
-    // appendData();
-    // makeBigPiano(paper, {x:200, y:200}, 66, '#000011', 'rectangle', {x:45, y:25}, Math.PI, {}, 0.1);
-    // appendData();
-    // makeBigPiano(paper, {x:75, y:150}, 100, '#45FC99', 'square', {x:5, y:5}, 0, pianoModFunctions, 1);
-    // appendData();
-    // makeBigPiano(paper, {x:700, y:56}, 0, '#8849C0', 'circle', {x:100, y:100}, 0, pianoModFunctionsNoShape, 0.5);
-    // appendData();
-
-    // // Test large grids
-    // // Adding these breaks everything, because of dimensions!
+    // Add these back soon!
     // makeColumnGrid(paper, {x:45, y:76}, 5, 5, {x:10, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-    // appendData();
     // makeColumnGrid(paper, {x:80, y:600}, 5, 6, {x:15, y:30}, 0, '#123456', 'triangle', {x:7, y:7}, Math.PI / 2, {});
-    // appendData();
     // makeColumnGrid(paper, {x:350, y:15}, 7, 5, {x:5, y:45}, 0, '#FFFF00', 'rectangle', {x:15, y:25}, 0, {});
-    // appendData();
     // makeColumnGrid(paper, {x:100, y:500}, 7, 7, {x:15, y:19}, 0, '#00BB45', 'pentagon', {x:2, y:2}, Math.PI / 5, {});
-    // appendData();
     
 
     writeData();

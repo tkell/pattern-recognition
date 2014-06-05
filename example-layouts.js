@@ -29,3 +29,7 @@ function drawExampleLargeGrid() {
 function drawExampleBigPiano() {
     makeBigPiano(paper, {x:50, y:200}, 5, '#123456', 'circle', {x:25, y:25}, 0, {}, 1);
 }
+
+function drawExampleCircle() {
+    makeCircle(paper, {x:250, y:225}, 200, 10, '#00AA10', 'pentagon', {x:25, y:25}, 0, {});
+}
