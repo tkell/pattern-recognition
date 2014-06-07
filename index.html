@@ -61,10 +61,7 @@ function drawConnectingLines() {
         var x1 = buttonData[i].location.x;
         var y1= buttonData[i].location.y;
 
-        for (var j = 0; j < buttonData.length; j++) {
-            if (i == j) {
-                continue;
-            }
+        for (var j = i + 1; j < buttonData.length; j++) {
             var x2 = buttonData[j].location.x;
             var y2= buttonData[j].location.y;
 
