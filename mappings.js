@@ -38,36 +38,3 @@ function applyKnownMapping(returnedButtonData) {
         }
     }
 }
-
-
-// Legacy!
-// we're going to do just distance, and just octaves, for now...
-// There's got to be a way to connect this to buttonDifferences, but they're coming in different orders, o
-function mapByRatio(buttons, baseNoteNumber) {
-    var baseLocation = buttons[0].location;
-    var baseFreq = midiNoteToFrequency(baseNoteNumber);
-
-    var maxDistance = 0;
-    for (var i = 0; i < buttons.length; i++) {
-        var distance = Math.sqrt(Math.pow(buttons[i].location.x - baseLocation.x, 2) + Math.pow(buttons[i].location.y - baseLocation.y, 2));
-        if (distance > maxDistance) {
-            maxDistance = distance;
-        }
-    }
-
-    for (var i = 0; i < buttons.length; i++) {
-        var distance = Math.sqrt(Math.pow(buttons[i].location.x - baseLocation.x, 2) + Math.pow(buttons[i].location.y - baseLocation.y, 2));
-        var ratio = (distance / maxDistance) + 1;
-        var freq = ratio * baseFreq;
-
-        var synth = new Synth({
-            context: tsw.context(),
-            speakersOn: true
-        });
-
-        var mouseDownFunc = partial(betterNoteClick, synth, freq);
-        var mouseUpFunc = partial(betterNoteStop, synth, freq);
-        buttons[i].button.node.addEventListener('mousedown', mouseDownFunc);
-        buttons[i].button.node.addEventListener('mouseup', mouseUpFunc);
-    }
-}
