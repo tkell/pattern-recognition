@@ -111,7 +111,7 @@ function makeButton(paper, location, color, shape, radius, rotation, modFunction
         button.attr("fill", currentColor);
     }
     // and THIS deals with the data..
-    addButton(button, currentLocation, currentColor, currentShape, radius, rotation);
+    addButton(button, currentLocation, currentColor, currentShape, currentRadius, currentRotation);
  }
 
 function makeRandomButton(paper) {
