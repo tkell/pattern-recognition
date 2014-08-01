@@ -137,7 +137,7 @@ function makeZither(paper, startingPoint, numberOfButtons, spacing, buttonColor,
     // Change size
     var averageRadius = (buttonRadius.x + buttonRadius.y / 2);
     function zitherSize(index) {
-        return Math.floor((index) * averageRadius / 7);
+        return Math.floor((index + 1) * averageRadius / 7);
     }
     modFunctions.radius = zitherSize;
 
