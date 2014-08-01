@@ -18,6 +18,11 @@ function drawExampleDulcimer() {
     makeDulcimer(paper, {x:256, y:100}, 8, -5, '#FFFF11', 'triangle',  {x:25, y:25}, Math.PI / 6, {}, 'right', 1);
 }
 
+function drawExampleKalimba() {
+    makeKalimba(paper, {x: 150, y: 150}, 8, 5, '#00DDAA', 'rectangle', {x:40, y:80}, 0, {});
+}
+
+
 function drawExamplePianoRoll() {
     makePianoRoll(paper, {x: 500, y: 25}, 20, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
 }

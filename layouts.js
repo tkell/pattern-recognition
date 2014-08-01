@@ -112,6 +112,22 @@ function makeXylophone(paper, startingPoint, numberOfButtons, spacing, buttonCol
     makeLine(paper, startingPoint, numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
 }
 
+function makeKalimba(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions) {
+    // The number of buttons is always greater than 7.  
+    // Let us call it more than 7 but less than 15
+    function kalimbaSize(index) {
+        var averageRadius = (buttonRadius.x + buttonRadius.y / 2);
+        if (index <= numberOfButtons / 2) {
+            sizeIndex = index;
+        } else {
+            sizeIndex = numberOfButtons - index;
+        }
+        return Math.floor(sizeIndex * averageRadius / 7);
+    }
+    modFunctions.radius = kalimbaSize;
+    makeLine(paper, startingPoint, numberOfButtons, spacing, 0, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
+}
+
 function makePianoRoll(paper, startingPoint, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, horizontalSpacingRatio) {
     // 7
     makeColumn(paper, startingPoint, 7, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions);
