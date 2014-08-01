@@ -11,7 +11,11 @@ function drawExampleXylophone() {
 }
 
 function drawExampleZither() {
-    makeZither(paper, {x:256, y:100}, 8, -5, '#FFFF11', 'triangle',  {x:25, y:25}, Math.PI / 6, {}, 'right');
+    makeDulcimer(paper, {x:256, y:100}, 8, -5, '#FFFF11', 'triangle',  {x:25, y:25}, Math.PI / 6, {}, 'right', -1);
+}
+
+function drawExampleDulcimer() {
+    makeDulcimer(paper, {x:256, y:100}, 8, -5, '#FFFF11', 'triangle',  {x:25, y:25}, Math.PI / 6, {}, 'right', 1);
 }
 
 function drawExamplePianoRoll() {

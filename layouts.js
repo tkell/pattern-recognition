@@ -130,16 +130,20 @@ function makePianoRoll(paper, startingPoint, spacing, buttonColor, buttonShape, 
 
 }
 
-function makeZither(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, alignment) {
+function makeDulcimer(paper, startingPoint, numberOfButtons, spacing, buttonColor, buttonShape, buttonRadius, buttonRotation, modFunctions, alignment, sizeIncrease) {
     // The number of buttons is always greater than 5.  
     // Alignment is a string:  left, center, or right, that defines to the justification of the buttons
     
     // Change size
     var averageRadius = (buttonRadius.x + buttonRadius.y / 2);
-    function zitherSize(index) {
-        return Math.floor((index + 1) * averageRadius / 7);
+    function dulcimerSize(index) {
+        if (sizeIncrease == 1) {
+            return Math.floor((index + 1) * averageRadius / 7);
+        } else if (sizeIncrease == -1) {
+            return Math.floor((numberOfButtons - index + 1) * averageRadius / 7);
+        }
     }
-    modFunctions.radius = zitherSize;
+    modFunctions.radius = dulcimerSize;
 
     // Functions for computing the alignment delta
     function alignRight(index) {
