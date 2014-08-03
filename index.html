@@ -87,14 +87,10 @@ function sendDataToServer() {
                     if (req.status >= 200 && req.status < 400) {
                         var jsonRes = JSON.parse(req.responseText);
                         playbackPreview('playback:  ' + jsonRes['result']);
-
                         applyKnownMapping(jsonRes['mapping']);
-
                         drawConnectingLines();
                         drawAnnotations(jsonRes['mapping']);
                         applyButtonDrawings();
-
-
                     } else {
                         playbackError("Error!  Please try again!");
                     }
