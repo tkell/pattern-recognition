@@ -35,6 +35,10 @@ function drawExampleLargeGrid() {
     makeColumnGrid(paper, {x:100, y:100}, 7, 5, {x: 20, y:10}, 0, '#AA1599', 'octagon', {x:25, y:25}, 0, {});    
 }
 
+function drawExampleTonnetz() {
+    makeColumnGrid(paper, {x:150, y:100}, 5, 5, {x:25, y:25}, 50, '#DC1344', 'triangle', {x:25, y:25}, Math.PI / 6, {});    
+}
+
 function drawExampleBigPiano() {
     makeBigPiano(paper, {x:50, y:200}, 5, '#123456', 'circle', {x:25, y:25}, 0, {}, 1);
 }
