@@ -154,8 +154,8 @@ if classification == 'zither':
             # modFunctions can stay as a blank object during testing
             params['mod_function'] = '{}'
 
-            #makeZither(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
-            function_string = 'makeZither(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, "%(offset)s");' % params
+            #makeDulcimer(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
+            function_string = 'makeDulcimer(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, "%(offset)s");' % params
             f.write(function_string + '\n')
             f.write('appendData();' + '\n')
 
@@ -216,6 +216,96 @@ if classification == 'circle':
 
             # makeCircle(paper, {x:400, y:400}, 200, 10, '#AA0000', 'rectangle', {x:10, y:10}, 0, {});   
             function_string = 'makeCircle(paper, {x:%(x)d, y:%(x)d}, %(circle_radius)d, %(number_of_buttons)d, "%(color)s", "%(shape)s", {x:%(button_radius)d, y:%(button_radius)d}, %(rotation)d, %(mod_function)s);' % params
+            f.write(function_string + '\n')
+            f.write('appendData();' + '\n')
+
+        f.write('writeData();' + '\n')
+
+
+if classification == 'large_grid':
+    with open('large-grid-data.js', 'w') as f:
+        for x in range(number_of_things):
+            # generate params
+            params = {}
+
+            # For the moment, colour, shape, initial location, and button rotation don't matter
+            params['color'] = '#000000'
+            params['shape'] = 'circle'
+            params['x'] = 0
+            params['y'] = 0
+            params['rotation'] = 0
+
+            # radius does matter, because we're going to add jitter based on it.
+            # Likewise, vertical spacing ratio is super important
+            # Spacing matters, again because of jitter
+            # Number for sure matters, because of dimensionality.
+            params['radius'] = random.randint(3, 200)
+            params['spacing_x'] = random.randint(0, 100)
+            params['spacing_y'] = random.randint(0, 100)
+
+            valid_sizes = {
+                   2: [7, 8, 9], 
+                   3: [5, 6, 7, 8],
+                   4: [4, 5, 6, 7],
+                   5: [3, 4, 5, 6],
+                   6: [3, 4, 5, 6],
+            }
+
+            params['number_x'] = random.choice([2, 3, 4, 6])
+            params['number_y'] = random.choice(valid_sizes[params['number_x']])
+
+            # We're totally ignoring offset for now!
+ 
+            # modFunctions can stay as a blank object during testing
+            params['mod_function'] = '{}'
+
+            #makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+            function_string = 'makeColumnGrid(paper, {x:%(x)d, y:%(y)d}, %(number_x)d, %(number_y)d, {x:%(spacing_x)d, y:%(spacing_y)d}, 0, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s);' % params
+            f.write(function_string + '\n')
+            f.write('appendData();' + '\n')
+
+        f.write('writeData();' + '\n')
+
+
+if classification == 'tonnetz':
+    with open('tonnetz-data.js', 'w') as f:
+        for x in range(number_of_things):
+            # generate params
+            params = {}
+
+            # For the moment, colour, shape, initial location, and button rotation don't matter
+            params['color'] = '#000000'
+            params['shape'] = 'circle'
+            params['x'] = 0
+            params['y'] = 0
+            params['rotation'] = 0
+
+            # radius does matter, because we're going to add jitter based on it.
+            # Likewise, vertical spacing ratio is super important
+            # Spacing matters, again because of jitter
+            # Number for sure matters, because of dimensionality.
+            params['radius'] = random.randint(3, 200)
+            params['spacing_x'] = random.randint(0, 100)
+            params['spacing_y'] = random.randint(0, 100)
+
+            valid_sizes = {
+                   4: [4, 5],
+                   5: [4, 5, 6],
+                   6: [5, 6, 7],
+                   7: [6, 7, 8],
+            }
+
+            params['number_x'] = random.choice([4, 5, 6, 7])
+            params['number_y'] = random.choice(valid_sizes[params['number_x']])
+
+            # Dun dun dun
+            params['offset'] = (params['spacing_y'] + params['radius']) / 2
+ 
+            # modFunctions can stay as a blank object during testing
+            params['mod_function'] = '{}'
+
+            #makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
+            function_string = 'makeColumnGrid(paper, {x:%(x)d, y:%(y)d}, %(number_x)d, %(number_y)d, {x:%(spacing_x)d, y:%(spacing_y)d}, 0, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s);' % params
             f.write(function_string + '\n')
             f.write('appendData();' + '\n')
 

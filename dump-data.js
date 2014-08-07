@@ -58,60 +58,13 @@ if (layoutType == 'circle') {
 }
 
 if (layoutType == 'large-grid') {
-    makeColumnGrid(paper, {x:25, y:25}, 5, 5, {x:5, y:5}, 0, '#AA0000', 'circle', {x:10, y:10}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:150, y:25}, 5, 6, {x:10, y:0}, 0, '#123456', 'triangle', {x:15, y:15}, Math.PI / 2, {});
-    appendData();
-    makeColumnGrid(paper, {x:300, y:25}, 6, 5, {x:10, y:15}, 0, '#FFFF00', 'square', {x:5, y:5}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:225, y:25}, 6, 6, {x:20, y:7}, 0, '#00BB45', 'pentagon', {x:25, y:25}, Math.PI / 5, {});
-    appendData();
-    makeColumnGrid(paper, {x:20, y:200}, 7, 6, {x:5, y:10}, 0, '#197723', 'hexagon', {x:10, y:10}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:175, y:200}, 6, 7, {x:20, y:0}, 0, '#000000', 'octagon', {x:15, y:15}, Math.PI / 2, {});
-    appendData();
-    makeColumnGrid(paper, {x:200, y:200}, 7, 7, {x:50, y:5}, 0, '#BBA016', 'rectangle', {x:5, y:15}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:315, y:200}, 5, 5, {x:2, y:27}, 0, '#FFFFFF', 'rectangle', {x:25, y:10}, Math.PI / 5, {});
-    appendData();
-    makeColumnGrid(paper, {x:55, y:350}, 6, 6, {x:15, y:60}, 0, '#CCCCCC', 'triangle', {x:11, y:19}, 0, {});
-    appendData();
-    makeColumnGrid(paper, {x:145, y:350}, 7, 6, {x:30, y:30}, 0, '#455453', 'square', {x:15, y:15}, Math.PI / 2, modFunctions);
-    appendData();
-    makeColumnGrid(paper, {x:275, y:350}, 7, 7, {x:0, y:0}, 0, '#ABCCBA', 'rectangle', {x:25, y:35}, 0, pianoModFunctions);
-    appendData();
-    makeColumnGrid(paper, {x:385, y:350}, 7, 6, {x:20, y:20}, 0, '#120021', 'circle', {x:7, y:10}, Math.PI / 5, {});
-    appendData();
-    writeData();
+   eval(fs.readFileSync('training-data/large-grid-data.js')+'');
 }
 
-if (layoutType == 'big-piano') {
-    makeBigPiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
-    appendData();
-    makeBigPiano(paper, {x:600, y:350}, 5, '#AABB11', 'square', {x:5, y:5}, 0, {}, 1);
-    appendData();
-    makeBigPiano(paper, {x:100, y:575}, 10, '#000000', 'pentagon', {x:60, y:60}, Math.PI, {}, 1);
-    appendData();
-    makeBigPiano(paper, {x:200, y:700}, 100, '#FFFFFF', 'hexagon', {x:15, y:15}, Math.PI / 24, {}, 1);
-    appendData();
-    makeBigPiano(paper, {x:400, y:100}, 15, '#00CC00', 'octagon', {x:25, y:25}, Math.PI / 7, {}, 0.9);
-    appendData();
-    makeBigPiano(paper, {x:150, y:250}, 0, '#001177', 'triangle', {x:35, y:35}, 0, {}, 0.3);
-    appendData();
-    makeBigPiano(paper, {x:110, y:500}, 24, '#CCCCCC', 'rectangle', {x:10, y:50}, 0, {}, 0.7);
-    appendData();
-    makeBigPiano(paper, {x:225, y:725}, 3, '#EE8811', 'rectangle', {x:50, y:10}, 0, {}, 1);
-    appendData();
-    makeBigPiano(paper, {x:75, y:150}, 60, '#45FC99', 'triangle', {x:5, y:5}, 0, pianoModFunctions, 1);
-    appendData();
-    makeBigPiano(paper, {x:500, y:300}, 0, '#003399', 'square', {x:15, y:15}, 0, pianoModFunctions, 1);
-    appendData();
-    makeBigPiano(paper, {x:200, y:525}, 0, '#DC2300', 'rectangle', {x:50, y:100}, 0, pianoModFunctionsNoShape, 1);
-    appendData();
-    makeBigPiano(paper, {x:200, y:700}, 0, '#007744', 'rectangle', {x:10, y:75}, 0, pianoModFunctionsNoShape, 0.5);
-    appendData();
-    writeData();
-} 
+if (layoutType == 'tonnetz') {
+   eval(fs.readFileSync('training-data/tonnetz-data.js')+'');
+}
+
 
 if (layoutType == 'test') {
     // Four test pianos
@@ -155,13 +108,13 @@ if (layoutType == 'test') {
     appendData();
 
     // Test zithers
-    makeZither(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
+    makeDulcimer(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
     appendData();
-    makeZither(paper, {x:190, y:56}, 15, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
+    makeDulcimer(paper, {x:190, y:56}, 15, 5, '#AABBCC', 'circle',  {x:44, y:44}, 0, {}, 'right');
     appendData();
-    makeZither(paper, {x:95, y:205}, 20, 5, '#ABED00', 'triangle',  {x:5, y:5}, 0, {}, 'center');
+    makeDulcimer(paper, {x:95, y:205}, 20, 5, '#ABED00', 'triangle',  {x:5, y:5}, 0, {}, 'center');
     appendData();
-    makeZither(paper, {x:345, y:220}, 12, 20, '#CBBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
+    makeDulcimer(paper, {x:345, y:220}, 12, 20, '#CBBC11', 'rectangle',  {x:50, y:35}, 0, pianoModFunctionsNoShape, 'center');
     appendData();
 
     // Test circles

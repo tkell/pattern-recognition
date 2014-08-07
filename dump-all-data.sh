@@ -12,9 +12,12 @@ echo "Generating piano-roll data"
 python generate.py piano-roll
 echo "Generating zither data"
 python generate.py zither
-
 echo "Generating circle data"
 python generate.py circle
+echo "Generating large grid data"
+python generate.py large_grid
+echo "Generating tonnetz data"
+python generate.py tonnetz
 
 echo "Coming up a directory"
 cd ..
@@ -39,17 +42,18 @@ echo "Running zither..."
 node dump-data.js zither > zither.json
 mv zither.json /home/thor/Code/pattern-recognition-server/example_data/
 
+echo "Running circle"
+node dump-data.js circle > circle.json
+mv circle.json /home/thor/Code/pattern-recognition-server/example_data/
+
 echo "Running large-grid..."
 node dump-data.js large-grid > large_grid.json
 mv large_grid.json /home/thor/Code/pattern-recognition-server/example_data/
 
-echo "Running big-piano..."
-node dump-data.js big-piano > big_piano.json
-mv big_piano.json /home/thor/Code/pattern-recognition-server/example_data/
+echo "Running tonnetz"
+node dump-data.js tonnetz > tonnetz.json
+mv tonnetz.json /home/thor/Code/pattern-recognition-server/example_data/
 
-echo "Running circle"
-node dump-data.js circle > circle.json
-mv circle.json /home/thor/Code/pattern-recognition-server/example_data/
 
 echo "Running test data"
 node dump-data.js test > test_data.json
