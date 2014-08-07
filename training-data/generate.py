@@ -209,7 +209,7 @@ if classification == 'circle':
             # These do matter!
             params['circle_radius'] = random.randint(20, 500)
             params['number_of_buttons'] = random.randint(5, 20)
-            params['button_radius'] = random.randint(0, 100)
+            params['button_radius'] = random.randint(10, 100)
             
             # modFunctions can stay as a blank object during testing
             params['mod_function'] = '{}'
@@ -305,7 +305,7 @@ if classification == 'tonnetz':
             params['mod_function'] = '{}'
 
             #makeColumnGrid(paper, {x:400, y:50}, 2, 2, {x:20, y:20}, 0, '#AA0000', 'circle', {x:50, y:50}, 0, {});
-            function_string = 'makeColumnGrid(paper, {x:%(x)d, y:%(y)d}, %(number_x)d, %(number_y)d, {x:%(spacing_x)d, y:%(spacing_y)d}, 0, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s);' % params
+            function_string = 'makeColumnGrid(paper, {x:%(x)d, y:%(y)d}, %(number_x)d, %(number_y)d, {x:%(spacing_x)d, y:%(spacing_y)d}, %(offset)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s);' % params
             f.write(function_string + '\n')
             f.write('appendData();' + '\n')
 
