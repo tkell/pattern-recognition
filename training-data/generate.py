@@ -25,7 +25,7 @@ if classification == 'piano':
             params['y'] = 0
             params['rotation'] = 0
 
-            # radius does matter, because we're going to add jitter based on it.
+            # radius does matter, because it impacts spacing
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
             params['radius'] = random.randint(10, 200)
@@ -33,7 +33,6 @@ if classification == 'piano':
             params['spacing'] = random.randint(0, 100)
 
             # modFunctions can stay as a blank object during testing
-            # Jesus.  A jitter of 15 makes everything terrible
             params['mod_function'] = '{}'
 
 
@@ -61,7 +60,6 @@ if classification == 'xylophone':
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
             # Number for sure matters, because of dimensionality.
-            # This one only cares about things from 7 to 12 - we'll make another class for 13 - 24, and so on.
             # The useSize toggle matters because that impacts the radius
             params['radius'] = random.randint(10, 200)
             params['spacing'] = random.randint(0, 100)
@@ -114,8 +112,6 @@ if classification == 'small-grid':
             params['number_x'] = random.choice([1, 2, 3, 4, 6])
             params['number_y'] = random.choice(valid_sizes[params['number_x']])
 
-            # We're totally ignoring offset for now!
- 
             # modFunctions can stay as a blank object during testing
             params['mod_function'] = '{}'
 
@@ -254,8 +250,6 @@ if classification == 'large_grid':
             params['number_x'] = random.choice([2, 3, 4, 6])
             params['number_y'] = random.choice(valid_sizes[params['number_x']])
 
-            # We're totally ignoring offset for now!
- 
             # modFunctions can stay as a blank object during testing
             params['mod_function'] = '{}'
 
