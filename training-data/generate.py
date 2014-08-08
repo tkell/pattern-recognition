@@ -10,7 +10,7 @@ import random
 
 classification = sys.argv[1]
 
-number_of_things = 1000
+number_of_things = 500
 
 if classification == 'piano':
     with open('piano-data.js', 'w') as f:
@@ -28,7 +28,7 @@ if classification == 'piano':
             # radius does matter, because we're going to add jitter based on it.
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['vertical_spacing'] = random.random() * 1.5 + 0.5
             params['spacing'] = random.randint(0, 100)
 
@@ -63,7 +63,7 @@ if classification == 'xylophone':
             # Number for sure matters, because of dimensionality.
             # This one only cares about things from 7 to 12 - we'll make another class for 13 - 24, and so on.
             # The useSize toggle matters because that impacts the radius
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['spacing'] = random.randint(0, 100)
             params['number']  = random.randint(7, 24)
             if random.randint(0, 1) == 0:
@@ -99,7 +99,7 @@ if classification == 'small-grid':
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
             # Number for sure matters, because of dimensionality.
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['spacing_x'] = random.randint(0, 100)
             params['spacing_y'] = random.randint(0, 100)
 
@@ -145,7 +145,7 @@ if classification == 'zither':
             # Spacing matters, again because of jitter
             # Number for sure matters, because of dimensionality.
             # Offset matters because of distance
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['spacing'] = random.randint(0, 100)
             params['number']  = random.randint(7, 24)
 
@@ -154,8 +154,8 @@ if classification == 'zither':
             # modFunctions can stay as a blank object during testing
             params['mod_function'] = '{}'
 
-            #makeDulcimer(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left');
-            function_string = 'makeDulcimer(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, "%(offset)s");' % params
+            #makeDulcimer(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left', 1);
+            function_string = 'makeDulcimer(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, "%(offset)s", 1);' % params
             f.write(function_string + '\n')
             f.write('appendData();' + '\n')
 
@@ -178,7 +178,7 @@ if classification == 'piano-roll':
             # radius does matter, because we're going to add jitter based on it.
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['horizontal_spacing'] = random.random() * 1.5 + 0.5
             params['spacing'] = random.randint(0, 100)
 
@@ -239,7 +239,7 @@ if classification == 'large_grid':
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
             # Number for sure matters, because of dimensionality.
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['spacing_x'] = random.randint(0, 100)
             params['spacing_y'] = random.randint(0, 100)
 
@@ -284,7 +284,7 @@ if classification == 'tonnetz':
             # Likewise, vertical spacing ratio is super important
             # Spacing matters, again because of jitter
             # Number for sure matters, because of dimensionality.
-            params['radius'] = random.randint(3, 200)
+            params['radius'] = random.randint(10, 200)
             params['spacing_x'] = random.randint(0, 100)
             params['spacing_y'] = random.randint(0, 100)
 

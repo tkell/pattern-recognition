@@ -92,6 +92,8 @@ function makeButton(paper, location, color, shape, radius, rotation, modFunction
     if (modFunctions.radius) {
         currentRadius.x = radius.x + modFunctions.radius(modIndex);
         currentRadius.y = radius.y + modFunctions.radius(modIndex);
+        if (currentRadius.x < 1) {currentRadius.x = 1;}
+        if (currentRadius.y < 1) {currentRadius.y = 1;}
     } else {
         currentRadius = radius;
     }
