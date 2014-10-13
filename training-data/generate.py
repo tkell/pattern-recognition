@@ -32,8 +32,9 @@ if classification == 'piano':
             params['vertical_spacing'] = random.random() * 1.5 + 0.5
             params['spacing'] = random.randint(0, 100)
 
-            # modFunctions can stay as a blank object during testing
-            params['mod_function'] = '{}'
+
+            # modFunctions can stay as a blank object for pianos, because pianos are too strong.
+            params['mod_function'] = {}
 
 
             #makePiano(paper, {x:50, y:200}, 20, '#AA0000', 'circle', {x:50, y:50}, 0, {}, 1);
@@ -69,8 +70,13 @@ if classification == 'xylophone':
             else:
                 params['useSize'] = 'true'
 
-            # modFunctions can stay as a blank object during testing
-            params['mod_function'] = '{}'
+            mod_function_string = """
+            function randomizeIntegerParam(index) {
+                return Math.floor(Math.random() * 5);
+            }
+            """
+            # modFunctions with a dash of jitter
+            params['mod_function'] = '{"xlocation": %s, "ylocation": %s}' % (mod_function_string, mod_function_string)
 
             #makeXylophone(paper, {x:50, y:100}, 7, 25, '#ABCEDF', 'rectangle', {x:50, y:75}, 0, pianoModFunctions, false);
             function_string = 'makeXylophone(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, %(useSize)s);' % params
@@ -147,8 +153,13 @@ if classification == 'zither':
 
             params['offset'] = random.choice(['left', 'right', 'center'])
  
-            # modFunctions can stay as a blank object during testing
-            params['mod_function'] = '{}'
+            mod_function_string = """
+            function randomizeIntegerParam(index) {
+                return Math.floor(Math.random() * 5);
+            }
+            """
+            # modFunctions with a dash of jitter
+            params['mod_function'] = '{"xlocation": %s, "ylocation": %s}' % (mod_function_string, mod_function_string)
 
             #makeDulcimer(paper, {x:0, y:0}, 7, 0, '#AABBCC', 'rectangle',  {x:15, y:38}, 0, modFunctions, 'left', 1);
             function_string = 'makeDulcimer(paper, {x:%(x)d, y:%(y)d}, %(number)d, %(spacing)d, "%(color)s", "%(shape)s", {x:%(radius)d, y:%(radius)d}, %(rotation)d, %(mod_function)s, "%(offset)s", 1);' % params
