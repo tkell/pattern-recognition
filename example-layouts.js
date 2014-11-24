@@ -24,7 +24,7 @@ function drawExampleKalimba() {
 
 
 function drawExamplePianoRoll() {
-    makePianoRoll(paper, {x: 500, y: 25}, 20, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 0.47);  
+    makePianoRoll(paper, {x: 500, y: 25}, 20, '#CCCCCC', 'diamond', {x:25, y:25}, 0, {}, 1);  
 }
 
 function drawExampleSmallGrid() {
