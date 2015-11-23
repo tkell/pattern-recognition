@@ -69,7 +69,7 @@ function sendDataToServer() {
     $('svg').off('click');
     playbackPreview('playback:  pending...');
 
-    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
+    var url = "http://ec2-52-10-186-129.us-west-2.compute.amazonaws.com/analysis";
     preppedButtonData = prepButtonData();
 
     if (preppedButtonData.buttonData.length < 3) {
