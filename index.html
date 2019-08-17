@@ -69,7 +69,7 @@ function sendDataToServer() {
     $('svg').off('click');
     playbackPreview('playback:  pending...');
 
-    var url = "http://pattern-rec.tide-pool.link/pattern-rec/analysis";
+    var url = "https://o3rxp7ycpk.execute-api.us-west-2.amazonaws.com/pattern-rec/analysis";
     preppedButtonData = prepButtonData();
 
     if (preppedButtonData.buttonData.length < 3) {
